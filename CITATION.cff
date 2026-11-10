@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite it as below. analytic-number-theory-lean (Lean library NTKB) was
+  developed with AI assistance (Claude Code, Anthropic), designed and directed by Jonathan Hanke; every proof is
+  checked by the Lean kernel.
+title: "Analytic number theory in Lean 4 (analytic-number-theory-lean)"
+type: software
+authors:
+  - family-names: Hanke
+    given-names: Jonathan
+license: Apache-2.0
+version: "0.1.0"
+repository-code: "https://github.com/jonhanke/analytic-number-theory-lean"
+keywords:
+  - Lean 4
+  - Mathlib
+  - formalization
+  - analytic number theory
+  - Apostol
+  - Davenport
+  - Dirichlet L-functions
+  - zero-free regions
+  - explicit formula
+  - prime number theorem for arithmetic progressions
+  - large sieve

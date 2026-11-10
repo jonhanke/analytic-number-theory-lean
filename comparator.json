@@ -1,0 +1,24 @@
+{
+  "description": "One lake comparator check per book (a combined check of all headlines needs far more memory). Run one book with: ./scripts/verify-comparator.sh <book>. Each entry's config is a complete lake comparator configuration.",
+  "books": [
+    {
+      "book": "Apostol",
+      "config": "comparator/Apostol.json",
+      "challenge_module": "Challenge_Apostol",
+      "solution_module": "Solution_Apostol",
+      "theorems": 3
+    },
+    {
+      "book": "Davenport",
+      "config": "comparator/Davenport.json",
+      "challenge_module": "Challenge_Davenport",
+      "solution_module": "Solution_Davenport",
+      "theorems": 15
+    }
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

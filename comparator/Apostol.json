@@ -1,0 +1,16 @@
+{
+  "challenge_module": "Challenge_Apostol",
+  "solution_module": "Solution_Apostol",
+  "theorem_names": [
+    "NTKB.Headlines.Apostol.polya",
+    "NTKB.Headlines.Apostol.card_partition_lt_exp",
+    "NTKB.Headlines.Apostol.mean_square_LSeries"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

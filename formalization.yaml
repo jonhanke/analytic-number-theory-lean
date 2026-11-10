@@ -1,0 +1,198 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "analytic-number-theory-lean (NTKB): analytic number theory"
+  description: >-
+    A Lean 4 + Mathlib formalization of two texts of analytic number theory, item by item: Apostol's Introduction to
+    Analytic Number Theory and Davenport's Multiplicative Number Theory (2nd edition, revised by H. L. Montgomery).
+    Principal results: the Hadamard product for xi(s, chi); the zero-free region for Dirichlet L-functions with
+    Landau's and Page's theorems on exceptional zeros; the Riemann-von Mangoldt formula for N(T) and its analogue
+    for N(T, chi); the explicit formula for psi(x, chi); the prime number theorem for arithmetic progressions with
+    the classical error term (outside the multiples of one exceptional modulus); the Polya-Vinogradov inequality;
+    the large sieve and its form for characters; Vinogradov's estimate for exponential sums over primes; Polya's
+    inequality, the bound p(n) < exp(pi sqrt(2n/3)) and the mean square of a Dirichlet series (Apostol). Each result
+    of the books is mapped to its Lean declaration and status in docs/results/books/, which also credits the results
+    proved here that Mathlib, Tau Ceti or PrimeNumberTheoremAnd also prove.
+  authors:
+    - "Jonathan Hanke"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Jonathan Hanke"
+
+classification:
+  arxiv: ["math.NT"]
+  # 11M06 zeta and L-functions; 11M26 nonreal zeros of zeta and L-functions; 11N05 distribution of primes;
+  # 11N13 primes in progressions; 11N35 sieves; 11L07 exponential sums; 11L40 character sums; 11P82 partitions;
+  # 30D20 entire functions; 03B35 mechanization of proofs and logical operations.
+  msc2020: ["11M06", "11M26", "11N05", "11N13", "11N35", "11L07", "11L40", "11P82", "30D20", "03B35"]
+
+sources:
+  - title: "Multiplicative Number Theory (2nd edition)"
+    authors:
+      - "Harold Davenport"
+    type: "book"
+    location: "Springer, Graduate Texts in Mathematics 74, 1980 (revised by H. L. Montgomery); every result mapped in docs/results/books/davenport.md"
+    relationship: "formalizes"
+    author_endorsement: "n/a"
+  - title: "Introduction to Analytic Number Theory"
+    authors:
+      - "Tom M. Apostol"
+    type: "book"
+    location: "Springer, Undergraduate Texts in Mathematics, 1976; every result mapped in docs/results/books/apostol.md"
+    relationship: "formalizes"
+    author_endorsement: "n/a"
+  - title: "Further references"
+    type: "bibliography"
+    location: "references.bib in this repository; each result is tagged with @[kb \"<key>\" \"<locator>\"]"
+    relationship: "background"
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4"
+    relationship: "builds-on"
+    note: "Built on Mathlib at commit 1b1ccf4. docs/results/comparison.md says what each headline adds to Mathlib master (df6966d, 2026-11-07)."
+  - id: "https://github.com/jonhanke/elementary-number-theory-lean"
+    relationship: "related"
+    note: "Not a dependency (both use the module namespace NTKB): 35 files of its v0.1.0 (same Lean and Mathlib) are shipped here unchanged: the attribute file, the special values of Dirichlet L-functions and part of the Apostol files."
+  - id: "https://github.com/TauCetiProject/TauCeti"
+    relationship: "related"
+    note: >-
+      Not a dependency. Some code is ported from Tau Ceti with credit (NTKB/Port/ and lemmas of NTKB/Elementary/SpecialValues/). docs/results/comparison.md
+      compares each headline with Tau Ceti master (686d0d7f).
+  - id: "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd"
+    relationship: "related"
+    note: >-
+      Not a dependency. It proves the prime number theorem with the classical error term, a zero-free region for
+      zeta, Hadamard's factorization theorem and the product for xi(s); this library proves these too (not
+      headlines) and adds the L-function results.
+
+status:
+  scope: >-
+    Formalized (the 18 statements of the Challenge_<book>.lean files, proved in the Solution_<book>.lean files):
+    Davenport 15 (Chapters 12, 14, 15, 16, 19, 20, 23, 25 and 27), Apostol 3 (Theorems 8.21, 11.16, 14.5). The book
+    maps give the status of every result. One named statement is assumed and not proved: SiegelWalfiszHypothesis
+    (the prime number theorem with classical error, proved here, together with the Siegel-Walfisz bound for
+    characters, which rests on Siegel's theorem), the input of Bombieri's theorem and of the Barban-Davenport-
+    Halberstam theorem (Davenport, Chapters 28 and 29); no headline depends on it.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  # No custom axioms; the standard axioms used (checked by scripts/check_axioms.lean and lake comparator):
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude Opus 5.5", "Claude Sonnet 5.5"]
+      framework: "Claude Code"
+      tool_setup: >-
+        Claude Code orchestrating parallel agents, each in its own git branch, with Lean kernel builds (lake build)
+        as the check and pull requests merged into the main branch; human direction throughout.
+      prompting_notes: >-
+        Human-chosen books and results; agents worked item by item from coverage tables of each book, with
+        written notes passed between sessions. Cited results that are not proved are named Lean structures, never
+        assumed silently; a kernel-level audit decides which are proved.
+  notes: >-
+    Jonathan Hanke designed and directed the project; the Lean code was written almost entirely by Claude Opus 5.5,
+    with a share by Claude Sonnet 5.5, in November 2026. All proofs are checked by the Lean kernel; the headline
+    statements are collected in the Challenge_<book>.lean files for human review.
+
+fidelity:
+  divergences: >-
+    (1) Davenport's absolute constants are made explicit where the library has them (zero-free region c = 1/16200
+    for L-functions, Landau c = 1/400, Page c = 1/800); they are not the best possible. (2) The explicit formulas are
+    proved at integers N >= 3, with psi_0(N, chi) = sum over n < N of chi(n) Lambda(n) plus half the term at N; the
+    sum over zeros is the limit of the sums over |gamma| < T. (3) The prime number theorem for progressions is the
+    form after Page's theorem (Davenport, Chapter 20, (13)) for integers N >= 3, with the exceptional modulus
+    explicit. (4) The Polya-Vinogradov inequality has the constant 2 (sqrt q log q times 2) for every nonprincipal
+    character; Polya's inequality (Apostol) is for primitive characters with constant 1. (5) N(T, chi) counts the
+    zeros with |gamma| < T. (6) The book maps' one-line statements are paraphrases; Davenport's results are numbered
+    chapter-k in the order of the text, since the book does not number them.
+
+review:
+  status: "not yet reviewed: the 18 headline statements of the Challenge_<book>.lean files and the definitions they use have not yet been reviewed by a human"
+  reviewers: []
+  notes: >-
+    The headline statements and the definitions they use have not yet been reviewed by a human; that review is
+    planned. The rest of the library has not been reviewed by a human, and there has been no external review. Lean
+    checks the proofs; lake comparator checks, one book at a time, that each Solution_<book>.lean proves exactly
+    the Challenge_<book>.lean statements using only the standard axioms.
+
+alignment:
+  namespace: "NTKB"
+  statements:
+    - source: "Davenport, Chapter 12, (17) (Hadamard product for xi(s, chi))"
+      lean: "NTKB.Headlines.Davenport.dirichletXi_hadamard"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 14, Theorem (p. 93), complex characters"
+      lean: "NTKB.Headlines.Davenport.LFunction_zero_free_complex"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 14, Theorem (p. 93), real characters"
+      lean: "NTKB.Headlines.Davenport.LFunction_zero_free_real"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 14, Theorem (p. 93), the exceptional zero is simple"
+      lean: "NTKB.Headlines.Davenport.LFunction_zero_free_real_simple"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 14, p. 93 (Landau)"
+      lean: "NTKB.Headlines.Davenport.landau_real_zeros"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 14, p. 95 (Page)"
+      lean: "NTKB.Headlines.Davenport.page_exceptional_character"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 15, p. 98, and Chapter 8, (1) (Riemann-von Mangoldt)"
+      lean: "NTKB.Headlines.Davenport.zetaZeroCount_sub_le"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 16, p. 101 (N(T, chi))"
+      lean: "NTKB.Headlines.Davenport.LZeroCount_sub_le"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 19, (2) (explicit formula, odd characters)"
+      lean: "NTKB.Headlines.Davenport.explicit_formula_psi0L_odd"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 19, (3) (explicit formula, even characters)"
+      lean: "NTKB.Headlines.Davenport.explicit_formula_psi0L_even"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 20, (13) (prime number theorem for arithmetic progressions)"
+      lean: "NTKB.Headlines.Davenport.psiAP_sub_le_page"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 23, (1) (Polya-Vinogradov)"
+      lean: "NTKB.Headlines.Davenport.polya_vinogradov"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 27, Theorem 2 (large sieve)"
+      lean: "NTKB.Headlines.Davenport.large_sieve"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 27, Theorem 4 (large sieve for characters)"
+      lean: "NTKB.Headlines.Davenport.large_sieve_characters"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 25, (2) (Vinogradov)"
+      lean: "NTKB.Headlines.Davenport.vinogradov_prime_exponential_sum"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Apostol, Theorem 8.21 (Polya's inequality)"
+      lean: "NTKB.Headlines.Apostol.polya"
+      module: "Challenge_Apostol / Solution_Apostol"
+      status: "proved"
+    - source: "Apostol, Theorem 14.5"
+      lean: "NTKB.Headlines.Apostol.card_partition_lt_exp"
+      module: "Challenge_Apostol / Solution_Apostol"
+      status: "proved"
+    - source: "Apostol, Theorem 11.16"
+      lean: "NTKB.Headlines.Apostol.mean_square_LSeries"
+      module: "Challenge_Apostol / Solution_Apostol"
+      status: "proved"
+
+acknowledgements: >-
+  Mathlib and its contributors; the Tau Ceti contributors, some of whose proofs are ported here with credit; the
+  Lean FRO for Lean, Lake and lake comparator; Claude Code (Anthropic).
