@@ -1,0 +1,28 @@
+{
+  "challenge_module": "Challenge_Davenport",
+  "solution_module": "Solution_Davenport",
+  "theorem_names": [
+    "NTKB.Headlines.Davenport.dirichletXi_hadamard",
+    "NTKB.Headlines.Davenport.LFunction_zero_free_complex",
+    "NTKB.Headlines.Davenport.LFunction_zero_free_real",
+    "NTKB.Headlines.Davenport.LFunction_zero_free_real_simple",
+    "NTKB.Headlines.Davenport.landau_real_zeros",
+    "NTKB.Headlines.Davenport.page_exceptional_character",
+    "NTKB.Headlines.Davenport.zetaZeroCount_sub_le",
+    "NTKB.Headlines.Davenport.LZeroCount_sub_le",
+    "NTKB.Headlines.Davenport.explicit_formula_psi0L_odd",
+    "NTKB.Headlines.Davenport.explicit_formula_psi0L_even",
+    "NTKB.Headlines.Davenport.psiAP_sub_le_page",
+    "NTKB.Headlines.Davenport.polya_vinogradov",
+    "NTKB.Headlines.Davenport.large_sieve",
+    "NTKB.Headlines.Davenport.large_sieve_characters",
+    "NTKB.Headlines.Davenport.vinogradov_prime_exponential_sum"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

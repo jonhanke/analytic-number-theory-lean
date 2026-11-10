@@ -1,0 +1,15 @@
+Copyright 2026 Jonathan Hanke
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It depends on Mathlib (https://github.com/leanprover-community/mathlib4), licensed under the Apache License,
+Version 2.0, as a Lake dependency. Some of its files are identical copies of files of elementary-number-theory-lean
+v0.1.0 (https://github.com/jonhanke/elementary-number-theory-lean, same author, Apache License 2.0): NTKB/Attr.lean,
+NTKB/Elementary/SpecialValues/ and part of NTKB/Analytic/Apostol/.
+
+It contains code copied or adapted, with credit, from:
+- Tau Ceti (https://github.com/TauCetiProject/TauCeti), Apache License 2.0: NTKB/Port/
+  (DirichletCharacterPartialSum.lean, JacobiThetaNearCusp.lean; master 686d0d7f), and lemmas in
+  NTKB/Elementary/SpecialValues/GeneralizedBernoulli.lean and NTKB/Elementary/SpecialValues/QuadraticGaussSum.lean
+  (main d2083f0f).
+Each such file's header names its source, its authors and the changes made.
