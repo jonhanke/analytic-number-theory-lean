@@ -1,5 +1,7 @@
 # Analytic number theory in Lean 4
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24119525.svg)](https://doi.org/10.5281/zenodo.24119525)
+
 A Lean 4 library (built on Mathlib) that formalizes two texts of analytic number theory item by item: Apostol's
 *Introduction to Analytic Number Theory* and Davenport's *Multiplicative Number Theory* (2nd edition, revised by
 H. L. Montgomery). The repository is analytic-number-theory-lean; its Lean modules are in the namespace `NTKB`, as in
@@ -182,9 +184,9 @@ mis-formalizations are very welcome.
 
 ## Releases
 
-Releases are tagged with semantic versions; `main` continues to develop.
+Releases are tagged with semantic versions; `main` continues to develop. The DOI [10.5281/zenodo.24119525](https://doi.org/10.5281/zenodo.24119525) always resolves to the latest release. To cite a specific version, use its release page or the "Cite this repository" button.
 
-- **v0.1.0** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`): the first release: the book maps of Apostol and Davenport and
+- **[v0.1.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.1.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24119526](https://doi.org/10.5281/zenodo.24119526): the first release: the book maps of Apostol and Davenport and
   the 18 headline statements above.
 
 **Not in this release:** Siegel's theorem (Davenport, Chapter 21) and what rests on it (Chapter 22, and
