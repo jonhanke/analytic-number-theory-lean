@@ -14,6 +14,9 @@ import NTKB.Analytic.Davenport.Sieve.PolyaVinogradov
 import NTKB.Analytic.Davenport.Sieve.LargeSieve
 import NTKB.Analytic.Davenport.Sieve.Characters
 import NTKB.Analytic.Davenport.Sieve.Vinogradov
+import NTKB.Analytic.Davenport.Siegel.Siegel
+import NTKB.Analytic.Davenport.Siegel.SiegelWalfisz
+import NTKB.Analytic.Davenport.Siegel.PrimeCountingAP
 
 /-!
 # Proofs of the Davenport headline statements
@@ -24,7 +27,7 @@ statement here is exactly the one in `Challenge_Davenport.lean`.
 
 namespace NTKB.Headlines.Davenport
 
-open Complex DirichletCharacter Finset
+open Complex _root_.DirichletCharacter Finset
 open scoped Real ArithmeticFunction.vonMangoldt
 
 theorem dirichletXi_hadamard {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N} (hχ : χ.IsPrimitive)
@@ -126,5 +129,43 @@ theorem vinogradov_prime_exponential_sum : ∃ C : ℝ, 0 < C ∧ ∀ (α : ℝ)
     ‖∑ n ∈ Icc 1 N, (Λ n : ℂ) * Complex.exp (2 * π * Complex.I * (n * α))‖ ≤
       C * (N / √q + (N : ℝ) ^ ((4 : ℝ) / 5) + √N * √q) * Real.log N ^ 4 :=
   NTKB.Davenport.norm_sum_vonMangoldt_exp_le
+
+/-! ## New in 0.2.0: Siegel's theorem and what rests on it (Chapters 21, 22, 28, 29) -/
+
+theorem siegel {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}, χ.IsPrimitive →
+      χ.IsQuadratic → χ ≠ 1 → C * (q : ℝ) ^ (-ε) < (χ.LFunction 1).re :=
+  NTKB.Davenport.siegel hε
+
+theorem siegel_second_form {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q},
+      χ.IsQuadratic → χ ≠ 1 → ∀ σ : ℝ, 1 - C * (q : ℝ) ^ (-ε) < σ → χ.LFunction σ ≠ 0 :=
+  NTKB.Davenport.siegel_second_form hε
+
+theorem siegel_walfisz (B : ℝ) (hB : 0 < B) :
+    ∃ c > 0, ∃ C > 0, ∀ x : ℝ, 2 ≤ x → ∀ q : ℕ, 0 < q → (q : ℝ) ≤ Real.log x ^ B →
+      ∀ a : ℤ, IsCoprime a q →
+        |NTKB.Davenport.psiAP x q a - x / q.totient| ≤ C * x * Real.exp (-c * √(Real.log x)) :=
+  NTKB.Davenport.siegel_walfisz B hB
+
+theorem siegel_walfisz_primeCounting (B : ℝ) (hB : 0 < B) :
+    ∃ c > 0, ∃ C > 0, ∀ x : ℝ, 2 ≤ x → ∀ q : ℕ, 0 < q → (q : ℝ) ≤ Real.log x ^ B →
+      ∀ a : ℤ, IsCoprime a q →
+        |(NTKB.Davenport.primeCountingAP x q a : ℝ) - NTKB.logIntegral x / q.totient| ≤
+          C * x * Real.exp (-c * √(Real.log x)) :=
+  NTKB.Davenport.siegel_walfisz_primeCounting B hB
+
+theorem bombieri_vinogradov {A : ℝ} (hA : 0 < A) :
+    ∃ C : ℝ, 0 < C ∧ ∀ x : ℝ, 3 ≤ x → ∀ Q : ℝ, √x * Real.log x ^ (-A) ≤ Q → Q ≤ √x →
+      ∀ (y : ℕ → ℝ) (a : ℕ → ℤ), (∀ q, 0 ≤ y q ∧ y q ≤ x) → (∀ q, IsCoprime (a q) q) →
+        ∑ q ∈ Icc 1 ⌊Q⌋₊, |NTKB.Davenport.psiAP (y q) q (a q) - y q / q.totient| ≤
+          C * √x * Q * Real.log x ^ 5 :=
+  NTKB.Davenport.bombieri_unconditional hA
+
+theorem barban_davenport_halberstam {A : ℝ} (hA : 0 < A) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ x : ℝ, 3 ≤ x → ∀ Q : ℝ, x * Real.log x ^ (-A) < Q → Q ≤ x →
+      ∑ q ∈ Icc 1 ⌊Q⌋₊, ∑ a ∈ (Icc 1 q).filter (fun a ↦ Nat.Coprime a q),
+        (NTKB.Davenport.psiAP x q a - x / q.totient) ^ 2 ≤ C * x * Q * Real.log x :=
+  NTKB.Davenport.barban_davenport_halberstam_unconditional hA
 
 end NTKB.Headlines.Davenport

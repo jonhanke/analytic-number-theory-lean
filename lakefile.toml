@@ -1,5 +1,5 @@
 name = "analytic_number_theory_lean"
-version = "0.1.0"
+version = "0.2.0"
 defaultTargets = ["AnalyticNumberTheory", "Challenge_Apostol", "Solution_Apostol", "Challenge_Davenport", "Solution_Davenport"]
 
 [leanOptions]
@@ -155,6 +155,10 @@ globs = [
   "NTKB.Analytic.Davenport.Hadamard.XiSum",
   "NTKB.Analytic.Davenport.Hadamard.ZeroCount",
   "NTKB.Analytic.Davenport.Hadamard.ZeroFree",
+  "NTKB.Analytic.Davenport.Siegel.Estermann",
+  "NTKB.Analytic.Davenport.Siegel.PrimeCountingAP",
+  "NTKB.Analytic.Davenport.Siegel.Siegel",
+  "NTKB.Analytic.Davenport.Siegel.SiegelWalfisz",
   "NTKB.Analytic.Davenport.Sieve.BarbanDavenportHalberstam",
   "NTKB.Analytic.Davenport.Sieve.Bessel",
   "NTKB.Analytic.Davenport.Sieve.BilinearSieve",
@@ -258,7 +262,8 @@ globs = [
   "NTKB.Elementary.SpecialValues.ValueAtOne",
   "NTKB.Elementary.SpecialValues.ValueAtZero",
   "NTKB.Port.DirichletCharacterPartialSum",
-  "NTKB.Port.JacobiThetaNearCusp"
+  "NTKB.Port.JacobiThetaNearCusp",
+  "NTKB.Port.ZetaMulPair"
 ]
 
 [[lean_lib]]

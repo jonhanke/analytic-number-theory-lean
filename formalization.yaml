@@ -10,7 +10,9 @@ project:
     Landau's and Page's theorems on exceptional zeros; the Riemann-von Mangoldt formula for N(T) and its analogue
     for N(T, chi); the explicit formula for psi(x, chi); the prime number theorem for arithmetic progressions with
     the classical error term (outside the multiples of one exceptional modulus); the Polya-Vinogradov inequality;
-    the large sieve and its form for characters; Vinogradov's estimate for exponential sums over primes; Polya's
+    the large sieve and its form for characters; Vinogradov's estimate for exponential sums over primes; Siegel's
+    theorem (both forms) and the Siegel-Walfisz theorem (for psi and pi); the Bombieri-Vinogradov and
+    Barban-Davenport-Halberstam theorems, unconditionally (since 0.2.0); Polya's
     inequality, the bound p(n) < exp(pi sqrt(2n/3)) and the mean square of a Dirichlet series (Apostol). Each result
     of the books is mapped to its Lean declaration and status in docs/results/books/, which also credits the results
     proved here that Mathlib, Tau Ceti or PrimeNumberTheoremAnd also prove.
@@ -24,8 +26,8 @@ classification:
   arxiv: ["math.NT"]
   # 11M06 zeta and L-functions; 11M26 nonreal zeros of zeta and L-functions; 11N05 distribution of primes;
   # 11N13 primes in progressions; 11N35 sieves; 11L07 exponential sums; 11L40 character sums; 11P82 partitions;
-  # 30D20 entire functions; 03B35 mechanization of proofs and logical operations.
-  msc2020: ["11M06", "11M26", "11N05", "11N13", "11N35", "11L07", "11L40", "11P82", "30D20", "03B35"]
+  # 11R29 class numbers (Siegel's theorem); 30D20 entire functions; 03B35 mechanization of proofs and logical operations.
+  msc2020: ["11M06", "11M26", "11N05", "11N13", "11N35", "11L07", "11L40", "11P82", "11R29", "30D20", "03B35"]
 
 sources:
   - title: "Multiplicative Number Theory (2nd edition)"
@@ -50,7 +52,7 @@ sources:
 related_formalizations:
   - id: "https://github.com/leanprover-community/mathlib4"
     relationship: "builds-on"
-    note: "Built on Mathlib at commit 1b1ccf4. docs/results/comparison.md says what each headline adds to Mathlib master (df6966d, 2026-11-07)."
+    note: "Built on Mathlib at commit 1b1ccf4. docs/results/comparison.md says what each headline adds to Mathlib master (dc2a600c, 2026-11-11)."
   - id: "https://github.com/jonhanke/elementary-number-theory-lean"
     relationship: "related"
     note: "Not a dependency (both use the module namespace NTKB): 35 files of its v0.1.0 (same Lean and Mathlib) are shipped here unchanged: the attribute file, the special values of Dirichlet L-functions and part of the Apostol files."
@@ -58,7 +60,7 @@ related_formalizations:
     relationship: "related"
     note: >-
       Not a dependency. Some code is ported from Tau Ceti with credit (NTKB/Port/ and lemmas of NTKB/Elementary/SpecialValues/). docs/results/comparison.md
-      compares each headline with Tau Ceti master (686d0d7f).
+      compares each headline with Tau Ceti main (1c6a1a4e, 2026-11-11).
   - id: "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd"
     relationship: "related"
     note: >-
@@ -68,12 +70,12 @@ related_formalizations:
 
 status:
   scope: >-
-    Formalized (the 18 statements of the Challenge_<book>.lean files, proved in the Solution_<book>.lean files):
-    Davenport 15 (Chapters 12, 14, 15, 16, 19, 20, 23, 25 and 27), Apostol 3 (Theorems 8.21, 11.16, 14.5). The book
-    maps give the status of every result. One named statement is assumed and not proved: SiegelWalfiszHypothesis
-    (the prime number theorem with classical error, proved here, together with the Siegel-Walfisz bound for
-    characters, which rests on Siegel's theorem), the input of Bombieri's theorem and of the Barban-Davenport-
-    Halberstam theorem (Davenport, Chapters 28 and 29); no headline depends on it.
+    Formalized (the 24 statements of the Challenge_<book>.lean files, proved in the Solution_<book>.lean files):
+    Davenport 21 (Chapters 12, 14, 15, 16, 19, 20, 21, 22, 23, 25, 27, 28 and 29), Apostol 3 (Theorems 8.21, 11.16,
+    14.5). The book maps give the status of every result. No named statement is assumed: SiegelWalfiszHypothesis,
+    the input of Bombieri's theorem and of the Barban-Davenport-Halberstam theorem in 0.1.0, is proved since 0.2.0
+    (from Siegel's theorem). Results under the generalized Riemann hypothesis take it as a named hypothesis and are
+    not headlines.
   sorry_count: 0
   sorry_in_definitions: 0
   # No custom axioms; the standard axioms used (checked by scripts/check_axioms.lean and lake comparator):
@@ -105,11 +107,16 @@ fidelity:
     form after Page's theorem (Davenport, Chapter 20, (13)) for integers N >= 3, with the exceptional modulus
     explicit. (4) The Polya-Vinogradov inequality has the constant 2 (sqrt q log q times 2) for every nonprincipal
     character; Polya's inequality (Apostol) is for primitive characters with constant 1. (5) N(T, chi) counts the
-    zeros with |gamma| < T. (6) The book maps' one-line statements are paraphrases; Davenport's results are numbered
+    zeros with |gamma| < T. (6) Siegel's theorem is stated for the real part of L(1, chi) (which is real); its
+    constants, and those of the Siegel-Walfisz theorem, are not effective, as in the book. Estermann's inequality
+    (Davenport (8)) is proved with an absolute constant c in the exponent in place of 8, which suffices. The
+    Siegel-Walfisz theorem for pi(x; q, a) has the error x exp(-c sqrt(log x)), the book's saving of log x being
+    absorbed by a change of c. Bombieri's theorem expresses the maxima over y <= x and over a by arbitrary choices
+    y(q), a(q). (7) The book maps' one-line statements are paraphrases; Davenport's results are numbered
     chapter-k in the order of the text, since the book does not number them.
 
 review:
-  status: "not yet reviewed: the 18 headline statements of the Challenge_<book>.lean files and the definitions they use have not yet been reviewed by a human"
+  status: "not yet reviewed: the 24 headline statements of the Challenge_<book>.lean files and the definitions they use have not yet been reviewed by a human"
   reviewers: []
   notes: >-
     The headline statements and the definitions they use have not yet been reviewed by a human; that review is
@@ -178,6 +185,30 @@ alignment:
       status: "proved"
     - source: "Davenport, Chapter 25, (2) (Vinogradov)"
       lean: "NTKB.Headlines.Davenport.vinogradov_prime_exponential_sum"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 21, (1) (Siegel's theorem)"
+      lean: "NTKB.Headlines.Davenport.siegel"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 21, (D) (Siegel's theorem, second form)"
+      lean: "NTKB.Headlines.Davenport.siegel_second_form"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 22, (D) (Siegel-Walfisz)"
+      lean: "NTKB.Headlines.Davenport.siegel_walfisz"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 22, p. 133 (Siegel-Walfisz for pi(x; q, a))"
+      lean: "NTKB.Headlines.Davenport.siegel_walfisz_primeCounting"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 28, p. 161 (Bombieri's theorem)"
+      lean: "NTKB.Headlines.Davenport.bombieri_vinogradov"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 29, (1) (Barban-Davenport-Halberstam)"
+      lean: "NTKB.Headlines.Davenport.barban_davenport_halberstam"
       module: "Challenge_Davenport / Solution_Davenport"
       status: "proved"
     - source: "Apostol, Theorem 8.21 (Polya's inequality)"

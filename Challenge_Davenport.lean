@@ -14,9 +14,12 @@ import NTKB.Analytic.Davenport.Sieve.PolyaVinogradov
 import NTKB.Analytic.Davenport.Sieve.LargeSieve
 import NTKB.Analytic.Davenport.Sieve.Characters
 import NTKB.Analytic.Davenport.Sieve.Vinogradov
+import NTKB.Analytic.Davenport.Siegel.Siegel
+import NTKB.Analytic.Davenport.Siegel.SiegelWalfisz
+import NTKB.Analytic.Davenport.Siegel.PrimeCountingAP
 
 /-!
-# Headline statements of analytic-number-theory-lean 0.1.0: Davenport
+# Headline statements of analytic-number-theory-lean: Davenport
 
 H. Davenport, *Multiplicative Number Theory* (2nd edition, revised by H. L. Montgomery, 1980). The main results of
 the library for this book, one theorem each, with every proof a deliberate `sorry`: to check what is claimed, read
@@ -49,11 +52,18 @@ these too:
   term of `L'/L(s, χ)` at `s = 0`)
 * `NTKB.psiAP a x` (`ψ(x; q, a) = ∑_{n ≤ x, n ≡ a mod q} Λ(n)`) and `NTKB.IsPageModulus z q'` (a modulus
   `q' ≤ z` of a real primitive character `χ' ≠ 1` with a real zero `β > 1 - 1/(800 log z)` of `L(s, χ')`)
+* (since 0.2.0) `NTKB.Davenport.psiAP x q a` (the same `ψ(x; q, a)` with `x : ℝ`, `q : ℕ`, `a : ℤ`, as in the
+  sieve chapters: `∑ Λ(n)` over `1 ≤ n ≤ x` with `n ≡ a (mod q)`), `NTKB.Davenport.primeCountingAP x q a`
+  (`π(x; q, a)`, the number of primes `p ≤ x` with `p ≡ a (mod q)`) and `NTKB.logIntegral x`
+  (`li x = ∫_2^x dt/log t`)
+
+A real character is one with `χ ^ 2 = 1`, or in the statements since 0.2.0, Mathlib's `χ.IsQuadratic` (every value
+is `0`, `1` or `-1`); these are equivalent.
 -/
 
 namespace NTKB.Headlines.Davenport
 
-open Complex DirichletCharacter Finset
+open Complex _root_.DirichletCharacter Finset
 open scoped Real ArithmeticFunction.vonMangoldt
 
 /-- **The Hadamard product for `ξ(s, χ)`** (Chapter 12, (17)): for a primitive character `χ` modulo `N > 1`,
@@ -208,6 +218,68 @@ theorem vinogradov_prime_exponential_sum : ∃ C : ℝ, 0 < C ∧ ∀ (α : ℝ)
     IsCoprime a q → |α - a / q| ≤ 1 / (q : ℝ) ^ 2 → ∀ N : ℕ, 2 ≤ N →
     ‖∑ n ∈ Icc 1 N, (Λ n : ℂ) * Complex.exp (2 * π * Complex.I * (n * α))‖ ≤
       C * (N / √q + (N : ℝ) ^ ((4 : ℝ) / 5) + √N * √q) * Real.log N ^ 4 := by
+  sorry
+
+/-! ## New in 0.2.0: Siegel's theorem and what rests on it (Chapters 21, 22, 28, 29) -/
+
+/-- **Siegel's theorem** (Chapter 21, (1)): for every `ε > 0` there is `C(ε) > 0` such that
+`L(1, χ) > C(ε) q^{-ε}` for every real primitive character `χ ≠ 1` modulo `q`. (`L(1, χ)` is real for a real
+character; the statement is about its real part.) The constant is not effective. Proof: Estermann's, as in the
+book. Tau Ceti has parts of a proof (the nonnegative coefficients of `ζ(s) L(s, χ) L(s, ψ) L(s, χψ)`, ported here
+with credit, and `|L(1, χ)| ≪ log q`) but not the theorem; Mathlib and PrimeNumberTheoremAnd have neither. -/
+theorem siegel {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q}, χ.IsPrimitive →
+      χ.IsQuadratic → χ ≠ 1 → C * (q : ℝ) ^ (-ε) < (χ.LFunction 1).re := by
+  sorry
+
+/-- **Siegel's theorem, second form** (Chapter 21, (D)): for every `ε > 0` there is `C(ε) > 0` such that
+`L(σ, χ) ≠ 0` for real `σ > 1 - C(ε) q^{-ε}`, for every real character `χ ≠ 1` modulo `q` (primitive or not). Not in
+Mathlib, Tau Ceti or PrimeNumberTheoremAnd. -/
+theorem siegel_second_form {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q},
+      χ.IsQuadratic → χ ≠ 1 → ∀ σ : ℝ, 1 - C * (q : ℝ) ^ (-ε) < σ → χ.LFunction σ ≠ 0 := by
+  sorry
+
+/-- **The Siegel–Walfisz theorem** (Chapter 22, (D)): for every `B > 0` there are `c, C > 0` such that
+`|ψ(x; q, a) - x/φ(q)| ≤ C x exp(-c √(log x))` for all `x ≥ 2`, `q ≤ (log x)^B` and `a` prime to `q` (`c` is not
+effective). PrimeNumberTheoremAnd has `ψ(x; q, a) ~ x/φ(q)` for fixed `q` without an error term (`WeakPNT_AP`);
+Mathlib has Dirichlet's theorem; Tau Ceti has neither error term. -/
+theorem siegel_walfisz (B : ℝ) (hB : 0 < B) :
+    ∃ c > 0, ∃ C > 0, ∀ x : ℝ, 2 ≤ x → ∀ q : ℕ, 0 < q → (q : ℝ) ≤ Real.log x ^ B →
+      ∀ a : ℤ, IsCoprime a q →
+        |NTKB.Davenport.psiAP x q a - x / q.totient| ≤ C * x * Real.exp (-c * √(Real.log x)) := by
+  sorry
+
+/-- **The Siegel–Walfisz theorem for `π(x; q, a)`** (Chapter 22, p. 133): for every `B > 0` there are `c, C > 0`
+such that `|π(x; q, a) - li(x)/φ(q)| ≤ C x exp(-c √(log x))` for all `x ≥ 2`, `q ≤ (log x)^B` and `a` prime to `q`.
+(The book's saving of a factor `log x` in the error is absorbed by a change of `c`.) Not in Mathlib, Tau Ceti or
+PrimeNumberTheoremAnd. -/
+theorem siegel_walfisz_primeCounting (B : ℝ) (hB : 0 < B) :
+    ∃ c > 0, ∃ C > 0, ∀ x : ℝ, 2 ≤ x → ∀ q : ℕ, 0 < q → (q : ℝ) ≤ Real.log x ^ B →
+      ∀ a : ℤ, IsCoprime a q →
+        |(NTKB.Davenport.primeCountingAP x q a : ℝ) - NTKB.logIntegral x / q.totient| ≤
+          C * x * Real.exp (-c * √(Real.log x)) := by
+  sorry
+
+/-- **The Bombieri–Vinogradov theorem** (Chapter 28, Bombieri's theorem, p. 161): for every `A > 0`,
+`∑_{q ≤ Q} max_{y ≤ x} max_{(a, q) = 1} |ψ(y; q, a) - y/φ(q)| ≪ x^{1/2} Q (log x)^5` for
+`x^{1/2} (log x)^{-A} ≤ Q ≤ x^{1/2}`. The maxima are expressed by arbitrary choices `y(q) ∈ [0, x]` and `a(q)`
+prime to `q`, uniformly. Unconditional (it uses the Siegel–Walfisz theorem above). Not in Mathlib, Tau Ceti or
+PrimeNumberTheoremAnd. -/
+theorem bombieri_vinogradov {A : ℝ} (hA : 0 < A) :
+    ∃ C : ℝ, 0 < C ∧ ∀ x : ℝ, 3 ≤ x → ∀ Q : ℝ, √x * Real.log x ^ (-A) ≤ Q → Q ≤ √x →
+      ∀ (y : ℕ → ℝ) (a : ℕ → ℤ), (∀ q, 0 ≤ y q ∧ y q ≤ x) → (∀ q, IsCoprime (a q) q) →
+        ∑ q ∈ Icc 1 ⌊Q⌋₊, |NTKB.Davenport.psiAP (y q) q (a q) - y q / q.totient| ≤
+          C * √x * Q * Real.log x ^ 5 := by
+  sorry
+
+/-- **The Barban–Davenport–Halberstam theorem** (Chapter 29, (1), Gallagher's form): for every `A > 0`,
+`∑_{q ≤ Q} ∑_{a mod q, (a, q) = 1} (ψ(x; q, a) - x/φ(q))² ≪ x Q log x` for `x (log x)^{-A} < Q ≤ x`.
+Unconditional (it uses the Siegel–Walfisz theorem above). Not in Mathlib, Tau Ceti or PrimeNumberTheoremAnd. -/
+theorem barban_davenport_halberstam {A : ℝ} (hA : 0 < A) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ x : ℝ, 3 ≤ x → ∀ Q : ℝ, x * Real.log x ^ (-A) < Q → Q ≤ x →
+      ∑ q ∈ Icc 1 ⌊Q⌋₊, ∑ a ∈ (Icc 1 q).filter (fun a ↦ Nat.Coprime a q),
+        (NTKB.Davenport.psiAP x q a - x / q.totient) ^ 2 ≤ C * x * Q * Real.log x := by
   sorry
 
 end NTKB.Headlines.Davenport
