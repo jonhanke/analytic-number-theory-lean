@@ -22,3 +22,9 @@ import Solution_Davenport
 #print axioms NTKB.Headlines.Davenport.large_sieve
 #print axioms NTKB.Headlines.Davenport.large_sieve_characters
 #print axioms NTKB.Headlines.Davenport.vinogradov_prime_exponential_sum
+#print axioms NTKB.Headlines.Davenport.siegel
+#print axioms NTKB.Headlines.Davenport.siegel_second_form
+#print axioms NTKB.Headlines.Davenport.siegel_walfisz
+#print axioms NTKB.Headlines.Davenport.siegel_walfisz_primeCounting
+#print axioms NTKB.Headlines.Davenport.bombieri_vinogradov
+#print axioms NTKB.Headlines.Davenport.barban_davenport_halberstam

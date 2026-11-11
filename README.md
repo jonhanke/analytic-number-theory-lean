@@ -20,7 +20,9 @@ files it ships unchanged (see *Dependencies and the companion library*).
   `lake comparator` once per book to check the proved statements against the `Challenge_<book>.lean` files.
 - **Cited results are named**: where the library assumes a result it does not prove, the result is a named Lean
   structure, never assumed silently; a theorem that uses it has it as a hypothesis and the book maps mark the row
-  *conditional*. In this release one such input is open: `NTKB.Davenport.SiegelWalfiszHypothesis` (see below).
+  *conditional*. Since 0.2.0 no such input is open: `NTKB.Davenport.SiegelWalfiszHypothesis`, the input of
+  Davenport's Chapters 28 and 29, is proved (`NTKB.Davenport.siegelWalfiszHypothesis`). Results under the
+  generalized Riemann hypothesis take it as a named hypothesis (see below).
 - **Comparison**: [docs/results/comparison.md](docs/results/comparison.md) says, for each headline, what Mathlib,
   [Tau Ceti](https://github.com/TauCetiProject/TauCeti) and
   [PrimeNumberTheoremAnd](https://github.com/AlexKontorovich/PrimeNumberTheoremAnd) already have and what this library
@@ -31,9 +33,9 @@ files it ships unchanged (see *Dependencies and the companion library*).
 | book | rows | proved | proved in part | conditional | in Mathlib | other | proved here, also elsewhere |
 |---|---|---|---|---|---|---|---|
 | [T. M. Apostol, *Introduction to Analytic Number Theory* (1976)](docs/results/books/apostol.md) | 322 | 168 | 2 | 0 | 148 | 4 | 81 |
-| [H. Davenport, *Multiplicative Number Theory* (2nd ed., revised by H. L. Montgomery, 1980)](docs/results/books/davenport.md) | 432 | 163 | 45 | 3 | 80 | 141 | 59 |
+| [H. Davenport, *Multiplicative Number Theory* (2nd ed., revised by H. L. Montgomery, 1980)](docs/results/books/davenport.md) | 432 | 178 | 50 | 0 | 80 | 124 | 60 |
 
-*Proved*: proved with only the standard axioms and no unproved input. *Proved in part*: a part, a special case, a weaker form or one instance is proved (the map's Lean column names it). *Conditional*: proved from a named unproved input (in this release only `SiegelWalfiszHypothesis`, the input of Davenport's Chapters 28 and 29). *In Mathlib*: Mathlib (a dependency) has the result; the map names the Mathlib declaration. *Other*: in Tau Ceti or PrimeNumberTheoremAnd only (not dependencies), partly formalized elsewhere, or not formalized (see each map). *Proved here, also elsewhere*: rows proved (in whole or in part) here whose result, a part of it or a closely related statement is also in Mathlib, Tau Ceti or PrimeNumberTheoremAnd; each map names those declarations in its column *Also in*. Rows that are not results (definitions, remarks, history) are omitted from the maps.
+*Proved*: proved with only the standard axioms and no unproved input. *Proved in part*: a part, a special case, a weaker form or one instance is proved (the map's Lean column names it). *Conditional*: proved from a named unproved input (none in this release: `SiegelWalfiszHypothesis`, the input of Davenport's Chapters 28 and 29, is proved since 0.2.0). *In Mathlib*: Mathlib (a dependency) has the result; the map names the Mathlib declaration. *Other*: in Tau Ceti or PrimeNumberTheoremAnd only (not dependencies), partly formalized elsewhere, or not formalized (see each map). *Proved here, also elsewhere*: rows proved (in whole or in part) here whose result, a part of it or a closely related statement is also in Mathlib, Tau Ceti or PrimeNumberTheoremAnd; each map names those declarations in its column *Also in*. Rows that are not results (definitions, remarks, history) are omitted from the maps.
 
 ## Highlights
 
@@ -54,8 +56,7 @@ Provenance).
   $`\sigma > 1 - c/\log(q\max(1,|t|))`$, $`c = 1/16200`$, for complex $`\chi`$; for real $`\chi \ne 1`$ at most one,
   real and simple (`LFunction_zero_free_complex`, `LFunction_zero_free_real`, `LFunction_zero_free_real_simple`).
   **Landau's theorem** on the real zeros of two real characters and **Page's theorem** (at most one exceptional real
-  primitive character to moduli $`q \le z`$) (`landau_real_zeros`, `page_exceptional_character`). Siegel's theorem
-  is not proved. Related: Mathlib has $`L(s,\chi) \ne 0`$ on $`\sigma \ge 1`$; PrimeNumberTheoremAnd has a zero-free
+  primitive character to moduli $`q \le z`$) (`landau_real_zeros`, `page_exceptional_character`). Related: Mathlib has $`L(s,\chi) \ne 0`$ on $`\sigma \ge 1`$; PrimeNumberTheoremAnd has a zero-free
   region for $`\zeta`$.
 - **Counting zeros:** the Riemann–von Mangoldt formula
   $`N(T) = \frac{T}{2\pi}\log\frac{T}{2\pi} - \frac{T}{2\pi} + O(\log T)`$ and its analogue
@@ -70,6 +71,15 @@ Provenance).
   multiples of at most one exceptional (Page) modulus (`psiAP_sub_le_page`, Chapter 20). Related:
   PrimeNumberTheoremAnd has $`\psi(x;q,a) \sim x/\varphi(q)`$ without error term and the classical error term for
   $`\psi(x)`$.
+- **Siegel's theorem** (new in 0.2.0, Chapter 21): for every $`\varepsilon > 0`$,
+  $`L(1,\chi) > C(\varepsilon)q^{-\varepsilon}`$ for real primitive $`\chi \ne 1`$ modulo $`q`$, and in the second form
+  $`L(\sigma,\chi) \ne 0`$ for $`\sigma > 1 - C(\varepsilon)q^{-\varepsilon}`$ for every real $`\chi \ne 1`$ (`siegel`,
+  `siegel_second_form`; Estermann's proof, constants not effective). Related: Tau Ceti has parts of a proof (the
+  nonnegative coefficients of $`\zeta(s)L(s,\chi)L(s,\psi)L(s,\chi\psi)`$, ported here with credit), not the theorem.
+- **The Siegel–Walfisz theorem** (new in 0.2.0, Chapter 22): for every $`B > 0`$,
+  $`\psi(x;q,a) = x/\varphi(q) + O(x e^{-c\sqrt{\log x}})`$ and
+  $`\pi(x;q,a) = \operatorname{li}(x)/\varphi(q) + O(x e^{-c\sqrt{\log x}})`$ uniformly for $`q \le (\log x)^B`$ and
+  $`(a,q) = 1`$ (`siegel_walfisz`, `siegel_walfisz_primeCounting`).
 - **The Pólya–Vinogradov inequality** $`|\sum_{M<n\le M+N}\chi(n)| \le 2\sqrt q\log q`$ for nonprincipal $`\chi`$
   (`polya_vinogradov`, Chapter 23).
 - **The large sieve** $`\sum_r|S(\alpha_r)|^2 \le (N + 3/\delta)\sum|a_n|^2`$ for $`\delta`$-separated points and its
@@ -78,6 +88,12 @@ Provenance).
   `large_sieve_characters`, Chapter 27).
 - **Vinogradov's estimate** $`\sum_{n\le N}\Lambda(n)e(n\alpha) \ll (Nq^{-1/2} + N^{4/5} + N^{1/2}q^{1/2})(\log N)^4`$
   for $`|\alpha - a/q| \le q^{-2}`$, by Vaughan's identity (`vinogradov_prime_exponential_sum`, Chapters 24 and 25).
+- **The Bombieri–Vinogradov theorem** (unconditional since 0.2.0, Chapter 28): for every $`A > 0`$,
+  $`\sum_{q\le Q}\max_{y\le x}\max_{(a,q)=1}|\psi(y;q,a) - y/\varphi(q)| \ll x^{1/2}Q(\log x)^5`$ for
+  $`x^{1/2}(\log x)^{-A} \le Q \le x^{1/2}`$ (`bombieri_vinogradov`).
+- **The Barban–Davenport–Halberstam theorem** (unconditional since 0.2.0, Chapter 29, Gallagher's form):
+  $`\sum_{q\le Q}\sum_{(a,q)=1}(\psi(x;q,a) - x/\varphi(q))^2 \ll xQ\log x`$ for $`x(\log x)^{-A} < Q \le x`$
+  (`barban_davenport_halberstam`).
 
 **Apostol, *Introduction to Analytic Number Theory*** ([`Challenge_Apostol.lean`](Challenge_Apostol.lean))
 
@@ -100,12 +116,12 @@ check is run one book at a time. [`formalization.yaml`](formalization.yaml) reco
 from the literature, provenance and review status in the
 [formalization.yaml](https://github.com/mathlib-initiative/formalization.yaml) format.
 
-**Proved, but conditional on a named input (not headlines):** Bombieri's theorem (the Bombieri–Vinogradov theorem,
-Davenport Chapter 28, `NTKB.Davenport.bombieri`) and the Barban–Davenport–Halberstam theorem (Chapter 29,
-`NTKB.Davenport.barban_davenport_halberstam`) take `NTKB.Davenport.SiegelWalfiszHypothesis` as a hypothesis: the
-prime number theorem with error $`x e^{-c\sqrt{\log x}}`$ (proved here, `NTKB.Davenport.psi_sub_self_le`) and the
-Siegel–Walfisz bound for $`\psi(x,\chi)`$, $`q \le (\log x)^B`$, which rests on Siegel's theorem (Chapter 21, not
-proved). **Proved under the generalized Riemann hypothesis** (stated as a hypothesis, `NTKB.GeneralizedRiemannHypothesis`):
+**No longer conditional (since 0.2.0):** in 0.1.0 Bombieri's theorem (`NTKB.Davenport.bombieri`) and the
+Barban–Davenport–Halberstam theorem (`NTKB.Davenport.barban_davenport_halberstam`) took
+`NTKB.Davenport.SiegelWalfiszHypothesis` as a hypothesis, because Siegel's theorem was not proved; that input is now
+proved (`NTKB.Davenport.siegelWalfiszHypothesis`), and the headlines `bombieri_vinogradov` and
+`barban_davenport_halberstam` are the unconditional forms (`NTKB.Davenport.bombieri_unconditional`,
+`NTKB.Davenport.barban_davenport_halberstam_unconditional`). **Proved under the generalized Riemann hypothesis** (stated as a hypothesis, `NTKB.GeneralizedRiemannHypothesis`):
 $`\psi(N;q,a) = N/\varphi(q) + O(N^{1/2}\log^2 N)`$ for $`q \le N`$ (`NTKB.Davenport.psiAP_sub_le_of_GRH`, Chapter 20).
 
 **Also proved here, not headlines because another library has them:** Hadamard's factorization theorem for entire
@@ -117,7 +133,7 @@ column *Also in*, the results proved here that Mathlib, Tau Ceti or PrimeNumberT
 
 ## Dependencies and the companion library
 
-The library depends on Mathlib only. It ships 240 modules; 35 of them are byte-identical to files
+The library depends on Mathlib only. It ships 245 modules; 35 of them are byte-identical to files
 of [elementary-number-theory-lean v0.1.0](https://github.com/jonhanke/elementary-number-theory-lean/releases/tag/v0.1.0)
 (the `@[kb]` attribute `NTKB.Attr`, the special values of Dirichlet $`L`$-functions
 `NTKB.Elementary.SpecialValues.*`, which the Davenport files use, and part of `NTKB.Analytic.Apostol.*`), with the
@@ -141,7 +157,8 @@ NTKB/
                             Dirichlet, GaussSums, QuadraticResidues, PrimitiveRoots, DirichletSeries, Zeta, PNT,
                             Partitions)
   Analytic/Davenport/       Davenport: Ch1to6 (primes in progressions, Gauss sums, class number formula),
-                            Hadamard (Chapters 11-12), Zeros (Chapters 13-20), Sieve (Chapters 23-29)
+                            Hadamard (Chapters 11-12), Zeros (Chapters 13-20), Siegel (Chapters 21-22),
+                            Sieve (Chapters 23-29)
   Elementary/SpecialValues/ special values of Dirichlet L-functions (as in elementary-number-theory-lean v0.1.0)
   Port/                     files ported from Tau Ceti (Apache 2.0), with credit in their headers
   Attr.lean                 the @[kb] citation attribute
@@ -162,12 +179,12 @@ lake env lean scripts/check_axioms.lean          # axioms of the headline theore
                                                  # (Linux; needs bubblewrap); likewise Apostol
 ```
 
-Mathlib comes prebuilt from its cache; this library is built from source (240 modules, about 55,000 lines; no file
-imports all of Mathlib, so only the Mathlib modules it needs are loaded). On 8 cores and 31 GB (2026-11-10), with
-Mathlib's cache in place, `lake build` took about 17 minutes, with at most 4.2 GB of memory in use and a largest
+Mathlib comes prebuilt from its cache; this library is built from source (245 modules, about 57,000 lines; no file
+imports all of Mathlib, so only the Mathlib modules it needs are loaded). On 8 cores and 31 GB (2026-11-11), with
+Mathlib's cache in place, `lake build` took about 17 minutes, with at most 4.0 GB of memory in use and a largest
 single Lean process of 4.6 GB. Each `lake comparator` check (one book: build, export, and the Lean, NanoDa and
-con-ron kernels) took about 5 minutes (Apostol) and 8 minutes (Davenport), with at most 4.1 GB in use and a largest
-single process of 4.7 GB (`leanexport`).
+con-ron kernels) took about 5 minutes (Apostol) and 8.5 minutes (Davenport), with at most 4.2 GB in use
+and a largest single process of 4.8 GB (`leanexport`).
 
 ## Provenance
 
@@ -175,7 +192,7 @@ NTKB was written by AI, with Claude Code (Anthropic): almost entirely by Claude 
 Sonnet 5.5, in November 2026. Jonathan Hanke designed and directed it: he chose the books, the results, the
 conventions and the proof routes. The files under `NTKB/Port/` contain code ported from Tau Ceti (by the Tau Ceti
 contributors, Apache 2.0). The proofs are checked by the Lean kernel, and CI checks that the headline theorems use
-only the standard axioms. The 18 headline statements of this release in the `Challenge_<book>.lean` files, and the
+only the standard axioms. The 24 headline statements of this release (18 of 0.1.0, unchanged, and 6 new) in the `Challenge_<book>.lean` files, and the
 definitions they use, have **not yet been reviewed** by a human. `lake comparator` checks that each
 `Solution_<book>.lean` proves exactly the statements of its `Challenge_<book>.lean`. The rest of the library (its
 other definitions and intermediate results, and the book maps) has not been reviewed by a human; as with any
@@ -188,9 +205,15 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
 
 - **[v0.1.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.1.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24119526](https://doi.org/10.5281/zenodo.24119526): the first release: the book maps of Apostol and Davenport and
   the 18 headline statements above.
+- **v0.2.0** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`): Davenport's Chapters 21 and 22: Siegel's theorem (both forms)
+  and the Siegel–Walfisz theorem (for $`\psi`$ and $`\pi`$); with them the Bombieri–Vinogradov and
+  Barban–Davenport–Halberstam theorems are unconditional (Chapters 28 and 29). 6 new headline statements
+  (`Challenge_Davenport.lean`, now 21); the 18 headlines of 0.1.0 unchanged. Refreshed Davenport map
+  (432 results: 178 proved, was 163; 50 proved in part, was 45; none conditional, was 3; 80 in Mathlib). The comparator check stays one per book (Apostol and Davenport, a matrix in CI); no file imports all of
+  Mathlib.
 
-**Not in this release:** Siegel's theorem (Davenport, Chapter 21) and what rests on it (Chapter 22, and
-unconditional forms of Chapters 28 and 29); the ternary Goldbach problem (Chapter 26); Iwaniec and Kowalski's
+**Not in this release:** the class number bounds that follow from Siegel's theorem (Davenport Chapter 21, (B) and
+(C): they need the class number formulas); the ternary Goldbach problem (Chapter 26); Iwaniec and Kowalski's
 *Analytic Number Theory*.
 
 ## License

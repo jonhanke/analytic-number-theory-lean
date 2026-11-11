@@ -13,7 +13,7 @@
       "config": "comparator/Davenport.json",
       "challenge_module": "Challenge_Davenport",
       "solution_module": "Solution_Davenport",
-      "theorems": 15
+      "theorems": 21
     }
   ],
   "permitted_axioms": [

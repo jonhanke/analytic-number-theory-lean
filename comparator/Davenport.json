@@ -16,7 +16,13 @@
     "NTKB.Headlines.Davenport.polya_vinogradov",
     "NTKB.Headlines.Davenport.large_sieve",
     "NTKB.Headlines.Davenport.large_sieve_characters",
-    "NTKB.Headlines.Davenport.vinogradov_prime_exponential_sum"
+    "NTKB.Headlines.Davenport.vinogradov_prime_exponential_sum",
+    "NTKB.Headlines.Davenport.siegel",
+    "NTKB.Headlines.Davenport.siegel_second_form",
+    "NTKB.Headlines.Davenport.siegel_walfisz",
+    "NTKB.Headlines.Davenport.siegel_walfisz_primeCounting",
+    "NTKB.Headlines.Davenport.bombieri_vinogradov",
+    "NTKB.Headlines.Davenport.barban_davenport_halberstam"
   ],
   "definition_names": [],
   "permitted_axioms": [

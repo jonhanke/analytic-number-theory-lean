@@ -10,7 +10,8 @@ authors:
     given-names: Jonathan
 license: Apache-2.0
 doi: 10.5281/zenodo.24119525
-version: "0.1.0"
+version: "0.2.0"
+date-released: "2026-11-11"
 repository-code: "https://github.com/jonhanke/analytic-number-theory-lean"
 keywords:
   - Lean 4
@@ -24,3 +25,7 @@ keywords:
   - explicit formula
   - prime number theorem for arithmetic progressions
   - large sieve
+  - Siegel's theorem
+  - Siegel-Walfisz theorem
+  - Bombieri-Vinogradov theorem
+  - Barban-Davenport-Halberstam theorem
