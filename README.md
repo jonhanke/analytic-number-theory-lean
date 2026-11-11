@@ -205,7 +205,7 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
 
 - **[v0.1.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.1.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24119526](https://doi.org/10.5281/zenodo.24119526): the first release: the book maps of Apostol and Davenport and
   the 18 headline statements above.
-- **v0.2.0** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`): Davenport's Chapters 21 and 22: Siegel's theorem (both forms)
+- **[v0.2.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.2.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24131623](https://doi.org/10.5281/zenodo.24131623): Davenport's Chapters 21 and 22: Siegel's theorem (both forms)
   and the Siegel–Walfisz theorem (for $`\psi`$ and $`\pi`$); with them the Bombieri–Vinogradov and
   Barban–Davenport–Halberstam theorems are unconditional (Chapters 28 and 29). 6 new headline statements
   (`Challenge_Davenport.lean`, now 21); the 18 headlines of 0.1.0 unchanged. Refreshed Davenport map
