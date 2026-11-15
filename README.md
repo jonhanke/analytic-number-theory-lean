@@ -282,7 +282,7 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
   (`Challenge_Davenport.lean`, now 21); the 18 headlines of 0.1.0 unchanged. Refreshed Davenport map
   (432 results: 178 proved, was 163; 50 proved in part, was 45; none conditional, was 3; 80 in Mathlib). The comparator check stays one per book (Apostol and Davenport, a matrix in CI); no file imports all of
   Mathlib.
-- **v0.3.0** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:ZENODO-DOI-v0.3.0](https://doi.org/ZENODO-DOI-v0.3.0):
+- **v0.3.0** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24257525](https://doi.org/10.5281/zenodo.24257525):
   the class number formulas (Davenport Chapters 5, 6, 14, 21: the finite formulas, Jacobi's formula, Siegel's lower
   bounds; conditional on two named inputs about quadratic fields) and Vinogradov's three primes theorem (Chapter 26,
   unconditional); Apostol's book complete (Theorems 4.17, 11.13, 11.18, 13.10; 11.14 in part). 7 new headline
