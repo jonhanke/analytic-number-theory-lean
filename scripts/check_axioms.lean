@@ -28,3 +28,10 @@ import Solution_Davenport
 #print axioms NTKB.Headlines.Davenport.siegel_walfisz_primeCounting
 #print axioms NTKB.Headlines.Davenport.bombieri_vinogradov
 #print axioms NTKB.Headlines.Davenport.barban_davenport_halberstam
+#print axioms NTKB.Headlines.Davenport.classNumber_eq_sum_of_discr_neg
+#print axioms NTKB.Headlines.Davenport.classNumber_mul_log_eq_sum_of_discr_pos
+#print axioms NTKB.Headlines.Davenport.classNumber_eq_jacobi
+#print axioms NTKB.Headlines.Davenport.classNumber_gt_of_discr_neg
+#print axioms NTKB.Headlines.Davenport.classNumber_mul_log_gt_of_discr_pos
+#print axioms NTKB.Headlines.Davenport.vinogradov_three_primes
+#print axioms NTKB.Headlines.Davenport.exists_three_primes_of_odd

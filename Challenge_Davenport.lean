@@ -17,6 +17,9 @@ import NTKB.Analytic.Davenport.Sieve.Vinogradov
 import NTKB.Analytic.Davenport.Siegel.Siegel
 import NTKB.Analytic.Davenport.Siegel.SiegelWalfisz
 import NTKB.Analytic.Davenport.Siegel.PrimeCountingAP
+import NTKB.Analytic.Davenport.ClassNumber.Finite
+import NTKB.Analytic.Davenport.ClassNumber.Bounds
+import NTKB.Analytic.Davenport.ThreePrimes.ThreePrimes
 
 /-!
 # Headline statements of analytic-number-theory-lean: Davenport
@@ -56,6 +59,19 @@ these too:
   sieve chapters: `∑ Λ(n)` over `1 ≤ n ≤ x` with `n ≡ a (mod q)`), `NTKB.Davenport.primeCountingAP x q a`
   (`π(x; q, a)`, the number of primes `p ≤ x` with `p ≡ a (mod q)`) and `NTKB.logIntegral x`
   (`li x = ∫_2^x dt/log t`)
+* (since 0.3.0) `NTKB.kroneckerChar D` (the Kronecker symbol `(D/·)` as a Dirichlet character modulo `|D|`),
+  `NTKB.IsFundamentalDiscriminant D`, `NTKB.Davenport.threePrimeRep N`
+  (`r(N) = ∑_{k₁ + k₂ + k₃ = N} Λ(k₁) Λ(k₂) Λ(k₃)`) and `NTKB.Davenport.singularSeries N` (the singular series
+  `G(N) = ∏_{p ∣ N} (1 - (p - 1)⁻²) ∏_{p ∤ N} (1 + (p - 1)⁻³)`); the class number, discriminant, regulator, number
+  of roots of unity and infinite places of a number field are Mathlib's (`NumberField.classNumber`,
+  `NumberField.discr`, `NumberField.Units.regulator`, `NumberField.Units.torsionOrder`,
+  `NumberField.InfinitePlace`)
+* (since 0.3.0) the two **named inputs** of the class number statements, structures assumed as hypotheses, not
+  proved in this library: `NTKB.Davenport.QuadraticFieldDiscriminants` (the discriminant of a quadratic number field
+  is a fundamental discriminant, and every fundamental discriminant `d ≠ 1` is the discriminant of a quadratic
+  number field) and `NTKB.Davenport.QuadraticIdealCount` (in a quadratic number field of discriminant `d` the number
+  of ideals of norm `n ≥ 1` is `∑_{m ∣ n} (d/m)`). Both are classical (Dedekind); the statements that take them are
+  marked *conditional*.
 
 A real character is one with `χ ^ 2 = 1`, or in the statements since 0.2.0, Mathlib's `χ.IsQuadratic` (every value
 is `0`, `1` or `-1`); these are equivalent.
@@ -280,6 +296,98 @@ theorem barban_davenport_halberstam {A : ℝ} (hA : 0 < A) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ x : ℝ, 3 ≤ x → ∀ Q : ℝ, x * Real.log x ^ (-A) < Q → Q ≤ x →
       ∑ q ∈ Icc 1 ⌊Q⌋₊, ∑ a ∈ (Icc 1 q).filter (fun a ↦ Nat.Coprime a q),
         (NTKB.Davenport.psiAP x q a - x / q.totient) ^ 2 ≤ C * x * Q * Real.log x := by
+  sorry
+
+/-! ## New in 0.3.0: class number formulas (Chapters 6 and 21) and the three primes theorem (Chapter 26)
+
+The class number statements are *conditional*: each takes the two named inputs
+`NTKB.Davenport.QuadraticFieldDiscriminants` and `NTKB.Davenport.QuadraticIdealCount` as hypotheses (see "Definitions
+used" above). The class number and the regulator are those of the field (`h` counts ideal classes, the regulator is
+`log ε` for a fundamental unit `ε`, whatever its norm); Davenport's `h(d)` for `d > 0` counts classes of forms. -/
+
+section ClassNumber
+
+open scoped NumberField
+
+/-- **The finite class number formula, `d < 0`** (Chapter 6, p. 51), *conditional*: for an imaginary quadratic field
+of discriminant `d` with `w` roots of unity, `h(d) = -(w/(2|d|)) ∑_{m=1}^{|d|} m (d/m)`. Tau Ceti has
+`h(d) = w √|d| L(1, χ)/(2π)` (`classNumber_eq_card_units_mul_LFunction_one`), not the finite formula; Mathlib and
+PrimeNumberTheoremAnd have neither. -/
+theorem classNumber_eq_sum_of_discr_neg {K : Type} [Field K] [NumberField K]
+    (hF : NTKB.Davenport.QuadraticFieldDiscriminants) (hI : NTKB.Davenport.QuadraticIdealCount)
+    (hK : Module.finrank ℚ K = 2) (hD : NumberField.discr K < 0) :
+    (NumberField.classNumber K : ℂ) =
+      -((NumberField.Units.torsionOrder K : ℂ) / (2 * (NumberField.discr K).natAbs)) *
+        ∑ m ∈ Icc 1 (NumberField.discr K).natAbs, (m : ℂ) * NTKB.kroneckerChar (NumberField.discr K) m := by
+  sorry
+
+/-- **The finite class number formula, `d > 0`** (Chapter 6, p. 51), *conditional*: for a real quadratic field of
+discriminant `d`, a fundamental unit `ε` (a unit generating the units modulo `±1`) and an infinite place `w`,
+`h(d) log ε = -(1/2) ∑_{m=1}^{d-1} (d/m) log sin(π m/d)`, with `log ε = |log w(ε)|`. Not in Mathlib, Tau Ceti or
+PrimeNumberTheoremAnd. -/
+theorem classNumber_mul_log_eq_sum_of_discr_pos {K : Type} [Field K] [NumberField K]
+    (hF : NTKB.Davenport.QuadraticFieldDiscriminants) (hI : NTKB.Davenport.QuadraticIdealCount)
+    (hK : Module.finrank ℚ K = 2) (hD : 0 < NumberField.discr K) (ε : (𝓞 K)ˣ)
+    (hε : Subgroup.closure {ε} ⊔ NumberField.Units.torsion K = ⊤) (w : NumberField.InfinitePlace K) :
+    ((NumberField.classNumber K * |Real.log (w (ε : K))| : ℝ) : ℂ) = -(1 / 2) *
+      ∑ m ∈ Ico 1 (NumberField.discr K).natAbs,
+        NTKB.kroneckerChar (NumberField.discr K) m *
+          (Real.log (Real.sin (π * m / NumberField.discr K)) : ℂ) := by
+  sorry
+
+/-- **Jacobi's class number formula** (Chapter 6, p. 51, (19)), *conditional*: for a prime `q ≡ 3 (mod 4)`,
+`q > 3`, the quadratic field of discriminant `-q` has `q h(-q) = -∑_{m=1}^{q-1} m (m/q)`. Not in Mathlib, Tau Ceti
+or PrimeNumberTheoremAnd. -/
+theorem classNumber_eq_jacobi {K : Type} [Field K] [NumberField K]
+    (hF : NTKB.Davenport.QuadraticFieldDiscriminants) (hI : NTKB.Davenport.QuadraticIdealCount)
+    {q : ℕ} [Fact q.Prime] (hq : q % 4 = 3) (hq3 : 3 < q) (hK : Module.finrank ℚ K = 2)
+    (hDq : NumberField.discr K = -q) :
+    (q : ℤ) * NumberField.classNumber K = -∑ m ∈ Ico 1 q, (m : ℤ) * legendreSym q m := by
+  sorry
+
+/-- **Siegel's lower bound for the class number, `d < 0`** (Chapter 21, (2)), *conditional*: for every `ε > 0`
+there is `C(ε) > 0` with `h(d) > C(ε) |d|^{1/2 - ε}` for every imaginary quadratic field of discriminant `d` (`C(ε)`
+is not effective). From Siegel's theorem above. Tau Ceti has the upper bound `h(d) ≪ √|d| log |d|`
+(`classNumber_le_card_units_mul_sqrt_mul_one_add_log`), not a lower bound; Mathlib and PrimeNumberTheoremAnd have
+neither. -/
+theorem classNumber_gt_of_discr_neg (hF : NTKB.Davenport.QuadraticFieldDiscriminants)
+    (hI : NTKB.Davenport.QuadraticIdealCount) {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      NumberField.discr K < 0 →
+        C * |(NumberField.discr K : ℝ)| ^ ((1 : ℝ) / 2 - ε) < NumberField.classNumber K := by
+  sorry
+
+/-- **Siegel's lower bound, `d > 0`** (Chapter 21, (3)), *conditional*: for every `ε > 0` there is `C(ε) > 0` with
+`h(d) log η > C(ε) d^{1/2 - ε}` for every real quadratic field of discriminant `d`, `η` a fundamental unit and
+`log η = |log w(η)|` at any infinite place `w`. Not in Mathlib, Tau Ceti or PrimeNumberTheoremAnd. -/
+theorem classNumber_mul_log_gt_of_discr_pos (hF : NTKB.Davenport.QuadraticFieldDiscriminants)
+    (hI : NTKB.Davenport.QuadraticIdealCount) {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      0 < NumberField.discr K →
+      ∀ (η : (𝓞 K)ˣ), Subgroup.closure {η} ⊔ NumberField.Units.torsion K = ⊤ →
+        ∀ w : NumberField.InfinitePlace K,
+          C * (NumberField.discr K : ℝ) ^ ((1 : ℝ) / 2 - ε) <
+            NumberField.classNumber K * |Real.log (w (η : K))| := by
+  sorry
+
+end ClassNumber
+
+/-- **Vinogradov's asymptotic formula** (Chapter 26, p. 146): for every `A > 0`,
+`r(N) = (1/2) G(N) N² + O(N² (log N)^{-A})`, where `r(N) = ∑_{k₁ + k₂ + k₃ = N} Λ(k₁) Λ(k₂) Λ(k₃)` and `G(N)` is the
+singular series. Unconditional (major arcs by the Siegel–Walfisz theorem above, minor arcs by Vinogradov's estimate
+above). Not in Mathlib, Tau Ceti or PrimeNumberTheoremAnd. -/
+theorem vinogradov_three_primes (A : ℝ) (hA : 0 < A) :
+    ∃ C > 0, ∀ N : ℕ, 2 ≤ N →
+      |NTKB.Davenport.threePrimeRep N - NTKB.Davenport.singularSeries N * N ^ 2 / 2| ≤
+        C * N ^ 2 * Real.log N ^ (-A) := by
+  sorry
+
+/-- **Every sufficiently large odd integer is a sum of three primes** (Vinogradov; Chapter 26, p. 146).
+Unconditional. PrimeNumberTheoremAnd states the odd Goldbach conjecture up to a given height (`odd_conjecture`) and
+checks it up to 33, not for all large odd integers; Mathlib and Tau Ceti have neither. -/
+theorem exists_three_primes_of_odd :
+    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → Odd N →
+      ∃ p₁ p₂ p₃ : ℕ, p₁.Prime ∧ p₂.Prime ∧ p₃.Prime ∧ p₁ + p₂ + p₃ = N := by
   sorry
 
 end NTKB.Headlines.Davenport
