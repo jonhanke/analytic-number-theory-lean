@@ -22,7 +22,14 @@
     "NTKB.Headlines.Davenport.siegel_walfisz",
     "NTKB.Headlines.Davenport.siegel_walfisz_primeCounting",
     "NTKB.Headlines.Davenport.bombieri_vinogradov",
-    "NTKB.Headlines.Davenport.barban_davenport_halberstam"
+    "NTKB.Headlines.Davenport.barban_davenport_halberstam",
+    "NTKB.Headlines.Davenport.classNumber_eq_sum_of_discr_neg",
+    "NTKB.Headlines.Davenport.classNumber_mul_log_eq_sum_of_discr_pos",
+    "NTKB.Headlines.Davenport.classNumber_eq_jacobi",
+    "NTKB.Headlines.Davenport.classNumber_gt_of_discr_neg",
+    "NTKB.Headlines.Davenport.classNumber_mul_log_gt_of_discr_pos",
+    "NTKB.Headlines.Davenport.vinogradov_three_primes",
+    "NTKB.Headlines.Davenport.exists_three_primes_of_odd"
   ],
   "definition_names": [],
   "permitted_axioms": [

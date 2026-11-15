@@ -17,6 +17,9 @@ import NTKB.Analytic.Davenport.Sieve.Vinogradov
 import NTKB.Analytic.Davenport.Siegel.Siegel
 import NTKB.Analytic.Davenport.Siegel.SiegelWalfisz
 import NTKB.Analytic.Davenport.Siegel.PrimeCountingAP
+import NTKB.Analytic.Davenport.ClassNumber.Finite
+import NTKB.Analytic.Davenport.ClassNumber.Bounds
+import NTKB.Analytic.Davenport.ThreePrimes.ThreePrimes
 
 /-!
 # Proofs of the Davenport headline statements
@@ -167,5 +170,71 @@ theorem barban_davenport_halberstam {A : ℝ} (hA : 0 < A) :
       ∑ q ∈ Icc 1 ⌊Q⌋₊, ∑ a ∈ (Icc 1 q).filter (fun a ↦ Nat.Coprime a q),
         (NTKB.Davenport.psiAP x q a - x / q.totient) ^ 2 ≤ C * x * Q * Real.log x :=
   NTKB.Davenport.barban_davenport_halberstam_unconditional hA
+
+/-! ## New in 0.3.0: class number formulas (Chapters 6 and 21) and the three primes theorem (Chapter 26)
+
+The class number statements are *conditional*: each takes the two named inputs
+`NTKB.Davenport.QuadraticFieldDiscriminants` and `NTKB.Davenport.QuadraticIdealCount` as hypotheses (see "Definitions
+used" above). The class number and the regulator are those of the field (`h` counts ideal classes, the regulator is
+`log ε` for a fundamental unit `ε`, whatever its norm); Davenport's `h(d)` for `d > 0` counts classes of forms. -/
+
+section ClassNumber
+
+open scoped NumberField
+
+theorem classNumber_eq_sum_of_discr_neg {K : Type} [Field K] [NumberField K]
+    (hF : NTKB.Davenport.QuadraticFieldDiscriminants) (hI : NTKB.Davenport.QuadraticIdealCount)
+    (hK : Module.finrank ℚ K = 2) (hD : NumberField.discr K < 0) :
+    (NumberField.classNumber K : ℂ) =
+      -((NumberField.Units.torsionOrder K : ℂ) / (2 * (NumberField.discr K).natAbs)) *
+        ∑ m ∈ Icc 1 (NumberField.discr K).natAbs, (m : ℂ) * NTKB.kroneckerChar (NumberField.discr K) m :=
+  NTKB.Davenport.classNumber_eq_sum_of_discr_neg hF hI hK hD
+
+theorem classNumber_mul_log_eq_sum_of_discr_pos {K : Type} [Field K] [NumberField K]
+    (hF : NTKB.Davenport.QuadraticFieldDiscriminants) (hI : NTKB.Davenport.QuadraticIdealCount)
+    (hK : Module.finrank ℚ K = 2) (hD : 0 < NumberField.discr K) (ε : (𝓞 K)ˣ)
+    (hε : Subgroup.closure {ε} ⊔ NumberField.Units.torsion K = ⊤) (w : NumberField.InfinitePlace K) :
+    ((NumberField.classNumber K * |Real.log (w (ε : K))| : ℝ) : ℂ) = -(1 / 2) *
+      ∑ m ∈ Ico 1 (NumberField.discr K).natAbs,
+        NTKB.kroneckerChar (NumberField.discr K) m *
+          (Real.log (Real.sin (π * m / NumberField.discr K)) : ℂ) :=
+  NTKB.Davenport.classNumber_mul_log_eq_sum_of_discr_pos hF hI hK hD ε hε w
+
+theorem classNumber_eq_jacobi {K : Type} [Field K] [NumberField K]
+    (hF : NTKB.Davenport.QuadraticFieldDiscriminants) (hI : NTKB.Davenport.QuadraticIdealCount)
+    {q : ℕ} [Fact q.Prime] (hq : q % 4 = 3) (hq3 : 3 < q) (hK : Module.finrank ℚ K = 2)
+    (hDq : NumberField.discr K = -q) :
+    (q : ℤ) * NumberField.classNumber K = -∑ m ∈ Ico 1 q, (m : ℤ) * legendreSym q m :=
+  NTKB.Davenport.classNumber_eq_jacobi hF hI hq hq3 hK hDq
+
+theorem classNumber_gt_of_discr_neg (hF : NTKB.Davenport.QuadraticFieldDiscriminants)
+    (hI : NTKB.Davenport.QuadraticIdealCount) {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      NumberField.discr K < 0 →
+        C * |(NumberField.discr K : ℝ)| ^ ((1 : ℝ) / 2 - ε) < NumberField.classNumber K :=
+  NTKB.Davenport.classNumber_gt_of_discr_neg hF hI hε
+
+theorem classNumber_mul_log_gt_of_discr_pos (hF : NTKB.Davenport.QuadraticFieldDiscriminants)
+    (hI : NTKB.Davenport.QuadraticIdealCount) {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      0 < NumberField.discr K →
+      ∀ (η : (𝓞 K)ˣ), Subgroup.closure {η} ⊔ NumberField.Units.torsion K = ⊤ →
+        ∀ w : NumberField.InfinitePlace K,
+          C * (NumberField.discr K : ℝ) ^ ((1 : ℝ) / 2 - ε) <
+            NumberField.classNumber K * |Real.log (w (η : K))| :=
+  NTKB.Davenport.classNumber_mul_log_gt_of_discr_pos hF hI hε
+
+end ClassNumber
+
+theorem vinogradov_three_primes (A : ℝ) (hA : 0 < A) :
+    ∃ C > 0, ∀ N : ℕ, 2 ≤ N →
+      |NTKB.Davenport.threePrimeRep N - NTKB.Davenport.singularSeries N * N ^ 2 / 2| ≤
+        C * N ^ 2 * Real.log N ^ (-A) :=
+  NTKB.Davenport.vinogradov_three_primes A hA
+
+theorem exists_three_primes_of_odd :
+    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → Odd N →
+      ∃ p₁ p₂ p₃ : ℕ, p₁.Prime ∧ p₂.Prime ∧ p₃.Prime ∧ p₁ + p₂ + p₃ = N :=
+  NTKB.Davenport.exists_three_primes_of_odd
 
 end NTKB.Headlines.Davenport

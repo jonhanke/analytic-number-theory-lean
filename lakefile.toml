@@ -1,5 +1,5 @@
 name = "analytic_number_theory_lean"
-version = "0.2.0"
+version = "0.3.0"
 defaultTargets = ["AnalyticNumberTheory", "Challenge_Apostol", "Solution_Apostol", "Challenge_Davenport", "Solution_Davenport"]
 
 [leanOptions]
@@ -57,9 +57,11 @@ globs = [
   "NTKB.Analytic.Apostol.DirichletSeries.Abscissa",
   "NTKB.Analytic.Apostol.DirichletSeries.DivisorSquare",
   "NTKB.Analytic.Apostol.DirichletSeries.Exponential",
+  "NTKB.Analytic.Apostol.DirichletSeries.ExponentialInversion",
   "NTKB.Analytic.Apostol.DirichletSeries.Liouville",
   "NTKB.Analytic.Apostol.DirichletSeries.MeanValues",
   "NTKB.Analytic.Apostol.DirichletSeries.MoebiusSquare",
+  "NTKB.Analytic.Apostol.DirichletSeries.PerronFormula",
   "NTKB.Analytic.Apostol.DirichletSeries.Products",
   "NTKB.Analytic.Apostol.DirichletSeries.UniformConvergence",
   "NTKB.Analytic.Apostol.DirichletSeries.Uniqueness",
@@ -83,6 +85,7 @@ globs = [
   "NTKB.Analytic.Apostol.PNT.Psi1",
   "NTKB.Analytic.Apostol.PNT.Psi1Integral",
   "NTKB.Analytic.Apostol.PNT.TotientLogLog",
+  "NTKB.Analytic.Apostol.PNT.ZeroFreeRegion",
   "NTKB.Analytic.Apostol.PNT.ZetaBounds",
   "NTKB.Analytic.Apostol.PNT.ZetaInverseBounds",
   "NTKB.Analytic.Apostol.Partitions.Conjugate",
@@ -101,6 +104,7 @@ globs = [
   "NTKB.Analytic.Apostol.Primes.PNTImpliesMertens",
   "NTKB.Analytic.Apostol.Primes.PrimeBounds",
   "NTKB.Analytic.Apostol.Primes.Selberg",
+  "NTKB.Analytic.Apostol.Primes.SelbergComplex",
   "NTKB.Analytic.Apostol.Primes.Shapiro",
   "NTKB.Analytic.Apostol.PrimitiveRoots.CharactersTwoPow",
   "NTKB.Analytic.Apostol.PrimitiveRoots.Index",
@@ -143,6 +147,13 @@ globs = [
   "NTKB.Analytic.Davenport.Ch1to6.LogL",
   "NTKB.Analytic.Davenport.Ch1to6.Periods",
   "NTKB.Analytic.Davenport.Ch1to6.RealPrimitive",
+  "NTKB.Analytic.Davenport.ClassNumber.Bounds",
+  "NTKB.Analytic.Davenport.ClassNumber.EulerProduct",
+  "NTKB.Analytic.Davenport.ClassNumber.Finite",
+  "NTKB.Analytic.Davenport.ClassNumber.Formula",
+  "NTKB.Analytic.Davenport.ClassNumber.RealCharacters",
+  "NTKB.Analytic.Davenport.ClassNumber.Regulator",
+  "NTKB.Analytic.Davenport.ClassNumber.Torsion",
   "NTKB.Analytic.Davenport.Hadamard.CanonicalProduct",
   "NTKB.Analytic.Davenport.Hadamard.Factorization",
   "NTKB.Analytic.Davenport.Hadamard.Gamma",
@@ -183,6 +194,14 @@ globs = [
   "NTKB.Analytic.Davenport.Sieve.TypeII",
   "NTKB.Analytic.Davenport.Sieve.Vaughan",
   "NTKB.Analytic.Davenport.Sieve.Vinogradov",
+  "NTKB.Analytic.Davenport.ThreePrimes.Circle",
+  "NTKB.Analytic.Davenport.ThreePrimes.GaussSumImprimitive",
+  "NTKB.Analytic.Davenport.ThreePrimes.MajorArc",
+  "NTKB.Analytic.Davenport.ThreePrimes.MajorArcIntegral",
+  "NTKB.Analytic.Davenport.ThreePrimes.MinorArc",
+  "NTKB.Analytic.Davenport.ThreePrimes.Ramanujan",
+  "NTKB.Analytic.Davenport.ThreePrimes.SingularSeries",
+  "NTKB.Analytic.Davenport.ThreePrimes.ThreePrimes",
   "NTKB.Analytic.Davenport.Zeros.APDecomp",
   "NTKB.Analytic.Davenport.Zeros.Digamma",
   "NTKB.Analytic.Davenport.Zeros.DigammaAsymp",
@@ -263,6 +282,7 @@ globs = [
   "NTKB.Elementary.SpecialValues.ValueAtZero",
   "NTKB.Port.DirichletCharacterPartialSum",
   "NTKB.Port.JacobiThetaNearCusp",
+  "NTKB.Port.Landau",
   "NTKB.Port.ZetaMulPair"
 ]
 

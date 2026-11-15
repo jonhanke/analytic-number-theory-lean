@@ -20,9 +20,11 @@ files it ships unchanged (see *Dependencies and the companion library*).
   `lake comparator` once per book to check the proved statements against the `Challenge_<book>.lean` files.
 - **Cited results are named**: where the library assumes a result it does not prove, the result is a named Lean
   structure, never assumed silently; a theorem that uses it has it as a hypothesis and the book maps mark the row
-  *conditional*. Since 0.2.0 no such input is open: `NTKB.Davenport.SiegelWalfiszHypothesis`, the input of
-  Davenport's Chapters 28 and 29, is proved (`NTKB.Davenport.siegelWalfiszHypothesis`). Results under the
-  generalized Riemann hypothesis take it as a named hypothesis (see below).
+  *conditional*. Since 0.2.0 `NTKB.Davenport.SiegelWalfiszHypothesis`, the input of Davenport's Chapters 28 and 29,
+  is proved (`NTKB.Davenport.siegelWalfiszHypothesis`). Since 0.3.0 three named inputs are open: two classical facts
+  about quadratic fields, used by the class number formulas, and an inversion theorem for Dirichlet series, used by
+  one form of Apostol's Theorem 11.14 (see *Known restrictions*). Results under the generalized Riemann hypothesis
+  take it as a named hypothesis (see below).
 - **Comparison**: [docs/results/comparison.md](docs/results/comparison.md) says, for each headline, what Mathlib,
   [Tau Ceti](https://github.com/TauCetiProject/TauCeti) and
   [PrimeNumberTheoremAnd](https://github.com/AlexKontorovich/PrimeNumberTheoremAnd) already have and what this library
@@ -32,15 +34,60 @@ files it ships unchanged (see *Dependencies and the companion library*).
 
 | book | rows | proved | proved in part | conditional | in Mathlib | other | proved here, also elsewhere |
 |---|---|---|---|---|---|---|---|
-| [T. M. Apostol, *Introduction to Analytic Number Theory* (1976)](docs/results/books/apostol.md) | 322 | 168 | 2 | 0 | 148 | 4 | 81 |
-| [H. Davenport, *Multiplicative Number Theory* (2nd ed., revised by H. L. Montgomery, 1980)](docs/results/books/davenport.md) | 432 | 178 | 50 | 0 | 80 | 124 | 60 |
+| [T. M. Apostol, *Introduction to Analytic Number Theory* (1976)](docs/results/books/apostol.md) | 322 | 173 | 0 | 1 | 148 | 0 | 80 |
+| [H. Davenport, *Multiplicative Number Theory* (2nd ed., revised by H. L. Montgomery, 1980)](docs/results/books/davenport.md) | 432 | 198 | 47 | 9 | 80 | 98 | 57 |
 
-*Proved*: proved with only the standard axioms and no unproved input. *Proved in part*: a part, a special case, a weaker form or one instance is proved (the map's Lean column names it). *Conditional*: proved from a named unproved input (none in this release: `SiegelWalfiszHypothesis`, the input of Davenport's Chapters 28 and 29, is proved since 0.2.0). *In Mathlib*: Mathlib (a dependency) has the result; the map names the Mathlib declaration. *Other*: in Tau Ceti or PrimeNumberTheoremAnd only (not dependencies), partly formalized elsewhere, or not formalized (see each map). *Proved here, also elsewhere*: rows proved (in whole or in part) here whose result, a part of it or a closely related statement is also in Mathlib, Tau Ceti or PrimeNumberTheoremAnd; each map names those declarations in its column *Also in*. Rows that are not results (definitions, remarks, history) are omitted from the maps.
+*Proved*: proved with only the standard axioms and no unproved input. *Proved in part*: a part, a special case, a weaker form or one instance is proved (the map's Lean column names it). *Conditional*: proved from a named unproved input (since 0.3.0: the Davenport class number rows, from `NTKB.Davenport.QuadraticFieldDiscriminants` and `NTKB.Davenport.QuadraticIdealCount`, and Apostol's Theorem 11.14, from `NTKB.Apostol.DirichletInverseSummableInput`; `SiegelWalfiszHypothesis`, the input of Davenport's Chapters 28 and 29 in 0.1.0, is proved since 0.2.0). *In Mathlib*: Mathlib (a dependency) has the result; the map names the Mathlib declaration. *Other*: in Tau Ceti or PrimeNumberTheoremAnd only (not dependencies), partly formalized elsewhere, or not formalized (see each map). *Proved here, also elsewhere*: rows proved (in whole or in part) here whose result, a part of it or a closely related statement is also in Mathlib, Tau Ceti or PrimeNumberTheoremAnd; each map names those declarations in its column *Also in*. Rows that are not results (definitions, remarks, history) are omitted from the maps.
+
+## What's new in 0.3.0
+
+- **Class number formulas** (Davenport, Chapters 5, 6, 14 and 21): the finite class number formulas for imaginary
+  and real quadratic fields, Jacobi's formula $`q\,h(-q) = -\sum_{m<q} m\left(\frac mq\right)`$, and Siegel's lower
+  bounds $`h(d) > C(\varepsilon)|d|^{1/2-\varepsilon}`$ and $`h(d)\log\varepsilon > C(\varepsilon)d^{1/2-\varepsilon}`$.
+  On the way: the analytic class number formula $`h(d) = w\sqrt{|d|}\,L(1,\chi_d)/(2\pi)`$ (and
+  $`2hR = \sqrt d\,L(1,\chi_d)`$ for $`d > 0`$), the regulator of a real quadratic field as $`\log\varepsilon`$, the
+  real primitive characters as the Kronecker symbols of fundamental discriminants, $`L(1,\chi) \gg q^{-1/2}`$ and the
+  effective bound for a real zero. These results are **conditional** on two named inputs (see *Known restrictions*).
+  5 new headlines.
+- **The three primes theorem** (Davenport, Chapter 26), unconditional: Vinogradov's asymptotic formula
+  $`r(N) = \tfrac12\mathfrak S(N)N^2 + O(N^2(\log N)^{-A})`$ for the weighted number of representations as a sum of
+  three primes, the singular series with $`\mathfrak S(N) \ge 1`$ for odd $`N`$, and every sufficiently large odd
+  integer is a sum of three primes (in at least $`N^2/(8\log^3 N)`$ ordered ways). On the way: Ramanujan sums and the
+  Gauss sum of an imprimitive character (Chapter 9). 2 new headlines.
+- **Apostol complete**: every result of Apostol's book is now proved here or in Mathlib, the last ones being the
+  zero-free region of Theorem 13.10 with its exponents $`\log^7`$ and $`\log^9`$, Perron's formula (Theorem 11.18 and
+  the lemma before it), Landau's theorem on Dirichlet series with nonnegative coefficients (Theorem 11.13, ported from
+  Tau Ceti with credit) and Theorem 4.17 for complex-valued functions; Theorem 11.14 in part (*Known restrictions*).
+  No new Apostol headline: PrimeNumberTheoremAnd has the bound of Theorem 13.10 (`ZetaInvBnd`).
+- The 24 headlines of 0.1.0 and 0.2.0 are unchanged (31 in all). Refreshed book maps (Davenport: 198 proved, was 178;
+  Apostol: 173 proved, was 168).
+
+## Known restrictions
+
+- **Two named inputs for the class number results.** The five class number headlines, and the Davenport rows 6-10,
+  6-12, 6-25, 6-27, 14-16, 14-18, 21-2 and 21-3 of the book map, take as hypotheses two structures that this library
+  does not prove: `NTKB.Davenport.QuadraticFieldDiscriminants` (the discriminant of a quadratic number field is a
+  fundamental discriminant, and every fundamental discriminant $`d \ne 1`$ is the discriminant of a quadratic number
+  field) and `NTKB.Davenport.QuadraticIdealCount` (in a quadratic number field of discriminant $`d`$ the number of
+  ideals of norm $`n \ge 1`$ is $`\sum_{m\mid n}(d/m)`$). Both are classical (Dedekind) and Tau Ceti, which is not a
+  dependency, proves them; the book map marks these rows *conditional*.
+- **Field class number, not form class number.** For $`d > 0`$ the statements use the class number and the regulator
+  of the field ($`\log\varepsilon`$ for a fundamental unit of either norm), not Davenport's class number of forms with
+  $`\varepsilon`$ of norm $`+1`$; the two agree when the fundamental unit has norm $`+1`$. Davenport's formula
+  $`R(n) = w\sum_{m\mid n}(d/m)`$ for binary forms (row 6-7) is not proved, and for even characters the extra factor
+  $`\log q`$ in the bound for a real zero (row 14-18) is not proved.
+- **Apostol's Theorem 11.14** (uniqueness of Dirichlet series) is proved for absolutely convergent series; under the
+  book's hypothesis only from the named input `NTKB.Apostol.DirichletInverseSummableInput` (an inversion theorem the
+  book uses without proof).
+- **Constants are not effective** where the proofs use Siegel's theorem: the constants of Siegel's bounds, of the
+  Siegel–Walfisz theorem and of Vinogradov's asymptotic formula, and the threshold beyond which every odd integer is a
+  sum of three primes, exist but are not computed.
 
 ## Highlights
 
 Every result listed here is a headline theorem of a `Challenge_<book>.lean` file: it is checked by the Lean kernel
-with only the standard axioms and depends on no unproved input. Headlines are only results that are in none of
+with only the standard axioms and depends on no unproved input, except the class number statements new in 0.3.0,
+which are marked *conditional* and take the two named inputs above as hypotheses. Headlines are only results that are in none of
 Mathlib, Tau Ceti and PrimeNumberTheoremAnd ([comparison](docs/results/comparison.md)); related results of those
 libraries are cited next to each headline. The statements have **not yet been reviewed by a human** (see
 Provenance).
@@ -94,6 +141,24 @@ Provenance).
 - **The Barban–Davenport–Halberstam theorem** (unconditional since 0.2.0, Chapter 29, Gallagher's form):
   $`\sum_{q\le Q}\sum_{(a,q)=1}(\psi(x;q,a) - x/\varphi(q))^2 \ll xQ\log x`$ for $`x(\log x)^{-A} < Q \le x`$
   (`barban_davenport_halberstam`).
+- **The finite class number formulas** (new in 0.3.0, Chapter 6, *conditional*): for an imaginary quadratic field of
+  discriminant $`d`$ with $`w`$ roots of unity, $`h(d) = -\frac{w}{2|d|}\sum_{m=1}^{|d|} m\left(\frac dm\right)`$; for a
+  real quadratic field with fundamental unit $`\varepsilon`$,
+  $`h(d)\log\varepsilon = -\frac12\sum_{m=1}^{d-1}\left(\frac dm\right)\log\sin\frac{\pi m}d`$
+  (`classNumber_eq_sum_of_discr_neg`, `classNumber_mul_log_eq_sum_of_discr_pos`); **Jacobi's formula**
+  $`q\,h(-q) = -\sum_{m=1}^{q-1} m\left(\frac mq\right)`$ for primes $`q \equiv 3 \pmod 4`$, $`q > 3`$
+  (`classNumber_eq_jacobi`). Related: Tau Ceti has $`h(d) = w\sqrt{|d|}L(1,\chi)/(2\pi)`$ for $`d < 0`$, not the
+  finite formulas.
+- **Siegel's lower bounds for the class number** (new in 0.3.0, Chapter 21, *conditional*): for every
+  $`\varepsilon > 0`$, $`h(d) > C(\varepsilon)|d|^{1/2-\varepsilon}`$ for $`d < 0`$ and
+  $`h(d)\log\varepsilon > C(\varepsilon)d^{1/2-\varepsilon}`$ for $`d > 0`$ (`classNumber_gt_of_discr_neg`,
+  `classNumber_mul_log_gt_of_discr_pos`; constants not effective). Related: Tau Ceti has the upper bound
+  $`h(d) \ll \sqrt{|d|}\log|d|`$.
+- **Vinogradov's three primes theorem** (new in 0.3.0, Chapter 26): for every $`A > 0`$,
+  $`r(N) = \sum_{k_1+k_2+k_3=N}\Lambda(k_1)\Lambda(k_2)\Lambda(k_3) = \tfrac12\mathfrak S(N)N^2 + O(N^2(\log N)^{-A})`$
+  with the singular series $`\mathfrak S(N)`$ (`vinogradov_three_primes`), and every sufficiently large odd integer
+  is a sum of three primes (`exists_three_primes_of_odd`). Related: PrimeNumberTheoremAnd states the odd Goldbach
+  conjecture up to a given height and checks it up to 33.
 
 **Apostol, *Introduction to Analytic Number Theory*** ([`Challenge_Apostol.lean`](Challenge_Apostol.lean))
 
@@ -128,13 +193,17 @@ $`\psi(N;q,a) = N/\varphi(q) + O(N^{1/2}\log^2 N)`$ for $`q \le N`$ (`NTKB.Daven
 functions of order at most one and the product for $`\xi(s)`$ (PrimeNumberTheoremAnd has both, for every finite
 order); the zero-free region for $`\zeta`$ and the prime number theorem with the classical error term
 (`NTKB.Davenport.riemannZeta_zero_free_region`, `NTKB.Davenport.psi_sub_self_le`; PrimeNumberTheoremAnd has both);
-Dirichlet's theorem and the nonvanishing of $`L(1,\chi)`$ in the book forms (Mathlib). Each book map credits, in its
+Dirichlet's theorem and the nonvanishing of $`L(1,\chi)`$ in the book forms (Mathlib); since 0.3.0, Apostol's
+zero-free region 13.10 (`NTKB.Apostol.apostol_thm_13_10`; PrimeNumberTheoremAnd has the same bound, `ZetaInvBnd`),
+Landau's theorem 11.13 (ported from Tau Ceti), Perron's formula 11.18 (Tau Ceti has a truncated form), and the
+analytic class number formula $`h(d) = w\sqrt{|d|}L(1,\chi)/(2\pi)`$ (`NTKB.Davenport.classNumber_eq_of_discr_neg`,
+conditional here; Tau Ceti proves it). Each book map credits, in its
 column *Also in*, the results proved here that Mathlib, Tau Ceti or PrimeNumberTheoremAnd also prove.
 
 ## Dependencies and the companion library
 
-The library depends on Mathlib only. It ships 245 modules; 35 of them are byte-identical to files
-of [elementary-number-theory-lean v0.1.0](https://github.com/jonhanke/elementary-number-theory-lean/releases/tag/v0.1.0)
+The library depends on Mathlib only. It ships 265 modules; 50 of them are byte-identical to files
+of [elementary-number-theory-lean v0.2.0](https://github.com/jonhanke/elementary-number-theory-lean/releases/tag/v0.2.0)
 (the `@[kb]` attribute `NTKB.Attr`, the special values of Dirichlet $`L`$-functions
 `NTKB.Elementary.SpecialValues.*`, which the Davenport files use, and part of `NTKB.Analytic.Apostol.*`), with the
 same Lean and Mathlib versions. They are copied rather than taken from that package as a Lake dependency, because
@@ -150,16 +219,18 @@ Challenge_<book>.lean   the headline statements of one book (proofs: deliberate 
 Solution_<book>.lean    the same statements, proved from the library
 comparator.json         the books, each with its lake comparator configuration comparator/<book>.json
 formalization.yaml      scope, sources, divergences, provenance, review (formalization.yaml v0.4)
-docs/results/books/     the book maps; docs/results/comparison.md: comparison with Mathlib, Tau Ceti, PNT+
+docs/results/books/     the book maps; docs/results/comparison.md: comparison with Mathlib, Tau Ceti,
+                        PrimeNumberTheoremAnd
 AnalyticNumberTheory.lean   imports every module of the library
 NTKB/
   Analytic/Apostol/         Apostol, by topic (ArithmeticFunctions, Averages, Primes, Congruences, Characters,
                             Dirichlet, GaussSums, QuadraticResidues, PrimitiveRoots, DirichletSeries, Zeta, PNT,
                             Partitions)
   Analytic/Davenport/       Davenport: Ch1to6 (primes in progressions, Gauss sums, class number formula),
-                            Hadamard (Chapters 11-12), Zeros (Chapters 13-20), Siegel (Chapters 21-22),
-                            Sieve (Chapters 23-29)
-  Elementary/SpecialValues/ special values of Dirichlet L-functions (as in elementary-number-theory-lean v0.1.0)
+                            ClassNumber (Chapters 5, 6, 14, 21), Hadamard (Chapters 11-12), Zeros
+                            (Chapters 13-20), Siegel (Chapters 21-22), Sieve (Chapters 23-29), ThreePrimes
+                            (Chapters 9, 26)
+  Elementary/SpecialValues/ special values of Dirichlet L-functions (as in elementary-number-theory-lean)
   Port/                     files ported from Tau Ceti (Apache 2.0), with credit in their headers
   Attr.lean                 the @[kb] citation attribute
 references.bib          bibliography; the keys used by @[kb]
@@ -179,12 +250,12 @@ lake env lean scripts/check_axioms.lean          # axioms of the headline theore
                                                  # (Linux; needs bubblewrap); likewise Apostol
 ```
 
-Mathlib comes prebuilt from its cache; this library is built from source (245 modules, about 57,000 lines; no file
-imports all of Mathlib, so only the Mathlib modules it needs are loaded). On 8 cores and 31 GB (2026-11-11), with
-Mathlib's cache in place, `lake build` took about 17 minutes, with at most 4.0 GB of memory in use and a largest
-single Lean process of 4.6 GB. Each `lake comparator` check (one book: build, export, and the Lean, NanoDa and
-con-ron kernels) took about 5 minutes (Apostol) and 8.5 minutes (Davenport), with at most 4.2 GB in use
-and a largest single process of 4.8 GB (`leanexport`).
+Mathlib comes prebuilt from its cache; this library is built from source (265 modules, about 63,000 lines; no file
+imports all of Mathlib, so only the Mathlib modules it needs are loaded). On 8 cores and 31 GB (2026-11-15), with
+Mathlib's cache in place, `lake build` took about 18 minutes, with at most 4.1 GB of memory in use and a largest
+single Lean process of 3.9 GB. Each `lake comparator` check (one book: build, export, and the Lean, NanoDa and
+con-ron kernels) took about 5 minutes (Apostol) and 13 minutes (Davenport), with at most 4.8 GB in use
+and a largest single process of 4.6 GB (`leanexport`).
 
 ## Provenance
 
@@ -192,7 +263,7 @@ NTKB was written by AI, with Claude Code (Anthropic): almost entirely by Claude 
 Sonnet 5.5, in November 2026. Jonathan Hanke designed and directed it: he chose the books, the results, the
 conventions and the proof routes. The files under `NTKB/Port/` contain code ported from Tau Ceti (by the Tau Ceti
 contributors, Apache 2.0). The proofs are checked by the Lean kernel, and CI checks that the headline theorems use
-only the standard axioms. The 24 headline statements of this release (18 of 0.1.0, unchanged, and 6 new) in the `Challenge_<book>.lean` files, and the
+only the standard axioms. The 31 headline statements of this release (24 of 0.1.0 and 0.2.0, unchanged, and 7 new) in the `Challenge_<book>.lean` files, and the
 definitions they use, have **not yet been reviewed** by a human. `lake comparator` checks that each
 `Solution_<book>.lean` proves exactly the statements of its `Challenge_<book>.lean`. The rest of the library (its
 other definitions and intermediate results, and the book maps) has not been reviewed by a human; as with any
@@ -211,10 +282,17 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
   (`Challenge_Davenport.lean`, now 21); the 18 headlines of 0.1.0 unchanged. Refreshed Davenport map
   (432 results: 178 proved, was 163; 50 proved in part, was 45; none conditional, was 3; 80 in Mathlib). The comparator check stays one per book (Apostol and Davenport, a matrix in CI); no file imports all of
   Mathlib.
+- **v0.3.0** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:ZENODO-DOI-v0.3.0](https://doi.org/ZENODO-DOI-v0.3.0):
+  the class number formulas (Davenport Chapters 5, 6, 14, 21: the finite formulas, Jacobi's formula, Siegel's lower
+  bounds; conditional on two named inputs about quadratic fields) and Vinogradov's three primes theorem (Chapter 26,
+  unconditional); Apostol's book complete (Theorems 4.17, 11.13, 11.18, 13.10; 11.14 in part). 7 new headline
+  statements (`Challenge_Davenport.lean`, now 28); the 24 headlines of 0.1.0 and 0.2.0 unchanged. Refreshed maps
+  (Davenport, 432 results: 198 proved, was 178; 47 proved in part, was 50; 9 conditional, was 0; 80 in Mathlib.
+  Apostol, 322 results: 173 proved, was 168; 1 conditional; 148 in Mathlib; none open). See *What's new in 0.3.0*
+  and *Known restrictions*.
 
-**Not in this release:** the class number bounds that follow from Siegel's theorem (Davenport Chapter 21, (B) and
-(C): they need the class number formulas); the ternary Goldbach problem (Chapter 26); Iwaniec and Kowalski's
-*Analytic Number Theory*.
+**Not in this release:** Davenport's lattice-point route to the class number formula (Chapter 6) and the other open
+rows of the Davenport map; Iwaniec and Kowalski's *Analytic Number Theory*.
 
 ## License
 
