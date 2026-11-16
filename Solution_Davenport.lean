@@ -20,6 +20,11 @@ import NTKB.Analytic.Davenport.Siegel.PrimeCountingAP
 import NTKB.Analytic.Davenport.ClassNumber.Finite
 import NTKB.Analytic.Davenport.ClassNumber.Bounds
 import NTKB.Analytic.Davenport.ThreePrimes.ThreePrimes
+import NTKB.Analytic.Davenport.ClassNumber.Unconditional
+import NTKB.Analytic.Davenport.Forms.Invariance
+import NTKB.Analytic.Davenport.Forms.Units
+import NTKB.Analytic.Davenport.Zeros.RiemannVonMangoldtExact
+import NTKB.Analytic.Davenport.Zeros.ExplicitReal
 
 /-!
 # Proofs of the Davenport headline statements
@@ -173,7 +178,8 @@ theorem barban_davenport_halberstam {A : ℝ} (hA : 0 < A) :
 
 /-! ## New in 0.3.0: class number formulas (Chapters 6 and 21) and the three primes theorem (Chapter 26)
 
-The class number statements are *conditional*: each takes the two named inputs
+The class number statements are *conditional* (since 0.4.0 the inputs are proved: see the unconditional copies in the
+section *New in 0.4.0* below): each takes the two named inputs
 `NTKB.Davenport.QuadraticFieldDiscriminants` and `NTKB.Davenport.QuadraticIdealCount` as hypotheses (see "Definitions
 used" above). The class number and the regulator are those of the field (`h` counts ideal classes, the regulator is
 `log ε` for a fundamental unit `ε`, whatever its norm); Davenport's `h(d)` for `d > 0` counts classes of forms. -/
@@ -236,5 +242,76 @@ theorem exists_three_primes_of_odd :
     ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → Odd N →
       ∃ p₁ p₂ p₃ : ℕ, p₁.Prime ∧ p₂.Prime ∧ p₃.Prime ∧ p₁ + p₂ + p₃ = N :=
   NTKB.Davenport.exists_three_primes_of_odd
+
+/-! ## New in 0.4.0: class numbers with no assumed input, binary quadratic forms (Chapter 6), the Riemann–von
+Mangoldt formula (Chapter 15) and von Mangoldt's explicit formula (Chapter 17)
+
+The five class number statements of 0.3.0 without their two named inputs, which are now theorems of the library (the
+ring of integers, discriminant and decomposition law of a quadratic field, proved from Mathlib's `QuadraticAlgebra`). -/
+
+section ClassNumberUnconditional
+
+open scoped NumberField
+
+theorem classNumber_eq_sum_of_discr_neg_unconditional {K : Type} [Field K] [NumberField K]
+    (hK : Module.finrank ℚ K = 2) (hD : NumberField.discr K < 0) :
+    (NumberField.classNumber K : ℂ) =
+      -((NumberField.Units.torsionOrder K : ℂ) / (2 * (NumberField.discr K).natAbs)) *
+        ∑ m ∈ Icc 1 (NumberField.discr K).natAbs, (m : ℂ) * NTKB.kroneckerChar (NumberField.discr K) m :=
+  NTKB.Davenport.classNumber_eq_sum_of_discr_neg_unconditional hK hD
+
+theorem classNumber_mul_log_eq_sum_of_discr_pos_unconditional {K : Type} [Field K] [NumberField K]
+    (hK : Module.finrank ℚ K = 2) (hD : 0 < NumberField.discr K) (ε : (𝓞 K)ˣ)
+    (hε : Subgroup.closure {ε} ⊔ NumberField.Units.torsion K = ⊤) (w : NumberField.InfinitePlace K) :
+    ((NumberField.classNumber K * |Real.log (w (ε : K))| : ℝ) : ℂ) = -(1 / 2) *
+      ∑ m ∈ Ico 1 (NumberField.discr K).natAbs,
+        NTKB.kroneckerChar (NumberField.discr K) m *
+          (Real.log (Real.sin (π * m / NumberField.discr K)) : ℂ) :=
+  NTKB.Davenport.classNumber_mul_log_eq_sum_of_discr_pos_unconditional hK hD ε hε w
+
+theorem classNumber_eq_jacobi_unconditional {K : Type} [Field K] [NumberField K]
+    {q : ℕ} [Fact q.Prime] (hq : q % 4 = 3) (hq3 : 3 < q) (hK : Module.finrank ℚ K = 2)
+    (hDq : NumberField.discr K = -q) :
+    (q : ℤ) * NumberField.classNumber K = -∑ m ∈ Ico 1 q, (m : ℤ) * legendreSym q m :=
+  NTKB.Davenport.classNumber_eq_jacobi_unconditional hq hq3 hK hDq
+
+theorem classNumber_gt_of_discr_neg_unconditional {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      NumberField.discr K < 0 →
+        C * |(NumberField.discr K : ℝ)| ^ ((1 : ℝ) / 2 - ε) < NumberField.classNumber K :=
+  NTKB.Davenport.classNumber_gt_of_discr_neg_unconditional hε
+
+theorem classNumber_mul_log_gt_of_discr_pos_unconditional {ε : ℝ} (hε : 0 < ε) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      0 < NumberField.discr K →
+      ∀ (η : (𝓞 K)ˣ), Subgroup.closure {η} ⊔ NumberField.Units.torsion K = ⊤ →
+        ∀ w : NumberField.InfinitePlace K,
+          C * (NumberField.discr K : ℝ) ^ ((1 : ℝ) / 2 - ε) <
+            NumberField.classNumber K * |Real.log (w (η : K))| :=
+  NTKB.Davenport.classNumber_mul_log_gt_of_discr_pos_unconditional hε
+
+end ClassNumberUnconditional
+
+theorem basic_theorem_binary_forms {D : ℤ} (hD : NTKB.IsFundamentalDiscriminant D) (h1 : D ≠ 1)
+    {S : Finset (ℤ × ℤ × ℤ)} (hS : NTKB.Davenport.IsDavFormSystem D S) {n : ℕ} (hn : 0 < n) :
+    ((∑ f ∈ S, NTKB.Davenport.repClassCount f n : ℕ) : ℂ) = ∑ m ∈ n.divisors, NTKB.kroneckerChar D m :=
+  NTKB.Davenport.sum_repClassCount_eq_of_isDavFormSystem hD h1 hS hn
+
+theorem total_representations_of_discr_neg {D : ℤ} (hD : NTKB.IsFundamentalDiscriminant D) (hneg : D < 0)
+    {S : Finset (ℤ × ℤ × ℤ)} (hS : NTKB.Davenport.IsFormSystem D S) {n : ℕ} (hn : 0 < n) :
+    ((∑ f ∈ S, Nat.card (NTKB.Davenport.Reps f n) : ℕ) : ℂ) =
+      ((if D = -3 then 6 else if D = -4 then 4 else 2 : ℕ) : ℂ) * ∑ m ∈ n.divisors, NTKB.kroneckerChar D m :=
+  NTKB.Davenport.sum_card_reps_eq_of_neg hD hneg hS hn
+
+theorem riemann_von_mangoldt {T : ℝ} (hT : 0 < T) (hTz : ∀ ρ : NTKB.ZeroIndex NTKB.riemannXi, |ρ.val.im| ≠ T) :
+    |(NTKB.zetaZeroCount T : ℝ) -
+      (T / (2 * π) * Real.log (T / (2 * π)) - T / (2 * π) + 7 / 8 + NTKB.zetaArgS T)| ≤ 3 / T :=
+  NTKB.Davenport.riemann_von_mangoldt hT hTz
+
+theorem explicit_formula_vonMangoldt {x : ℝ} (hx : 2 ≤ x) :
+    Filter.Tendsto (fun T : ℝ ↦ ∑ ρ ∈ NTKB.zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val) Filter.atTop
+      (nhds ((x : ℂ) - NTKB.psi0R x - Real.log (2 * π) -
+        ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))) :=
+  NTKB.Davenport.explicit_formula_vonMangoldt hx
 
 end NTKB.Headlines.Davenport

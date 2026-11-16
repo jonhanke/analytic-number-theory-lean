@@ -29,7 +29,16 @@
     "NTKB.Headlines.Davenport.classNumber_gt_of_discr_neg",
     "NTKB.Headlines.Davenport.classNumber_mul_log_gt_of_discr_pos",
     "NTKB.Headlines.Davenport.vinogradov_three_primes",
-    "NTKB.Headlines.Davenport.exists_three_primes_of_odd"
+    "NTKB.Headlines.Davenport.exists_three_primes_of_odd",
+    "NTKB.Headlines.Davenport.classNumber_eq_sum_of_discr_neg_unconditional",
+    "NTKB.Headlines.Davenport.classNumber_mul_log_eq_sum_of_discr_pos_unconditional",
+    "NTKB.Headlines.Davenport.classNumber_eq_jacobi_unconditional",
+    "NTKB.Headlines.Davenport.classNumber_gt_of_discr_neg_unconditional",
+    "NTKB.Headlines.Davenport.classNumber_mul_log_gt_of_discr_pos_unconditional",
+    "NTKB.Headlines.Davenport.basic_theorem_binary_forms",
+    "NTKB.Headlines.Davenport.total_representations_of_discr_neg",
+    "NTKB.Headlines.Davenport.riemann_von_mangoldt",
+    "NTKB.Headlines.Davenport.explicit_formula_vonMangoldt"
   ],
   "definition_names": [],
   "permitted_axioms": [
