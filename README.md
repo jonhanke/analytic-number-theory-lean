@@ -329,7 +329,7 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
   statements (`Challenge_Davenport.lean`, now 28); the 24 headlines of 0.1.0 and 0.2.0 unchanged. Refreshed maps
   (Davenport, 432 results: 198 proved, was 178; 47 proved in part, was 50; 9 conditional, was 0; 80 in Mathlib.
   Apostol, 322 results: 173 proved, was 168; 1 conditional; 148 in Mathlib; none open).
-- **v0.4.0** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:ZENODO-DOI-v0.4.0](https://doi.org/ZENODO-DOI-v0.4.0):
+- **v0.4.0** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24285927](https://doi.org/10.5281/zenodo.24285927):
   quadratic fields with no assumed input (the class number formulas, Jacobi's formula and Siegel's bounds
   unconditional), binary quadratic forms and ideal classes (Davenport Chapter 6, the basic theorem), the
   Riemann–von Mangoldt formula with $`7/8 + S(T)`$, explicit formulas for real $`x`$, the effective prime number
