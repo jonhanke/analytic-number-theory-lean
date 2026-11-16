@@ -35,3 +35,12 @@ import Solution_Davenport
 #print axioms NTKB.Headlines.Davenport.classNumber_mul_log_gt_of_discr_pos
 #print axioms NTKB.Headlines.Davenport.vinogradov_three_primes
 #print axioms NTKB.Headlines.Davenport.exists_three_primes_of_odd
+#print axioms NTKB.Headlines.Davenport.classNumber_eq_sum_of_discr_neg_unconditional
+#print axioms NTKB.Headlines.Davenport.classNumber_mul_log_eq_sum_of_discr_pos_unconditional
+#print axioms NTKB.Headlines.Davenport.classNumber_eq_jacobi_unconditional
+#print axioms NTKB.Headlines.Davenport.classNumber_gt_of_discr_neg_unconditional
+#print axioms NTKB.Headlines.Davenport.classNumber_mul_log_gt_of_discr_pos_unconditional
+#print axioms NTKB.Headlines.Davenport.basic_theorem_binary_forms
+#print axioms NTKB.Headlines.Davenport.total_representations_of_discr_neg
+#print axioms NTKB.Headlines.Davenport.riemann_von_mangoldt
+#print axioms NTKB.Headlines.Davenport.explicit_formula_vonMangoldt
