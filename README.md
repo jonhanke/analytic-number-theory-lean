@@ -350,7 +350,7 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
   now 37); the 31 headlines of 0.1.0 to 0.3.0 unchanged. Refreshed Davenport map (432 results: 243 proved, was 198;
   32 proved in part, was 47; none conditional, was 9; 80 in Mathlib). See *What's new in 0.4.0*, *Conditional
   theorems* and *Known restrictions*.
-- **[v0.4.1](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.4.1)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:ZENODO-DOI-v0.4.1](https://doi.org/ZENODO-DOI-v0.4.1):
+- **[v0.4.1](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.4.1)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24301263](https://doi.org/10.5281/zenodo.24301263):
   von Mangoldt's explicit formula for every real $`x > 1`$ and Davenport's primary representations (Chapter 6). 1 new
   headline statement (`Challenge_Davenport.lean`, now 38); the 40 headlines of 0.1.0 to 0.4.0 unchanged. Refreshed
   Davenport map (432 results: 244 proved, was 243; 32 proved in part; none conditional; 80 in Mathlib). See *What's
