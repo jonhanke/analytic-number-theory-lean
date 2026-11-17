@@ -330,6 +330,7 @@ import AnalyticNumberTheory
 #check @NTKB.Davenport.IsFormSystem
 #check @NTKB.Davenport.IsPellFundamental
 #check @NTKB.Davenport.IsPellFundamental.pellValue_eq
+#check @NTKB.Davenport.IsPrimaryRep
 #check @NTKB.Davenport.LFunction_changeLevel_eq_zero_iff
 #check @NTKB.Davenport.LFunction_exceptional_zero_real_simple
 #check @NTKB.Davenport.LFunction_exceptional_zero_unique
@@ -391,6 +392,7 @@ import AnalyticNumberTheory
 #check @NTKB.Davenport.card_absNorm_eq_sum_order
 #check @NTKB.Davenport.card_le_of_sieve
 #check @NTKB.Davenport.card_narrowClass_eq_two_mul
+#check @NTKB.Davenport.card_primaryReps_eq_repClassCount
 #check @NTKB.Davenport.card_repClasses_eq
 #check @NTKB.Davenport.card_sol_four_of_neg
 #check @NTKB.Davenport.card_three_primes_ge
@@ -743,6 +745,8 @@ import AnalyticNumberTheory
 #check @NTKB.Davenport.supPsi
 #check @NTKB.Davenport.tendsto_dirichletPartialSum_LFunction
 #check @NTKB.Davenport.tendsto_explicitMain_real
+#check @NTKB.Davenport.tendsto_explicitMain_real_of_one_lt
+#check @NTKB.Davenport.tendsto_explicitMain_real_of_one_lt'
 #check @NTKB.Davenport.tendsto_sum_char_div_LFunction
 #check @NTKB.Davenport.tendsto_sum_prime_rpow_atTop
 #check @NTKB.Davenport.tendsto_sum_range_pow_div

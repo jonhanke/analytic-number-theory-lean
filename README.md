@@ -35,9 +35,23 @@ files it ships unchanged (see *Dependencies and the companion library*).
 | book | rows | proved | proved in part | conditional | in Mathlib | other | proved here, also elsewhere |
 |---|---|---|---|---|---|---|---|
 | [T. M. Apostol, *Introduction to Analytic Number Theory* (1976)](docs/results/books/apostol.md) | 322 | 173 | 0 | 1 | 148 | 0 | 80 |
-| [H. Davenport, *Multiplicative Number Theory* (2nd ed., revised by H. L. Montgomery, 1980)](docs/results/books/davenport.md) | 432 | 243 | 32 | 0 | 80 | 77 | 59 |
+| [H. Davenport, *Multiplicative Number Theory* (2nd ed., revised by H. L. Montgomery, 1980)](docs/results/books/davenport.md) | 432 | 244 | 32 | 0 | 80 | 76 | 59 |
 
 *Proved*: proved with only the standard axioms and no unproved input. *Proved in part*: a part, a special case, a weaker form or one instance is proved (the map's Lean column names it). *Conditional*: proved from a named unproved input (here Apostol's Theorem 11.14, from `NTKB.Apostol.DirichletInverseSummableInput`; the two inputs of the Davenport class number rows of 0.3.0, `NTKB.Davenport.QuadraticFieldDiscriminants` and `NTKB.Davenport.QuadraticIdealCount`, are proved since 0.4.0, and `SiegelWalfiszHypothesis`, the input of Davenport's Chapters 28 and 29 in 0.1.0, since 0.2.0). *In Mathlib*: Mathlib (a dependency) has the result; the map names the Mathlib declaration. *Other*: in Tau Ceti or PrimeNumberTheoremAnd only (not dependencies), partly formalized elsewhere, or not formalized (see each map). *Proved here, also elsewhere*: rows proved (in whole or in part) here whose result, a part of it or a closely related statement is also in Mathlib, Tau Ceti or PrimeNumberTheoremAnd; each map names those declarations in its column *Also in*. Rows that are not results (definitions, remarks, history) are omitted from the maps.
+
+## What's new in 0.4.1
+
+- **Von Mangoldt's explicit formula for every real $`x > 1`$** (Davenport, Chapter 17, (1)), as Davenport states it:
+  the case $`1 < x < 2`$ (where $`\psi_0(x) = 0`$) is proved by the argument for $`x \ge 2`$ with constants depending
+  on $`x`$. 1 new headline (`explicit_formula_vonMangoldt_of_one_lt`); the headline `explicit_formula_vonMangoldt` of
+  0.4.0 ($`x \ge 2`$) is kept unchanged.
+- **Primary representations** (Davenport, Chapter 6, pp. 56-57, row 6-6): for $`d > 0`$, a form $`(a, b, c)`$ with
+  $`a > 0`$ and the generator $`\varepsilon > 1`$ of the units of norm $`1`$, every orbit of representations of $`n`$
+  under the automorphs contains exactly one primary representation, so their number is $`R_f(n)`$
+  (`NTKB.Davenport.card_primaryReps_eq_repClassCount`; not a headline: with it the headline
+  `basic_theorem_binary_forms` of 0.4.0 counts Davenport's primary representations).
+- The 40 headlines of 0.1.0 to 0.4.0 are unchanged (41 in all). Davenport map: 244 proved, was 243; 32 in part; none
+  conditional.
 
 ## What's new in 0.4.0
 
@@ -66,7 +80,7 @@ files it ships unchanged (see *Dependencies and the companion library*).
 
 ## Conditional theorems
 
-Theorems proved from a named input that the library does not prove. No headline of 0.4.0 needs one.
+Theorems proved from a named input that the library does not prove. No headline of 0.4.0 or 0.4.1 needs one.
 
 - **Apostol's Theorem 11.14** (uniqueness of Dirichlet series) is proved for absolutely convergent series; under the
   book's hypothesis only from the named input `NTKB.Apostol.DirichletInverseSummableInput` (an inversion theorem the
@@ -83,11 +97,9 @@ Theorems proved from a named input that the library does not prove. No headline 
 
 ## Known restrictions
 
-- **Von Mangoldt's explicit formula** (headline `explicit_formula_vonMangoldt`) is proved for real $`x \ge 2`$;
-  Davenport states it for $`x > 1`$, and $`1 < x < 2`$ is not done.
 - **The basic theorem on binary forms** (headline `basic_theorem_binary_forms`) counts representations up to
-  automorphs; Davenport's primary representations (the fundamental domain of his (10) and (11) for $`d > 0`$, row 6-6)
-  and his lattice-point route to the class number formula (rows 6-8, 6-9, 6-11) are not formalized.
+  automorphs (since 0.4.1 the library proves that this is the number of Davenport's primary representations, row
+  6-6); his lattice-point route to the class number formula (rows 6-8, 6-9, 6-11) is not formalized.
 - **Field class number and form class number.** The class number headlines use the class number and the regulator
   of the field ($`\log\varepsilon`$ for a fundamental unit of either norm); the library also states them for
   Davenport's class number of forms with $`\varepsilon`$ of norm $`+1`$ (not headlines). For even characters the extra
@@ -192,8 +204,9 @@ Provenance).
   proves $`N(T) \le AT^{3/2}`$.
 - **Von Mangoldt's explicit formula** (new in 0.4.0, Chapter 17): for real $`x \ge 2`$,
   $`\psi_0(x) = x - \sum_\rho x^\rho/\rho - \log 2\pi - \tfrac12\log(1 - x^{-2})`$, the sum over the zeros taken
-  symmetrically (`explicit_formula_vonMangoldt`). Related: PrimeNumberTheoremAnd has smoothed explicit formulas that
-  depend on statements with `sorry`.
+  symmetrically (`explicit_formula_vonMangoldt`); since 0.4.1 for every real $`x > 1`$, as in the book
+  (`explicit_formula_vonMangoldt_of_one_lt`). Related: PrimeNumberTheoremAnd has smoothed explicit formulas that
+  depend on statements with `sorry`; Mathlib and Tau Ceti have none.
 
 **Apostol, *Introduction to Analytic Number Theory*** ([`Challenge_Apostol.lean`](Challenge_Apostol.lean))
 
@@ -239,7 +252,7 @@ column *Also in*, the results proved here that Mathlib, Tau Ceti or PrimeNumberT
 
 ## Dependencies and the companion library
 
-The library depends on Mathlib only. It ships 300 modules; 104 of them are byte-identical to files
+The library depends on Mathlib only. It ships 302 modules; 104 of them are byte-identical to files
 of [elementary-number-theory-lean v0.4.0](https://github.com/jonhanke/elementary-number-theory-lean/releases/tag/v0.4.0)
 (the `@[kb]` attribute `NTKB.Attr`, the special values of Dirichlet $`L`$-functions
 `NTKB.Elementary.SpecialValues.*`, which the Davenport files use, and part of `NTKB.Analytic.Apostol.*`), with the
@@ -290,11 +303,11 @@ lake env lean scripts/check_axioms.lean          # axioms of the headline theore
                                                  # (Linux; needs bubblewrap); likewise Apostol
 ```
 
-Mathlib comes prebuilt from its cache; this library is built from source (300 modules, about 72,000 lines; no file
-imports all of Mathlib, so only the Mathlib modules it needs are loaded). On 8 cores and 31 GB (2026-11-16), with
+Mathlib comes prebuilt from its cache; this library is built from source (302 modules, about 73,000 lines; no file
+imports all of Mathlib, so only the Mathlib modules it needs are loaded). On 8 cores and 31 GB (2026-11-17), with
 Mathlib's cache in place, `lake build` took about 18 minutes, with at most 4.4 GB of memory in use and a largest
-single Lean process of 4.2 GB. Each `lake comparator` check (one book: build, export, and the Lean, NanoDa and
-con-ron kernels) took about 5 minutes (Apostol) and 13 minutes (Davenport), with at most 5.0 GB in use
+single Lean process of 4.3 GB. Each `lake comparator` check (one book: build, export, and the Lean, NanoDa and
+con-ron kernels) took about 5 minutes (Apostol) and 14 minutes (Davenport), with at most 5.1 GB in use
 and a largest single process of 5.0 GB (`leanexport`).
 
 ## Provenance
@@ -303,7 +316,7 @@ NTKB was written by AI, with Claude Code (Anthropic): almost entirely by Claude 
 Sonnet 5.5, in November 2026. Jonathan Hanke designed and directed it: he chose the books, the results, the
 conventions and the proof routes. The files under `NTKB/Port/` contain code ported from Tau Ceti (by the Tau Ceti
 contributors, Apache 2.0). The proofs are checked by the Lean kernel, and CI checks that the headline theorems use
-only the standard axioms. The 40 headline statements of this release (31 of 0.1.0 to 0.3.0, unchanged, and 9 new) in the `Challenge_<book>.lean` files, and the
+only the standard axioms. The 41 headline statements of this release (40 of 0.1.0 to 0.4.0, unchanged, and 1 new) in the `Challenge_<book>.lean` files, and the
 definitions they use, have **not yet been reviewed** by a human. `lake comparator` checks that each
 `Solution_<book>.lean` proves exactly the statements of its `Challenge_<book>.lean`. The rest of the library (its
 other definitions and intermediate results, and the book maps) has not been reviewed by a human; as with any
@@ -337,9 +350,14 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
   now 37); the 31 headlines of 0.1.0 to 0.3.0 unchanged. Refreshed Davenport map (432 results: 243 proved, was 198;
   32 proved in part, was 47; none conditional, was 9; 80 in Mathlib). See *What's new in 0.4.0*, *Conditional
   theorems* and *Known restrictions*.
+- **[v0.4.1](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.4.1)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:ZENODO-DOI-v0.4.1](https://doi.org/ZENODO-DOI-v0.4.1):
+  von Mangoldt's explicit formula for every real $`x > 1`$ and Davenport's primary representations (Chapter 6). 1 new
+  headline statement (`Challenge_Davenport.lean`, now 38); the 40 headlines of 0.1.0 to 0.4.0 unchanged. Refreshed
+  Davenport map (432 results: 244 proved, was 243; 32 proved in part; none conditional; 80 in Mathlib). See *What's
+  new in 0.4.1*.
 
-**Not in this release:** Davenport's lattice-point route to the class number formula (Chapter 6), von Mangoldt's
-formula for $`1 < x < 2`$ and the other open rows of the Davenport map; Iwaniec and Kowalski's *Analytic Number
+**Not in this release:** Davenport's lattice-point route to the class number formula (Chapter 6) and the other open
+rows of the Davenport map; Iwaniec and Kowalski's *Analytic Number
 Theory*.
 
 ## License

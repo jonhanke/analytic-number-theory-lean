@@ -25,6 +25,7 @@ import NTKB.Analytic.Davenport.Forms.Invariance
 import NTKB.Analytic.Davenport.Forms.Units
 import NTKB.Analytic.Davenport.Zeros.RiemannVonMangoldtExact
 import NTKB.Analytic.Davenport.Zeros.ExplicitReal
+import NTKB.Analytic.Davenport.Zeros.ExplicitSmall
 
 /-!
 # Proofs of the Davenport headline statements
@@ -309,6 +310,14 @@ theorem riemann_von_mangoldt {T : ℝ} (hT : 0 < T) (hTz : ∀ ρ : NTKB.ZeroInd
   NTKB.Davenport.riemann_von_mangoldt hT hTz
 
 theorem explicit_formula_vonMangoldt {x : ℝ} (hx : 2 ≤ x) :
+    Filter.Tendsto (fun T : ℝ ↦ ∑ ρ ∈ NTKB.zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val) Filter.atTop
+      (nhds ((x : ℂ) - NTKB.psi0R x - Real.log (2 * π) -
+        ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))) :=
+  NTKB.Davenport.explicit_formula_vonMangoldt_of_two_le hx
+
+/-! ## New in 0.4.1: von Mangoldt's explicit formula for every real `x > 1` (Chapter 17) -/
+
+theorem explicit_formula_vonMangoldt_of_one_lt {x : ℝ} (hx : 1 < x) :
     Filter.Tendsto (fun T : ℝ ↦ ∑ ρ ∈ NTKB.zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val) Filter.atTop
       (nhds ((x : ℂ) - NTKB.psi0R x - Real.log (2 * π) -
         ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))) :=
