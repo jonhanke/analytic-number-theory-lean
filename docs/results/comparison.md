@@ -7,7 +7,9 @@ of 2026-11-11, 0.1.0 those of 2026-11-07): Mathlib master `4cf60f1d` (2026-11-14
 including its `PrimeNumberTheoremAnd/Mathlib/` subtree, which is not in Mathlib). A result is a headline only if none of the three
 has it; the related results are cited. The searches were by name and by content (statements read); "not found" means
 that no declaration of that content was found, not a proof of absence. The nine headlines new in 0.4.0 were searched on
-2026-11-16 in Mathlib master `a8754b1`, Tau Ceti main `726e93ef` and PrimeNumberTheoremAnd `a4fb6989`.
+2026-11-16 in Mathlib master `a8754b1`, Tau Ceti main `726e93ef` and PrimeNumberTheoremAnd `a4fb6989`. The headline new
+in 0.4.1 was searched on 2026-11-17 in Mathlib master `d9a73ae1` and Tau Ceti main `7b4d5f70` (PrimeNumberTheoremAnd:
+the 0.4.0 search of the same formula for `x ≥ 2`).
 
 ## Headlines
 
@@ -35,6 +37,7 @@ that no declaration of that content was found, not a proof of absence. The nine 
 | `Davenport.basic_theorem_binary_forms`, `total_representations_of_discr_neg` (Chapter 6, p. 57; new in 0.4.0) | binary quadratic forms as quadratic forms; no representation count | classes of forms and (narrow) ideal classes (`properClassEquivNarrowPic`, `posDefProperClassEquivPic`), reduced forms; not these counts | not found |
 | `Davenport.riemann_von_mangoldt` (Chapter 15; new in 0.4.0) | not found | complex Stirling (ported here with credit for the proof); no zero count | `riemannZeta.Riemann_vonMangoldt_bound` stated with `sorry` (`backlund_bound`); `N(T) ≤ A T^{3/2}` proved (`Backlund.zetaCounting_crude_majorant`) |
 | `Davenport.explicit_formula_vonMangoldt` (Chapter 17; new in 0.4.0) | not found | the truncated Perron kernel; no explicit formula | smoothed explicit formulas (`Kadiri.prop_2_1`) resting on statements with `sorry`; a truncated form with `sorry` |
+| `Davenport.explicit_formula_vonMangoldt_of_one_lt` (Chapter 17, every real `x > 1`; new in 0.4.1) | not found | as above | as above |
 | `Apostol.card_partition_lt_exp` (Theorem 14.5) | partitions (`Nat.Partition`), Euler's generating function; no bound | not found | not found |
 | `Apostol.mean_square_LSeries` (Theorem 11.16) | `LSeries`, its convergence; no mean value | absolute convergence from mean-square bounds on the coefficients (`TauCeti.LSeriesSummable_of_sum_norm_sq_bigO`), a different statement | not found |
 

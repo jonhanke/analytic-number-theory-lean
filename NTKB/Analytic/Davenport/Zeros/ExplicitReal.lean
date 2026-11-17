@@ -222,11 +222,9 @@ theorem Davenport.tendsto_explicitMain_real {x : ℝ} (hx : 2 ≤ x) :
   rw [norm_norm, norm_sub_rev]
   exact h x hx T hT
 
-/-- **Davenport, Ch. 17, p. 104, (1) (row 17-2)**, in the book's form: for real `x ≥ 2`,
-`∑_{|γ|<T} x^ρ/ρ → x - ψ₀(x) - ζ'(0)/ζ(0) - ½ log(1 - x^{-2})` as `T → ∞`; that is,
-`ψ₀(x) = x - ∑_ρ x^ρ/ρ - ζ'(0)/ζ(0) - ½ log(1 - x^{-2})`. Here `ζ'(0)/ζ(0) = log 2π`. -/
-@[kb "davenport1980" "Ch 17, p. 104"]
-theorem Davenport.explicit_formula_vonMangoldt {x : ℝ} (hx : 2 ≤ x) :
+/-- Davenport, Ch. 17, p. 104, (1) (row 17-2) for real `x ≥ 2`; the book's form for every real
+`x > 1` is `Davenport.explicit_formula_vonMangoldt` (ExplicitSmall.lean). -/
+theorem Davenport.explicit_formula_vonMangoldt_of_two_le {x : ℝ} (hx : 2 ≤ x) :
     Tendsto (fun T : ℝ ↦ ∑ ρ ∈ zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val) atTop
       (𝓝 ((x : ℂ) - psi0R x - Real.log (2 * π) -
         ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))) := by

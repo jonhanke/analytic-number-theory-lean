@@ -25,6 +25,7 @@ import NTKB.Analytic.Davenport.Forms.Invariance
 import NTKB.Analytic.Davenport.Forms.Units
 import NTKB.Analytic.Davenport.Zeros.RiemannVonMangoldtExact
 import NTKB.Analytic.Davenport.Zeros.ExplicitReal
+import NTKB.Analytic.Davenport.Zeros.ExplicitSmall
 
 /-!
 # Headline statements of analytic-number-theory-lean: Davenport
@@ -510,10 +511,25 @@ theorem riemann_von_mangoldt {T : ℝ} (hT : 0 < T) (hTz : ∀ ρ : NTKB.ZeroInd
 
 /-- **Von Mangoldt's explicit formula** (Chapter 17, p. 104, (1)), for every real `x ≥ 2`:
 `ψ₀(x) = x - ∑_ρ x^ρ/ρ - log 2π - (1/2) log(1 - x⁻²)`, the sum over the nontrivial zeros `ρ` of `ζ` (with
-multiplicity) taken symmetrically, `|γ| < T`, `T → ∞`. (Davenport states it for `x > 1`; `1 < x < 2` is not done.)
+multiplicity) taken symmetrically, `|γ| < T`, `T → ∞`. (Davenport states it for `x > 1`: that is the headline `explicit_formula_vonMangoldt_of_one_lt`,
+new in 0.4.1.)
 PrimeNumberTheoremAnd has smoothed explicit formulas that depend on statements with `sorry`; Mathlib and Tau Ceti have
 none. -/
 theorem explicit_formula_vonMangoldt {x : ℝ} (hx : 2 ≤ x) :
+    Filter.Tendsto (fun T : ℝ ↦ ∑ ρ ∈ NTKB.zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val) Filter.atTop
+      (nhds ((x : ℂ) - NTKB.psi0R x - Real.log (2 * π) -
+        ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))) := by
+  sorry
+
+/-! ## New in 0.4.1: von Mangoldt's explicit formula for every real `x > 1` (Chapter 17) -/
+
+/-- **Von Mangoldt's explicit formula** (Chapter 17, p. 104, (1)), for every real `x > 1`, as Davenport states it:
+`ψ₀(x) = x - ∑_ρ x^ρ/ρ - log 2π - (1/2) log(1 - x⁻²)`, the sum over the nontrivial zeros `ρ` of `ζ` (with
+multiplicity) taken symmetrically, `|γ| < T`, `T → ∞`. The headline `explicit_formula_vonMangoldt` of 0.4.0 is the
+case `x ≥ 2`; for `1 < x < 2` (where `ψ₀(x) = 0`) the library repeats its proof with the constants depending on `x`
+(`log 2` replaced by `log x` or `log(2/x)`). PrimeNumberTheoremAnd has smoothed explicit formulas that depend on statements with `sorry`; Mathlib
+and Tau Ceti have none. -/
+theorem explicit_formula_vonMangoldt_of_one_lt {x : ℝ} (hx : 1 < x) :
     Filter.Tendsto (fun T : ℝ ↦ ∑ ρ ∈ NTKB.zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val) Filter.atTop
       (nhds ((x : ℂ) - NTKB.psi0R x - Real.log (2 * π) -
         ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))) := by

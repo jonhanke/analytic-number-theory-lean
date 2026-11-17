@@ -44,3 +44,4 @@ import Solution_Davenport
 #print axioms NTKB.Headlines.Davenport.total_representations_of_discr_neg
 #print axioms NTKB.Headlines.Davenport.riemann_von_mangoldt
 #print axioms NTKB.Headlines.Davenport.explicit_formula_vonMangoldt
+#print axioms NTKB.Headlines.Davenport.explicit_formula_vonMangoldt_of_one_lt

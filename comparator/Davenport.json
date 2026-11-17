@@ -38,7 +38,8 @@
     "NTKB.Headlines.Davenport.basic_theorem_binary_forms",
     "NTKB.Headlines.Davenport.total_representations_of_discr_neg",
     "NTKB.Headlines.Davenport.riemann_von_mangoldt",
-    "NTKB.Headlines.Davenport.explicit_formula_vonMangoldt"
+    "NTKB.Headlines.Davenport.explicit_formula_vonMangoldt",
+    "NTKB.Headlines.Davenport.explicit_formula_vonMangoldt_of_one_lt"
   ],
   "definition_names": [],
   "permitted_axioms": [

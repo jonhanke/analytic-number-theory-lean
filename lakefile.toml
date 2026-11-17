@@ -1,5 +1,5 @@
 name = "analytic_number_theory_lean"
-version = "0.4.0"
+version = "0.4.1"
 defaultTargets = ["AnalyticNumberTheory", "Challenge_Apostol", "Solution_Apostol", "Challenge_Davenport", "Solution_Davenport"]
 
 [leanOptions]
@@ -163,6 +163,7 @@ globs = [
   "NTKB.Analytic.Davenport.Forms.Invariance",
   "NTKB.Analytic.Davenport.Forms.Narrow",
   "NTKB.Analytic.Davenport.Forms.PellCount",
+  "NTKB.Analytic.Davenport.Forms.Primary",
   "NTKB.Analytic.Davenport.Forms.RealUnits",
   "NTKB.Analytic.Davenport.Forms.Representation",
   "NTKB.Analytic.Davenport.Forms.Units",
@@ -226,6 +227,7 @@ globs = [
   "NTKB.Analytic.Davenport.Zeros.ExplicitPrime",
   "NTKB.Analytic.Davenport.Zeros.ExplicitPsi",
   "NTKB.Analytic.Davenport.Zeros.ExplicitReal",
+  "NTKB.Analytic.Davenport.Zeros.ExplicitSmall",
   "NTKB.Analytic.Davenport.Zeros.ExplicitSum",
   "NTKB.Analytic.Davenport.Zeros.GoodHeight",
   "NTKB.Analytic.Davenport.Zeros.LConstant",

@@ -143,6 +143,7 @@ import NTKB.Analytic.Davenport.Forms.Ideal
 import NTKB.Analytic.Davenport.Forms.Invariance
 import NTKB.Analytic.Davenport.Forms.Narrow
 import NTKB.Analytic.Davenport.Forms.PellCount
+import NTKB.Analytic.Davenport.Forms.Primary
 import NTKB.Analytic.Davenport.Forms.RealUnits
 import NTKB.Analytic.Davenport.Forms.Representation
 import NTKB.Analytic.Davenport.Forms.Units
@@ -206,6 +207,7 @@ import NTKB.Analytic.Davenport.Zeros.ExplicitFormula
 import NTKB.Analytic.Davenport.Zeros.ExplicitPrime
 import NTKB.Analytic.Davenport.Zeros.ExplicitPsi
 import NTKB.Analytic.Davenport.Zeros.ExplicitReal
+import NTKB.Analytic.Davenport.Zeros.ExplicitSmall
 import NTKB.Analytic.Davenport.Zeros.ExplicitSum
 import NTKB.Analytic.Davenport.Zeros.GoodHeight
 import NTKB.Analytic.Davenport.Zeros.LConstant
