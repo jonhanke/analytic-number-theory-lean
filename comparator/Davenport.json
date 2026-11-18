@@ -39,7 +39,14 @@
     "NTKB.Headlines.Davenport.total_representations_of_discr_neg",
     "NTKB.Headlines.Davenport.riemann_von_mangoldt",
     "NTKB.Headlines.Davenport.explicit_formula_vonMangoldt",
-    "NTKB.Headlines.Davenport.explicit_formula_vonMangoldt_of_one_lt"
+    "NTKB.Headlines.Davenport.explicit_formula_vonMangoldt_of_one_lt",
+    "NTKB.Headlines.Davenport.explicit_formula_memoir",
+    "NTKB.Headlines.Davenport.explicit_formula_psiL",
+    "NTKB.Headlines.Davenport.real_zero_lt",
+    "NTKB.Headlines.Davenport.psiAP_exceptional",
+    "NTKB.Headlines.Davenport.classNumber_gt_of_no_real_zero",
+    "NTKB.Headlines.Davenport.classNumber_mul_regulator_gt_of_no_real_zero",
+    "NTKB.Headlines.Davenport.card_le_montgomery"
   ],
   "definition_names": [],
   "permitted_axioms": [
