@@ -112,7 +112,9 @@ import NTKB.Analytic.Apostol.Zeta.HurwitzIntegral
 import NTKB.Analytic.Apostol.Zeta.LBounds
 import NTKB.Analytic.Apostol.Zeta.LBoundsHigher
 import NTKB.Analytic.Apostol.Zeta.LZero
+import NTKB.Analytic.Davenport.Ch1to6.CharacterProduct
 import NTKB.Analytic.Davenport.Ch1to6.CubicPeriods
+import NTKB.Analytic.Davenport.Ch1to6.CubicRoots
 import NTKB.Analytic.Davenport.Ch1to6.Cyclotomy
 import NTKB.Analytic.Davenport.Ch1to6.DeLaValleePoussin
 import NTKB.Analytic.Davenport.Ch1to6.Discriminant
@@ -130,6 +132,10 @@ import NTKB.Analytic.Davenport.Ch1to6.LOnePos
 import NTKB.Analytic.Davenport.Ch1to6.LogL
 import NTKB.Analytic.Davenport.Ch1to6.Periods
 import NTKB.Analytic.Davenport.Ch1to6.RealPrimitive
+import NTKB.Analytic.Davenport.Ch1to6.RealPrimitiveModuli
+import NTKB.Analytic.Davenport.Ch1to6.ZetaFract
+import NTKB.Analytic.Davenport.Ch9to10.FourierHurwitz
+import NTKB.Analytic.Davenport.Ch9to10.GammaProduct
 import NTKB.Analytic.Davenport.ClassNumber.Bounds
 import NTKB.Analytic.Davenport.ClassNumber.EulerProduct
 import NTKB.Analytic.Davenport.ClassNumber.EvenZero
@@ -169,6 +175,9 @@ import NTKB.Analytic.Davenport.Hadamard.XiCharConj
 import NTKB.Analytic.Davenport.Hadamard.XiSum
 import NTKB.Analytic.Davenport.Hadamard.ZeroCount
 import NTKB.Analytic.Davenport.Hadamard.ZeroFree
+import NTKB.Analytic.Davenport.Poisson.Kernel
+import NTKB.Analytic.Davenport.Poisson.SecondMean
+import NTKB.Analytic.Davenport.Poisson.Summation
 import NTKB.Analytic.Davenport.Siegel.Estermann
 import NTKB.Analytic.Davenport.Siegel.Hecke
 import NTKB.Analytic.Davenport.Siegel.MertensAP
@@ -216,6 +225,7 @@ import NTKB.Analytic.Davenport.ThreePrimes.Ramanujan
 import NTKB.Analytic.Davenport.ThreePrimes.SingularSeries
 import NTKB.Analytic.Davenport.ThreePrimes.ThreePrimes
 import NTKB.Analytic.Davenport.Zeros.APDecomp
+import NTKB.Analytic.Davenport.Zeros.ArgVariation
 import NTKB.Analytic.Davenport.Zeros.Digamma
 import NTKB.Analytic.Davenport.Zeros.DigammaAsymp
 import NTKB.Analytic.Davenport.Zeros.ExceptionalSize
@@ -234,6 +244,7 @@ import NTKB.Analytic.Davenport.Zeros.LContour
 import NTKB.Analytic.Davenport.Zeros.LContourMain
 import NTKB.Analytic.Davenport.Zeros.LEulerFactorZeros
 import NTKB.Analytic.Davenport.Zeros.LExceptional
+import NTKB.Analytic.Davenport.Zeros.LExceptionalBook
 import NTKB.Analytic.Davenport.Zeros.LExceptionalFormula
 import NTKB.Analytic.Davenport.Zeros.LExceptionalMain
 import NTKB.Analytic.Davenport.Zeros.LExceptionalReal
@@ -253,6 +264,7 @@ import NTKB.Analytic.Davenport.Zeros.LResidues
 import NTKB.Analytic.Davenport.Zeros.LTrivialResidues
 import NTKB.Analytic.Davenport.Zeros.LZeroCount
 import NTKB.Analytic.Davenport.Zeros.LZeroCountArg
+import NTKB.Analytic.Davenport.Zeros.LZeroCountArgBook
 import NTKB.Analytic.Davenport.Zeros.LZeroCountImprimitive
 import NTKB.Analytic.Davenport.Zeros.LZeroCountVertical
 import NTKB.Analytic.Davenport.Zeros.LZeroFreeComplex
@@ -281,6 +293,7 @@ import NTKB.Analytic.Davenport.Zeros.RiemannVonMangoldt
 import NTKB.Analytic.Davenport.Zeros.RiemannVonMangoldtExact
 import NTKB.Analytic.Davenport.Zeros.ThreeFourOne
 import NTKB.Analytic.Davenport.Zeros.ZeroCountArg
+import NTKB.Analytic.Davenport.Zeros.ZeroCountArgBook
 import NTKB.Analytic.Davenport.Zeros.ZeroCountCor
 import NTKB.Analytic.Davenport.Zeros.ZeroCountHoriz
 import NTKB.Analytic.Davenport.Zeros.ZeroCountVertical
@@ -288,6 +301,7 @@ import NTKB.Analytic.Davenport.Zeros.ZeroOrdinates
 import NTKB.Analytic.Davenport.Zeros.ZeroSum
 import NTKB.Analytic.Davenport.Zeros.ZetaArg
 import NTKB.Analytic.Davenport.Zeros.ZetaLocal
+import NTKB.Analytic.Davenport.Zeros.ZetaLogEuler
 import NTKB.Analytic.Davenport.Zeros.ZetaPartialFraction
 import NTKB.Analytic.Davenport.Zeros.ZetaResidues
 import NTKB.Analytic.Davenport.Zeros.ZetaZeroFree

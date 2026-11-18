@@ -32,6 +32,10 @@ import NTKB.Analytic.Davenport.ClassNumber.EvenZero
 import NTKB.Analytic.Davenport.Zeros.PNTAPExceptional
 import NTKB.Analytic.Davenport.Siegel.Hecke
 import NTKB.Analytic.Davenport.Sieve.Montgomery
+import NTKB.Analytic.Davenport.Zeros.ZeroCountArgBook
+import NTKB.Analytic.Davenport.Zeros.LZeroCountArgBook
+import NTKB.Analytic.Davenport.Poisson.Summation
+import NTKB.Analytic.Davenport.Ch1to6.CubicRoots
 
 /-!
 # Proofs of the Davenport headline statements
@@ -386,5 +390,53 @@ theorem classNumber_mul_regulator_gt_of_no_real_zero {c₂ : ℝ} (hc₂ : 0 < c
 theorem card_le_montgomery {Q : ℝ} (hQ : 1 ≤ Q) (M : ℤ) (N : ℕ) (Z : Finset ℤ) (hZ : Z ⊆ Ioc M (M + N)) :
     (Z.card : ℝ) ≤ (N + 3 * Q ^ 2) / NTKB.Davenport.montgomeryL Z Q :=
   NTKB.Davenport.card_le_montgomery hQ M N Z hZ
+
+/-! ## New in 0.6.0: the zeros in the book's form (Chapters 8, 15, 16), Poisson summation (Chapter 2) and Kummer's
+cubic periods (Chapter 3)
+
+The change of argument by continuous variation is `NTKB.argChange φ a b`: the value `θ(b) - θ(a)` for any
+continuous `θ` on `[a, b]` with `φ = |φ| e^{iθ}` (it does not depend on the choice of `θ`,
+`NTKB.IsArgChange.unique`; it is `0` by convention if no such `θ` exists, which does not happen below, where `φ`
+has no zero on the path). -/
+
+theorem riemann_von_mangoldt_argChange :
+    ∃ A : ℝ, 0 < A ∧ ∀ T : ℝ, 3 ≤ T →
+      |(NTKB.zetaZeroCount T : ℝ) - (T / (2 * π) * Real.log (T / (2 * π)) - T / (2 * π))| ≤
+          A * Real.log T ∧
+      |(NTKB.zetaZeroCountLE T : ℝ) - (T / (2 * π) * Real.log (T / (2 * π)) - T / (2 * π))| ≤
+          A * Real.log T ∧
+      ((∀ ρ : NTKB.ZeroIndex NTKB.riemannXi, |ρ.val.im| ≠ T) →
+        2 * π * NTKB.zetaZeroCount T =
+          NTKB.argChange (fun y : ℝ ↦ NTKB.riemannXi (2 + y * I)) 0 T +
+          NTKB.argChange (fun x : ℝ ↦ NTKB.riemannXi (x + T * I)) 2 (-1) +
+          NTKB.argChange (fun y : ℝ ↦ NTKB.riemannXi (-1 + y * I)) T 0 +
+          NTKB.argChange (fun x : ℝ ↦ NTKB.riemannXi x) (-1) 2) :=
+  NTKB.Davenport.riemann_von_mangoldt_argChange
+
+theorem abs_argChange_LFunction_le :
+    ∃ A : ℝ, 0 < A ∧ ∀ {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N}, χ.IsPrimitive → N ≠ 1 →
+      ∀ T : ℝ, 2 ≤ T → (∀ ρ : NTKB.ZeroIndex (NTKB.dirichletXi χ), |ρ.val.im| ≠ T) →
+      ∀ h : ℝ, |h| = T →
+      |NTKB.argChange (fun x : ℝ ↦ χ.LFunction (x + h * I)) (3 / 2) (1 / 2)| ≤
+          A * (Real.log N + Real.log (T + 2)) ∧
+      |NTKB.argChange (fun y : ℝ ↦ χ.LFunction (3 / 2 + y * I)) 0 h +
+          NTKB.argChange (fun x : ℝ ↦ χ.LFunction (x + h * I)) (3 / 2) (1 / 2)| ≤
+          A * (Real.log N + Real.log (T + 2)) :=
+  NTKB.Davenport.abs_argChange_LFunction_le
+
+theorem poisson_summation_piecewise_monotone {f : ℝ → ℝ} {A B : ℝ} (hAB : A < B)
+    (hf : ContinuousOn f (Set.Icc A B)) (hpm : NTKB.Davenport.Poisson.PiecewiseMonotoneOn f A B) :
+    Filter.Tendsto (fun N : ℕ ↦ ∑ ν ∈ Finset.Icc (-(N : ℤ)) N,
+        ∫ x in A..B, (f x : ℂ) * Complex.exp (2 * π * Complex.I * ν * x)) Filter.atTop
+      (nhds (NTKB.Davenport.Poisson.halvedSum f A B : ℂ)) :=
+  NTKB.Davenport.Poisson.poisson_summation_piecewise_monotone hAB hf hpm
+
+theorem kummer_cubic_periods {q : ℕ} [Fact q.Prime] (hq : q % 3 = 1) {g : (ZMod q)ˣ}
+    (hg : ∀ x, x ∈ Subgroup.zpowers g) :
+    ∃ a b : ℤ, 4 * (q : ℤ) = a ^ 2 + 27 * b ^ 2 ∧ a ≡ 1 [ZMOD 3] ∧ ∀ z : ℂ,
+      z ^ 3 - 3 * q * z - q * a =
+        (z - NTKB.Davenport.kummerPeriod g 0) * (z - NTKB.Davenport.kummerPeriod g 1) *
+          (z - NTKB.Davenport.kummerPeriod g 2) :=
+  NTKB.Davenport.exists_cubic_eq_prod_kummerPeriod hq hg
 
 end NTKB.Headlines.Davenport

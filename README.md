@@ -35,9 +35,48 @@ files it ships unchanged (see *Dependencies and the companion library*).
 | book | rows | proved | proved in part | conditional | in Mathlib | other | proved here, also elsewhere |
 |---|---|---|---|---|---|---|---|
 | [T. M. Apostol, *Introduction to Analytic Number Theory* (1976)](docs/results/books/apostol.md) | 322 | 173 | 0 | 1 | 148 | 0 | 80 |
-| [H. Davenport, *Multiplicative Number Theory* (2nd ed., revised by H. L. Montgomery, 1980)](docs/results/books/davenport.md) | 432 | 275 | 20 | 0 | 80 | 57 | 60 |
+| [H. Davenport, *Multiplicative Number Theory* (2nd ed., revised by H. L. Montgomery, 1980)](docs/results/books/davenport.md) | 432 | 297 | 12 | 0 | 80 | 43 | 70 |
 
 *Proved*: proved with only the standard axioms and no unproved input. *Proved in part*: a part, a special case, a weaker form or one instance is proved (the map's Lean column names it). *Conditional*: proved from a named unproved input (here Apostol's Theorem 11.14, from `NTKB.Apostol.DirichletInverseSummableInput`; the two inputs of the Davenport class number rows of 0.3.0, `NTKB.Davenport.QuadraticFieldDiscriminants` and `NTKB.Davenport.QuadraticIdealCount`, are proved since 0.4.0, and `SiegelWalfiszHypothesis`, the input of Davenport's Chapters 28 and 29 in 0.1.0, since 0.2.0). *In Mathlib*: Mathlib (a dependency) has the result; the map names the Mathlib declaration. *Other*: in Tau Ceti or PrimeNumberTheoremAnd only (not dependencies), partly formalized elsewhere, or not formalized (see each map). *Proved here, also elsewhere*: rows proved (in whole or in part) here whose result, a part of it or a closely related statement is also in Mathlib, Tau Ceti or PrimeNumberTheoremAnd; each map names those declarations in its column *Also in*. Rows that are not results (definitions, remarks, history) are omitted from the maps.
+
+## What's new in 0.6.0
+
+- **A note on sources.** The source books were not available to the work of this release (copies are being
+  obtained again through a university library). The new statements were therefore checked against this project's
+  own earlier book maps and statements, not re-read against the books. All proofs are machine-checked by the Lean
+  kernel. A check of the new statements against the books is planned once the library copies are in hand.
+- **The zeros of $`\zeta(s)`$ and $`L(s, \chi)`$ in the book's form** (Davenport, Chapters 8, 13, 15, 16 and 19):
+  - The change of argument by continuous variation is a new notion (`NTKB.argChange`). It equals the imaginary part
+    of $`\int\varphi'/\varphi`$ and does not depend on the choice of the continuous argument.
+  - $`2\pi N(T)`$ is the change of argument of $`\xi`$ around the rectangle $`2, 2 + iT, -1 + iT, -1`$ (15-1), and
+    $`\pi N(T)`$ is its change along $`2 \to 2 + iT \to \tfrac12 + iT`$ (15-2).
+  - Von Mangoldt's $`N(T) = \frac{T}{2\pi}\log\frac{T}{2\pi} - \frac{T}{2\pi} + O(\log T)`$ is stated together with
+    the argument form, for the counts with $`0 < \gamma < T`$ and with $`0 < \gamma \le T`$ (8-6).
+  - $`2\pi N(T, \chi)`$ is the change of argument of $`\xi(s, \chi)`$ around a rectangle (16-3).
+  - The argument of $`L(\tfrac12 + iT, \chi)`$ is $`O(\log q + \log T)`$ for primitive $`\chi`$ (16-4).
+  - The zero-free region near 1 holds uniformly in $`q`$, with at most one exceptional zero, which is real; for
+    primitive $`\chi`$ it is simple, and $`1 - \beta_1`$ is also a zero (19-11).
+  - $`\zeta`$ has infinitely many zeros in the critical strip, symmetric about the real axis and about the critical
+    line (8-5).
+  - $`\log|\zeta(\sigma + it)|`$ is a double series over the prime powers (13-2).
+- **Poisson summation, Gamma and Gauss sums in the book's form** (Davenport, Chapters 2 to 5, 9 and 10):
+  - Poisson summation for a continuous piecewise monotone function on $`[A, B]`$, with the end terms halved and the
+    sum over the frequencies taken symmetrically (2-6). The proof uses the Dirichlet kernel and a second mean value
+    theorem.
+  - Kummer's cubic: the three periods $`z_j`$ of a prime $`q \equiv 1 \pmod 3`$ are the roots of
+    $`z^3 - 3qz - qa`$, where $`4q = a^2 + 27b^2`$ and $`a \equiv 1 \pmod 3`$ (3-20). The periods are real, distinct
+    and equal to $`2\sqrt q\cos(\theta + 4\pi kj/3)`$, and exactly one lies in each of three intervals (3-15).
+    Also $`q = A^2 - AB + B^2`$ from the Jacobi sum (3-18).
+  - The characters modulo $`q`$ as products over prime powers (4-4).
+  - $`\zeta(s) = 1/(s-1) + 1 - s\int_1^\infty\{x\}x^{-s-1}\,dx`$ for $`\operatorname{Re}s > 0`$ (4-18).
+  - The moduli of the real primitive characters (5-9).
+  - $`\chi(n)`$ as a normalized Gauss sum (9-6).
+  - Hurwitz's $`\zeta(s, \tfrac12) = (2^s - 1)\zeta(s)`$ (9-15).
+  - Weierstrass's product for $`1/\Gamma(s)`$ and the residues of $`\Gamma`$ (10-2).
+  - The Gamma quotient of the functional equation (10-6; a restatement of Mathlib's).
+- **Four new headline statements** (all Davenport; marked "new in 0.6.0" below). The 48 headlines of 0.1.0 to 0.5.0
+  are unchanged, which makes 52 in all. Davenport map: 432 results, 297 proved (was 275), 12 in part (was 20), none
+  conditional.
 
 ## What's new in 0.5.0
 
@@ -110,7 +149,7 @@ files it ships unchanged (see *Dependencies and the companion library*).
 
 ## Conditional theorems
 
-Theorems proved from a named input that the library does not prove. No headline of 0.4.0 to 0.5.0 needs one.
+Theorems proved from a named input that the library does not prove. No headline of 0.4.0 to 0.6.0 needs one.
 
 - **Hecke's class number bound** (headlines `classNumber_gt_of_no_real_zero`,
   `classNumber_mul_regulator_gt_of_no_real_zero`, new in 0.5.0) is an implication, as in the book: if $`L(\sigma, \chi_d)`$
@@ -144,11 +183,22 @@ Theorems proved from a named input that the library does not prove. No headline 
   page.
 - **Primes represented by forms (row 5-18):** proved for the forms $`(a, b, c)`$ with $`a > 0`$; the indefinite forms
   with $`a < 0`$ of a positive discriminant are not treated.
-- **Davenport, Chapter 7:** rows 7-15 and 7-17 (the convergence of $`\sum\chi(n)\log n/n`$ and of
-  $`\sum\chi(m)\Lambda(m)/m`$) are not proved here (Tau Ceti has them); 7-14 is proved from Mertens's theorem in
-  progressions instead.
-- **Davenport, Chapters 15 to 19:** a few rows are proved only in part (the wording by change of argument, rows 15-1,
-  15-2, 16-3, 16-4 and 19-11); the book map marks them.
+- **Davenport, Chapter 7:** row 7-15 (the convergence of $`\sum\chi(n)\log n/n`$ and of
+  $`\sum\chi(m)\Lambda(m)/m`$) is not proved here, and row 7-17 (the Euler product at $`s = 1`$) is credited to Tau
+  Ceti in the map; 7-14 is proved from Mertens's theorem in progressions instead.
+- **Changes of argument (rows 15-1, 15-2, 16-3, 16-4; headlines `riemann_von_mangoldt_argChange`,
+  `abs_argChange_LFunction_le`):** stated for heights $`T`$ that are not the ordinate of a zero, where the argument
+  along each side is defined by continuous variation. The book's convention at an ordinate is not formalized. The
+  counts $`N(T)`$, $`N(T, \chi)`$ and their asymptotic formulas hold for every $`T`$.
+- **Row 16-3:** the library proves that the change of argument of $`\xi(s, \chi)`$ around the rectangle is
+  $`2\pi N(T, \chi)`$. The project's map reads $`2\pi[N(T, \chi) + 1]`$; since $`\xi(s, \chi)`$ has no zero outside
+  the critical strip, the map's reading may be wrong, or it may refer to another function. This is to be checked
+  against the book.
+- **Row 19-11:** the simplicity of the exceptional zero and the zero $`1 - \beta_1`$ are proved for primitive
+  characters only (uniqueness and reality for every character).
+- **Statements new in 0.6.0:** checked against this project's earlier book maps and statements, not re-read against
+  the book (see [What's new in 0.6.0](#whats-new-in-060)); in particular the hypotheses of 2-6 and the normalization
+  of 3-15 and 10-6.
 - **Constants are not effective** where the proofs use Siegel's theorem: the constants of Siegel's bounds, of the
   Siegel–Walfisz theorem and of Vinogradov's asymptotic formula, and the threshold beyond which every odd integer is a
   sum of three primes, exist but are not computed.
@@ -275,6 +325,26 @@ Provenance).
   $`\omega(p)`$ the number of classes modulo $`p`$ that contain no element of $`Z`$ (`card_le_montgomery`). Related:
   Tau Ceti has ingredients of the Selberg sieve, PrimeNumberTheoremAnd the Selberg sieve and Brun–Titchmarsh, not
   this inequality; Mathlib has none of them.
+- **The Riemann–von Mangoldt formula in the book's form** (new in 0.6.0, Chapters 8 and 15): for $`T \ge 3`$,
+  $`|N(T) - (\frac{T}{2\pi}\log\frac{T}{2\pi} - \frac{T}{2\pi})| \le A\log T`$, for the count with $`0 < \gamma < T`$ and
+  for the count with $`0 < \gamma \le T`$. When $`T`$ is not an ordinate, $`2\pi N(T)`$ is the change of argument of
+  $`\xi`$ around the rectangle $`2, 2 + iT, -1 + iT, -1`$, by continuous variation (`riemann_von_mangoldt_argChange`).
+  Related: PrimeNumberTheoremAnd assumes the formula as a hypothesis; Tau Ceti defines the counting function of a
+  completed $`L`$-function; neither proves the formula.
+- **The argument of $`L(\tfrac12 + iT, \chi)`$** (new in 0.6.0, Chapter 16): for primitive $`\chi`$ modulo $`q > 1`$,
+  $`T \ge 2`$ not an ordinate and $`h = \pm T`$, the change of argument of $`L(s, \chi)`$ from $`\tfrac32 + ih`$ to
+  $`\tfrac12 + ih`$, and along $`\tfrac32 \to \tfrac32 + ih \to \tfrac12 + ih`$, is at most
+  $`A(\log q + \log(T + 2))`$, with $`A`$ absolute (`abs_argChange_LFunction_le`). Related: Tau Ceti has the partial
+  fractions of $`L'/L`$, not this bound.
+- **Poisson summation for a piecewise monotone function** (new in 0.6.0, Chapter 2): for $`f`$ continuous on
+  $`[A, B]`$ and monotone or antitone on each piece of a finite partition,
+  $`{\sum}'_{A \le n \le B}f(n) = \lim_{N\to\infty}\sum_{|\nu| \le N}\int_A^Bf(x)e(\nu x)\,dx`$, the terms
+  $`n = A`$, $`n = B`$ halved (`poisson_summation_piecewise_monotone`). Related: Mathlib and Tau Ceti have Poisson
+  summation over all integers for functions with decay, not this form.
+- **Kummer's cubic** (new in 0.6.0, Chapter 3): for a prime $`q \equiv 1 \pmod 3`$ and a primitive root $`g`$, the
+  periods $`z_j = 1 + 3\eta_j`$ ($`j = 0, 1, 2`$) are the roots of $`z^3 - 3qz - qa`$, where $`4q = a^2 + 27b^2`$ and
+  $`a \equiv 1 \pmod 3`$ (`kummer_cubic_periods`). Related: Tau Ceti has the cube of a cubic Gauss sum as $`q`$ times
+  a Jacobi sum, not the periods.
 
 **Apostol, *Introduction to Analytic Number Theory*** ([`Challenge_Apostol.lean`](Challenge_Apostol.lean))
 
@@ -326,7 +396,7 @@ column *Also in*, the results proved here that Mathlib, Tau Ceti or PrimeNumberT
 
 ## Dependencies and the companion library
 
-The library depends on Mathlib only. It ships 336 modules; 117 of them are byte-identical to files
+The library depends on Mathlib only. It ships 350 modules; 117 of them are byte-identical to files
 of [elementary-number-theory-lean v0.4.0](https://github.com/jonhanke/elementary-number-theory-lean/releases/tag/v0.4.0)
 (the `@[kb]` attribute `NTKB.Attr`, the special values of Dirichlet $`L`$-functions
 `NTKB.Elementary.SpecialValues.*`, which the Davenport files use, and part of `NTKB.Analytic.Apostol.*`), with the
@@ -377,11 +447,11 @@ lake env lean scripts/check_axioms.lean          # axioms of the headline theore
                                                  # (Linux; needs bubblewrap); likewise Apostol
 ```
 
-Mathlib comes prebuilt from its cache; this library is built from source (336 modules, about 83,000 lines; no file
+Mathlib comes prebuilt from its cache; this library is built from source (350 modules, about 86,000 lines; no file
 imports all of Mathlib, so only the Mathlib modules it needs are loaded). On 8 cores and 31 GB (2026-11-18), with
-Mathlib's cache in place, `lake build` took about 19 minutes, with at most 4.5 GB of memory in use and a largest
-single Lean process of 4.1 GB. Each `lake comparator` check (one book: build, export, and the Lean, NanoDa and
-con-ron kernels) took about 5 minutes (Apostol) and 14 minutes (Davenport), with at most 5.1 GB in use
+Mathlib's cache in place, `lake build` took about 20 minutes, with at most 4.5 GB of memory in use and a largest
+single Lean process of 4.0 GB. Each `lake comparator` check (one book: build, export, and the Lean, NanoDa and
+con-ron kernels) took about 5 minutes (Apostol) and 14 minutes (Davenport), with at most 5.2 GB in use
 and a largest single process of 4.9 GB (`leanexport`).
 
 ## Provenance
@@ -390,7 +460,7 @@ NTKB was written by AI, with Claude Code (Anthropic): almost entirely by Claude 
 Sonnet 5.5, in November 2026. Jonathan Hanke designed and directed it: he chose the books, the results, the
 conventions and the proof routes. The files under `NTKB/Port/` contain code ported from Tau Ceti (by the Tau Ceti
 contributors, Apache 2.0). The proofs are checked by the Lean kernel, and CI checks that the headline theorems use
-only the standard axioms. The 41 headline statements of this release (40 of 0.1.0 to 0.4.0, unchanged, and 1 new) in the `Challenge_<book>.lean` files, and the
+only the standard axioms. The 52 headline statements of this release (48 of 0.1.0 to 0.5.0, unchanged, and 4 new) in the `Challenge_<book>.lean` files, and the
 definitions they use, have **not yet been reviewed** by a human. `lake comparator` checks that each
 `Solution_<book>.lean` proves exactly the statements of its `Challenge_<book>.lean`. The rest of the library (its
 other definitions and intermediate results, and the book maps) has not been reviewed by a human; as with any
@@ -436,6 +506,14 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
   (`Challenge_Davenport.lean`, now 45); the 41 headlines of 0.1.0 to 0.4.1 unchanged. Refreshed Davenport map (432 results: 275 proved, was 244; 20
   proved in part, was 32; none conditional; 80 in Mathlib). See *What's
   new in 0.5.0*.
+- **[v0.6.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.6.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:ZENODO-DOI-v0.6.0](https://doi.org/ZENODO-DOI-v0.6.0):
+  the zeros of $`\zeta(s)`$ and $`L(s, \chi)`$ in the book's form by the change of argument (Chapters 8, 15, 16 and
+  19), Poisson summation for piecewise monotone functions (Chapter 2), Kummer's cubic for the cubic periods and the
+  other rows of Chapters 3 to 5, 9 and 10 (see *What's new in 0.6.0*). The source books were not available to this
+  round's work, so the new statements were checked against the project's own earlier maps and statements rather than
+  re-read against the books; all proofs are machine-checked, and a check against the books is planned. 4 new
+  headline statements (`Challenge_Davenport.lean`, now 49); the 48 headlines of 0.1.0 to 0.5.0 unchanged. Refreshed
+  Davenport map (432 results: 297 proved, was 275; 12 proved in part, was 20; none conditional; 80 in Mathlib).
 
 **Not in this release:** Davenport's lattice-point route to the class number formula (Chapter 6) and the other open
 rows of the Davenport map; Iwaniec and Kowalski's *Analytic Number

@@ -10,7 +10,8 @@ that no declaration of that content was found, not a proof of absence. The nine 
 2026-11-16 in Mathlib master `a8754b1`, Tau Ceti main `726e93ef` and PrimeNumberTheoremAnd `a4fb6989`. The headline new
 in 0.4.1 was searched on 2026-11-17 in Mathlib master `d9a73ae1` and Tau Ceti main `7b4d5f70` (PrimeNumberTheoremAnd:
 the 0.4.0 search of the same formula for `x ≥ 2`). The seven headlines new in 0.5.0 were searched on 2026-11-18 in Mathlib master
-`5198cccb`, Tau Ceti main `6532c340` and PrimeNumberTheoremAnd `a4fb6989`.
+`5198cccb`, Tau Ceti main `6532c340` and PrimeNumberTheoremAnd `a4fb6989`. The four headlines new in 0.6.0 were searched on 2026-11-18 in Mathlib master
+`1ddfaa95`, Tau Ceti main `91942aa9` and PrimeNumberTheoremAnd main.
 
 ## Headlines
 
@@ -45,6 +46,10 @@ the 0.4.0 search of the same formula for `x ≥ 2`). The seven headlines new in 
 | `Davenport.psiAP_exceptional` (Chapter 20, (9); new in 0.5.0) | Dirichlet's theorem; no error term | not found | not found (the prime number theorem for `ψ(x)` only) |
 | `Davenport.classNumber_gt_of_no_real_zero`, `classNumber_mul_regulator_gt_of_no_real_zero` (Chapter 21, Hecke; new in 0.5.0) | class numbers; no lower bound | `h(d) = w √|d| L(1, χ)/(2π)` and the upper bound `h(d) ≪ √|d| log |d|`; no lower bound | not found |
 | `Davenport.card_le_montgomery` (Chapter 27, Montgomery's large sieve; new in 0.5.0) | not found | the Selberg sieve upper bound (`SelbergSieve.lean`) and `log_le_sum_selbergTerms`; no large sieve | the Selberg sieve and Brun–Titchmarsh (`BrunTitchmarsh.primesBetween_le`); no large sieve |
+| `Davenport.riemann_von_mangoldt_argChange` (Chapters 8 and 15, by the change of argument; new in 0.6.0) | not found | counting functions of completed L-functions (`LFunctions/Zeros/Counting/Basic.lean`) and an argument principle for rectangles; no asymptotic count | assumes the formula as a hypothesis (`IEANTN/KadiriZeroCounting.lean`); proves `N(T) ≪ T^{3/2}` (`Backlund/ZeroCountCrude.lean`) |
+| `Davenport.abs_argChange_LFunction_le` (Chapter 16, the argument of L(1/2 + iT, χ); new in 0.6.0) | not found | Hadamard's product for Dirichlet L-functions and the partial fractions of L'/L (`LFunctions/Zeros/Completion/Dirichlet/Hadamard.lean`); no bound for the argument | not found |
+| `Davenport.poisson_summation_piecewise_monotone` (Chapter 2, Poisson summation for piecewise monotone f; new in 0.6.0) | Poisson summation over all integers for functions with decay (`Real.tsum_eq_tsum_fourier`, `Analysis/Fourier/PoissonSummation.lean`) | Poisson summation for Schwartz functions and lattices; the Dini criterion for Fourier integrals (`Analysis/Fourier/Inversion.lean`); not this form | not found |
+| `Davenport.kummer_cubic_periods` (Chapter 3, Kummer's cubic for the cubic periods; new in 0.6.0) | Gauss sums and Jacobi sums; no periods | the cube of a cubic Gauss sum as q times a Jacobi sum (`JacobiSum/Cubic.lean`); no periods | — |
 | `Apostol.card_partition_lt_exp` (Theorem 14.5) | partitions (`Nat.Partition`), Euler's generating function; no bound | not found | not found |
 | `Apostol.mean_square_LSeries` (Theorem 11.16) | `LSeries`, its convergence; no mean value | absolute convergence from mean-square bounds on the coefficients (`TauCeti.LSeriesSummable_of_sum_norm_sq_bigO`), a different statement | not found |
 
