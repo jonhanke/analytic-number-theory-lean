@@ -1,5 +1,5 @@
 name = "analytic_number_theory_lean"
-version = "0.5.0"
+version = "0.6.0"
 defaultTargets = ["AnalyticNumberTheory", "Challenge_Apostol", "Solution_Apostol", "Challenge_Davenport", "Solution_Davenport"]
 
 [leanOptions]
@@ -132,7 +132,9 @@ globs = [
   "NTKB.Analytic.Apostol.Zeta.LBounds",
   "NTKB.Analytic.Apostol.Zeta.LBoundsHigher",
   "NTKB.Analytic.Apostol.Zeta.LZero",
+  "NTKB.Analytic.Davenport.Ch1to6.CharacterProduct",
   "NTKB.Analytic.Davenport.Ch1to6.CubicPeriods",
+  "NTKB.Analytic.Davenport.Ch1to6.CubicRoots",
   "NTKB.Analytic.Davenport.Ch1to6.Cyclotomy",
   "NTKB.Analytic.Davenport.Ch1to6.DeLaValleePoussin",
   "NTKB.Analytic.Davenport.Ch1to6.Discriminant",
@@ -150,6 +152,10 @@ globs = [
   "NTKB.Analytic.Davenport.Ch1to6.LogL",
   "NTKB.Analytic.Davenport.Ch1to6.Periods",
   "NTKB.Analytic.Davenport.Ch1to6.RealPrimitive",
+  "NTKB.Analytic.Davenport.Ch1to6.RealPrimitiveModuli",
+  "NTKB.Analytic.Davenport.Ch1to6.ZetaFract",
+  "NTKB.Analytic.Davenport.Ch9to10.FourierHurwitz",
+  "NTKB.Analytic.Davenport.Ch9to10.GammaProduct",
   "NTKB.Analytic.Davenport.ClassNumber.Bounds",
   "NTKB.Analytic.Davenport.ClassNumber.EulerProduct",
   "NTKB.Analytic.Davenport.ClassNumber.EvenZero",
@@ -189,6 +195,9 @@ globs = [
   "NTKB.Analytic.Davenport.Hadamard.XiSum",
   "NTKB.Analytic.Davenport.Hadamard.ZeroCount",
   "NTKB.Analytic.Davenport.Hadamard.ZeroFree",
+  "NTKB.Analytic.Davenport.Poisson.Kernel",
+  "NTKB.Analytic.Davenport.Poisson.SecondMean",
+  "NTKB.Analytic.Davenport.Poisson.Summation",
   "NTKB.Analytic.Davenport.Siegel.Estermann",
   "NTKB.Analytic.Davenport.Siegel.Hecke",
   "NTKB.Analytic.Davenport.Siegel.MertensAP",
@@ -236,6 +245,7 @@ globs = [
   "NTKB.Analytic.Davenport.ThreePrimes.SingularSeries",
   "NTKB.Analytic.Davenport.ThreePrimes.ThreePrimes",
   "NTKB.Analytic.Davenport.Zeros.APDecomp",
+  "NTKB.Analytic.Davenport.Zeros.ArgVariation",
   "NTKB.Analytic.Davenport.Zeros.Digamma",
   "NTKB.Analytic.Davenport.Zeros.DigammaAsymp",
   "NTKB.Analytic.Davenport.Zeros.ExceptionalSize",
@@ -254,6 +264,7 @@ globs = [
   "NTKB.Analytic.Davenport.Zeros.LContourMain",
   "NTKB.Analytic.Davenport.Zeros.LEulerFactorZeros",
   "NTKB.Analytic.Davenport.Zeros.LExceptional",
+  "NTKB.Analytic.Davenport.Zeros.LExceptionalBook",
   "NTKB.Analytic.Davenport.Zeros.LExceptionalFormula",
   "NTKB.Analytic.Davenport.Zeros.LExceptionalMain",
   "NTKB.Analytic.Davenport.Zeros.LExceptionalReal",
@@ -273,6 +284,7 @@ globs = [
   "NTKB.Analytic.Davenport.Zeros.LTrivialResidues",
   "NTKB.Analytic.Davenport.Zeros.LZeroCount",
   "NTKB.Analytic.Davenport.Zeros.LZeroCountArg",
+  "NTKB.Analytic.Davenport.Zeros.LZeroCountArgBook",
   "NTKB.Analytic.Davenport.Zeros.LZeroCountImprimitive",
   "NTKB.Analytic.Davenport.Zeros.LZeroCountVertical",
   "NTKB.Analytic.Davenport.Zeros.LZeroFreeComplex",
@@ -301,6 +313,7 @@ globs = [
   "NTKB.Analytic.Davenport.Zeros.RiemannVonMangoldtExact",
   "NTKB.Analytic.Davenport.Zeros.ThreeFourOne",
   "NTKB.Analytic.Davenport.Zeros.ZeroCountArg",
+  "NTKB.Analytic.Davenport.Zeros.ZeroCountArgBook",
   "NTKB.Analytic.Davenport.Zeros.ZeroCountCor",
   "NTKB.Analytic.Davenport.Zeros.ZeroCountHoriz",
   "NTKB.Analytic.Davenport.Zeros.ZeroCountVertical",
@@ -308,6 +321,7 @@ globs = [
   "NTKB.Analytic.Davenport.Zeros.ZeroSum",
   "NTKB.Analytic.Davenport.Zeros.ZetaArg",
   "NTKB.Analytic.Davenport.Zeros.ZetaLocal",
+  "NTKB.Analytic.Davenport.Zeros.ZetaLogEuler",
   "NTKB.Analytic.Davenport.Zeros.ZetaPartialFraction",
   "NTKB.Analytic.Davenport.Zeros.ZetaResidues",
   "NTKB.Analytic.Davenport.Zeros.ZetaZeroFree",

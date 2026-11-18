@@ -52,3 +52,7 @@ import Solution_Davenport
 #print axioms NTKB.Headlines.Davenport.classNumber_gt_of_no_real_zero
 #print axioms NTKB.Headlines.Davenport.classNumber_mul_regulator_gt_of_no_real_zero
 #print axioms NTKB.Headlines.Davenport.card_le_montgomery
+#print axioms NTKB.Headlines.Davenport.riemann_von_mangoldt_argChange
+#print axioms NTKB.Headlines.Davenport.abs_argChange_LFunction_le
+#print axioms NTKB.Headlines.Davenport.poisson_summation_piecewise_monotone
+#print axioms NTKB.Headlines.Davenport.kummer_cubic_periods

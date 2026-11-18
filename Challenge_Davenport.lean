@@ -32,6 +32,10 @@ import NTKB.Analytic.Davenport.ClassNumber.EvenZero
 import NTKB.Analytic.Davenport.Zeros.PNTAPExceptional
 import NTKB.Analytic.Davenport.Siegel.Hecke
 import NTKB.Analytic.Davenport.Sieve.Montgomery
+import NTKB.Analytic.Davenport.Zeros.ZeroCountArgBook
+import NTKB.Analytic.Davenport.Zeros.LZeroCountArgBook
+import NTKB.Analytic.Davenport.Poisson.Summation
+import NTKB.Analytic.Davenport.Ch1to6.CubicRoots
 
 /-!
 # Headline statements of analytic-number-theory-lean: Davenport
@@ -638,6 +642,80 @@ without proof; the library proves it by Montgomery's argument from the large sie
 ingredients of the Selberg sieve, not this inequality; Mathlib has neither. -/
 theorem card_le_montgomery {Q : ℝ} (hQ : 1 ≤ Q) (M : ℤ) (N : ℕ) (Z : Finset ℤ) (hZ : Z ⊆ Ioc M (M + N)) :
     (Z.card : ℝ) ≤ (N + 3 * Q ^ 2) / NTKB.Davenport.montgomeryL Z Q := by
+  sorry
+
+/-! ## New in 0.6.0: the zeros in the book's form (Chapters 8, 15, 16), Poisson summation (Chapter 2) and Kummer's
+cubic periods (Chapter 3)
+
+The change of argument by continuous variation is `NTKB.argChange φ a b`: the value `θ(b) - θ(a)` for any
+continuous `θ` on `[a, b]` with `φ = |φ| e^{iθ}` (it does not depend on the choice of `θ`,
+`NTKB.IsArgChange.unique`; it is `0` by convention if no such `θ` exists, which does not happen below, where `φ`
+has no zero on the path). -/
+
+/-- **The Riemann–von Mangoldt formula in the book's form** (Chapter 8, p. 69, and Chapter 15, p. 97): there is
+`A > 0` such that for every `T ≥ 3`, with `N(T)` the number of zeros of `ζ` with `0 < γ < T` (`NTKB.zetaZeroCount`)
+or with `0 < γ ≤ T` (`NTKB.zetaZeroCountLE`), counted with multiplicity,
+`|N(T) - ((T/2π) log(T/2π) - T/2π)| ≤ A log T`; and when `T` is not the ordinate of a zero, `2π N(T)` is the change
+of argument of `ξ` around the rectangle with vertices `2, 2 + iT, -1 + iT, -1`, described counterclockwise. The
+first bound is the headline `zetaZeroCount_sub_le` of 0.1.0; this one adds the closed count and the argument form
+of the book. PrimeNumberTheoremAnd assumes the formula as a hypothesis; Mathlib and Tau Ceti (which defines the
+counting function of a completed `L`-function) do not prove it. -/
+theorem riemann_von_mangoldt_argChange :
+    ∃ A : ℝ, 0 < A ∧ ∀ T : ℝ, 3 ≤ T →
+      |(NTKB.zetaZeroCount T : ℝ) - (T / (2 * π) * Real.log (T / (2 * π)) - T / (2 * π))| ≤
+          A * Real.log T ∧
+      |(NTKB.zetaZeroCountLE T : ℝ) - (T / (2 * π) * Real.log (T / (2 * π)) - T / (2 * π))| ≤
+          A * Real.log T ∧
+      ((∀ ρ : NTKB.ZeroIndex NTKB.riemannXi, |ρ.val.im| ≠ T) →
+        2 * π * NTKB.zetaZeroCount T =
+          NTKB.argChange (fun y : ℝ ↦ NTKB.riemannXi (2 + y * I)) 0 T +
+          NTKB.argChange (fun x : ℝ ↦ NTKB.riemannXi (x + T * I)) 2 (-1) +
+          NTKB.argChange (fun y : ℝ ↦ NTKB.riemannXi (-1 + y * I)) T 0 +
+          NTKB.argChange (fun x : ℝ ↦ NTKB.riemannXi x) (-1) 2) := by
+  sorry
+
+/-- **The argument of `L(1/2 + iT, χ)`** (Chapter 16, p. 102): there is an absolute `A > 0` such that for every
+primitive character `χ` modulo `N > 1`, every `T ≥ 2` that is not the ordinate of a zero of `ξ(s, χ)` and `h = ±T`,
+the argument of `L(1/2 + ih, χ)` obtained by continuous variation is `O(log N + log T)`: both its change along the
+segment from `3/2 + ih` to `1/2 + ih` and its change along the path `3/2 → 3/2 + ih → 1/2 + ih` are at most
+`A (log N + log(T + 2))` in absolute value. Tau Ceti has the partial fractions of `L'/L` (Hadamard's product for
+Dirichlet `L`-functions), not this bound; Mathlib has neither. -/
+theorem abs_argChange_LFunction_le :
+    ∃ A : ℝ, 0 < A ∧ ∀ {N : ℕ} [NeZero N] {χ : DirichletCharacter ℂ N}, χ.IsPrimitive → N ≠ 1 →
+      ∀ T : ℝ, 2 ≤ T → (∀ ρ : NTKB.ZeroIndex (NTKB.dirichletXi χ), |ρ.val.im| ≠ T) →
+      ∀ h : ℝ, |h| = T →
+      |NTKB.argChange (fun x : ℝ ↦ χ.LFunction (x + h * I)) (3 / 2) (1 / 2)| ≤
+          A * (Real.log N + Real.log (T + 2)) ∧
+      |NTKB.argChange (fun y : ℝ ↦ χ.LFunction (3 / 2 + y * I)) 0 h +
+          NTKB.argChange (fun x : ℝ ↦ χ.LFunction (x + h * I)) (3 / 2) (1 / 2)| ≤
+          A * (Real.log N + Real.log (T + 2)) := by
+  sorry
+
+/-- **Poisson summation for a piecewise monotone function** (Chapter 2, p. 14): for `A < B` and `f` continuous on
+`[A, B]` and monotone or antitone on each piece of a finite partition of `[A, B]`
+(`NTKB.Davenport.Poisson.PiecewiseMonotoneOn`), `∑'_{A ≤ n ≤ B} f(n) = ∑_ν ∫_A^B f(x) e(νx) dx`, where `∑'` halves
+the terms `n = A` and `n = B` (`NTKB.Davenport.Poisson.halvedSum`) and the sum over `ν` is the limit of the symmetric
+partial sums `|ν| ≤ N`. This is the form the book uses for the theta relation and the quadratic Gauss sum. Mathlib
+and Tau Ceti have Poisson summation over all integers for functions with decay (Schwartz functions, or summability
+hypotheses), not this form. -/
+theorem poisson_summation_piecewise_monotone {f : ℝ → ℝ} {A B : ℝ} (hAB : A < B)
+    (hf : ContinuousOn f (Set.Icc A B)) (hpm : NTKB.Davenport.Poisson.PiecewiseMonotoneOn f A B) :
+    Filter.Tendsto (fun N : ℕ ↦ ∑ ν ∈ Finset.Icc (-(N : ℤ)) N,
+        ∫ x in A..B, (f x : ℂ) * Complex.exp (2 * π * Complex.I * ν * x)) Filter.atTop
+      (nhds (NTKB.Davenport.Poisson.halvedSum f A B : ℂ)) := by
+  sorry
+
+/-- **Kummer's cubic for the periods of a cubic Gauss sum** (Chapter 3, p. 25): for a prime `q ≡ 1 (mod 3)` and a
+primitive root `g` modulo `q`, there are integers `a ≡ 1 (mod 3)` and `b` with `4q = a² + 27b²` such that the three
+numbers `z_j = 1 + 3η_j` (`NTKB.Davenport.kummerPeriod g j`, `j = 0, 1, 2`), where `η_j` is the sum of `e(n/q)` over
+the residues `n` whose index with respect to `g` is `≡ j (mod 3)`, are the roots of `z³ - 3qz - qa`. Tau Ceti has the
+cube of a cubic Gauss sum as `q` times a Jacobi sum, not the periods; Mathlib has neither. -/
+theorem kummer_cubic_periods {q : ℕ} [Fact q.Prime] (hq : q % 3 = 1) {g : (ZMod q)ˣ}
+    (hg : ∀ x, x ∈ Subgroup.zpowers g) :
+    ∃ a b : ℤ, 4 * (q : ℤ) = a ^ 2 + 27 * b ^ 2 ∧ a ≡ 1 [ZMOD 3] ∧ ∀ z : ℂ,
+      z ^ 3 - 3 * q * z - q * a =
+        (z - NTKB.Davenport.kummerPeriod g 0) * (z - NTKB.Davenport.kummerPeriod g 1) *
+          (z - NTKB.Davenport.kummerPeriod g 2) := by
   sorry
 
 end NTKB.Headlines.Davenport

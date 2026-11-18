@@ -46,7 +46,11 @@
     "NTKB.Headlines.Davenport.psiAP_exceptional",
     "NTKB.Headlines.Davenport.classNumber_gt_of_no_real_zero",
     "NTKB.Headlines.Davenport.classNumber_mul_regulator_gt_of_no_real_zero",
-    "NTKB.Headlines.Davenport.card_le_montgomery"
+    "NTKB.Headlines.Davenport.card_le_montgomery",
+    "NTKB.Headlines.Davenport.riemann_von_mangoldt_argChange",
+    "NTKB.Headlines.Davenport.abs_argChange_LFunction_le",
+    "NTKB.Headlines.Davenport.poisson_summation_piecewise_monotone",
+    "NTKB.Headlines.Davenport.kummer_cubic_periods"
   ],
   "definition_names": [],
   "permitted_axioms": [

@@ -21,7 +21,9 @@ project:
     Riemann's form, the truncated explicit formula for psi(x, chi), the effective bound for a real zero, the prime
     number theorem for arithmetic progressions with the exceptional zero, Hecke's class number bound under a
     zero-free interval, Montgomery's large sieve (with the Brun-Titchmarsh inequality, not a headline); Polya's
-    inequality, the bound p(n) < exp(pi sqrt(2n/3)) and the mean square of a Dirichlet series (Apostol). Each result
+    since 0.6.0, the Riemann-von Mangoldt formula by the change of argument of xi, the bound O(log q + log T) for
+    the argument of L(1/2 + iT, chi), Poisson summation for piecewise monotone functions and Kummer's cubic for the
+    cubic Gauss periods; Polya's inequality, the bound p(n) < exp(pi sqrt(2n/3)) and the mean square of a Dirichlet series (Apostol). Each result
     of the books is mapped to its Lean declaration and status in docs/results/books/, which also credits the results
     proved here that Mathlib, Tau Ceti or PrimeNumberTheoremAnd also prove.
   authors:
@@ -61,16 +63,17 @@ sources:
 related_formalizations:
   - id: "https://github.com/leanprover-community/mathlib4"
     relationship: "builds-on"
-    note: "Built on Mathlib at commit 1b1ccf4. docs/results/comparison.md says what each headline adds to Mathlib master (4cf60f1d, 2026-11-14; the headlines new in 0.4.0 against a8754b1, 2026-11-16; the one new in 0.4.1 against d9a73ae1, 2026-11-17; those new in 0.5.0 against 5198cccb, 2026-11-18)."
+    note: "Built on Mathlib at commit 1b1ccf4. docs/results/comparison.md says what each headline adds to Mathlib master (4cf60f1d, 2026-11-14; the headlines new in 0.4.0 against a8754b1, 2026-11-16; the one new in 0.4.1 against d9a73ae1, 2026-11-17; those new in 0.5.0 against 5198cccb, 2026-11-18; those new in 0.6.0 against 1ddfaa95, 2026-11-18)."
   - id: "https://github.com/jonhanke/elementary-number-theory-lean"
     relationship: "related"
-    note: "Not a dependency (both use the module namespace NTKB): 117 files of its v0.5.0 (same Lean and Mathlib) are shipped here unchanged: the attribute file, the special values of Dirichlet L-functions and part of the Apostol files."
+    note: "Not a dependency (both use the module namespace NTKB): 117 files of its v0.6.0 (same Lean and Mathlib) are shipped here unchanged: the attribute file, the special values of Dirichlet L-functions and part of the Apostol files."
   - id: "https://github.com/TauCetiProject/TauCeti"
     relationship: "related"
     note: >-
       Not a dependency. Some code is ported from Tau Ceti with credit (NTKB/Port/ and lemmas of NTKB/Elementary/SpecialValues/). docs/results/comparison.md
       compares each headline with Tau Ceti main (9f43ade0, 2026-11-15; the headlines new in 0.4.0 with 726e93ef,
-      2026-11-16; the one new in 0.4.1 with 7b4d5f70, 2026-11-17; those new in 0.5.0 with 6532c340, 2026-11-18).
+      2026-11-16; the one new in 0.4.1 with 7b4d5f70, 2026-11-17; those new in 0.5.0 with 6532c340, 2026-11-18; those new in 0.6.0 with 91942aa9,
+      2026-11-18).
   - id: "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd"
     relationship: "related"
     note: >-
@@ -81,8 +84,8 @@ related_formalizations:
 
 status:
   scope: >-
-    Release 0.5.0. Formalized (the 48 statements of the Challenge_<book>.lean files, proved in the
-    Solution_<book>.lean files): Davenport 45 (Chapters 6, 8, 12, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 28
+    Release 0.6.0. Formalized (the 52 statements of the Challenge_<book>.lean files, proved in the
+    Solution_<book>.lean files): Davenport 49 (Chapters 2, 3, 6, 8, 12, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 28
     and 29), Apostol 3 (Theorems 8.21, 11.16, 14.5). The book maps give the status of every result. Five headlines of
     0.3.0 (the class number statements of Davenport Chapters 6 and 21) take two named inputs as hypotheses,
     NTKB.Davenport.QuadraticFieldDiscriminants and NTKB.Davenport.QuadraticIdealCount; since 0.4.0 both are proved
@@ -93,7 +96,9 @@ status:
     hypothesis take it as a named hypothesis and are not headlines. Von Mangoldt's explicit formula is proved for
     every real x > 1, as in the book (since 0.4.1; the headline of 0.4.0 has x >= 2). Hecke's class number bound
     (since 0.5.0) is an implication from a zero-free interval of L(s, chi_d), a hypothesis of the theorem, not a
-    named input.
+    named input. The source books were not available to the work of release 0.6.0: its new statements were
+    checked against the project's earlier book maps and statements, not re-read against the books; a check against
+    the books is planned.
   sorry_count: 0
   sorry_in_definitions: 0
   # No custom axioms; the standard axioms used (checked by scripts/check_axioms.lean and lake comparator):
@@ -113,7 +118,7 @@ automation:
         assumed silently; a kernel-level audit decides which are proved.
   notes: >-
     Jonathan Hanke designed and directed the project; the Lean code was written almost entirely by Claude Opus 5.5,
-    with a share by Claude Sonnet 5.5, in November 2026 (releases 0.4.0 to 0.5.0: November 2026). All proofs are checked by the Lean kernel; the headline
+    with a share by Claude Sonnet 5.5, in November 2026 (releases 0.4.0 to 0.6.0: November 2026). All proofs are checked by the Lean kernel; the headline
     statements are collected in the Challenge_<book>.lean files for human review.
 
 fidelity:
@@ -145,10 +150,14 @@ fidelity:
     with |gamma| < T, for real x >= 2. (11) (since 0.5.0) Hecke's class number bound asks for the zero-free interval
     only for the character of the one field (Davenport: for every real primitive character); Montgomery's large sieve,
     stated without proof in the book, is proved by Montgomery's argument; the size of the exceptional modulus (row
-    20-9, not a headline) is proved with log^4 q1 in general.
+    20-9, not a headline) is proved with log^4 q1 in general. (12) (since 0.6.0) The changes of argument are by
+    continuous variation (NTKB.argChange), for heights T that are not ordinates of zeros; Poisson summation is stated
+    with the sum over the frequencies as the limit of symmetric partial sums. The statements new in 0.6.0 were
+    checked against the project's earlier maps and statements, not re-read against the books (not available to that
+    work).
 
 review:
-  status: "not yet reviewed: the 48 headline statements of the Challenge_<book>.lean files and the definitions they use have not yet been reviewed by a human"
+  status: "not yet reviewed: the 52 headline statements of the Challenge_<book>.lean files and the definitions they use have not yet been reviewed by a human"
   reviewers: []
   notes: >-
     The headline statements and the definitions they use have not yet been reviewed by a human; that review is
@@ -349,6 +358,22 @@ alignment:
       status: "proved"
     - source: "Davenport, Chapter 27, p. 159 (Montgomery's large sieve)"
       lean: "NTKB.Headlines.Davenport.card_le_montgomery"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 8, p. 69, and Chapter 15, p. 97 (Riemann-von Mangoldt by the change of argument)"
+      lean: "NTKB.Headlines.Davenport.riemann_von_mangoldt_argChange"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 16, p. 102 (the argument of L(1/2 + iT, chi))"
+      lean: "NTKB.Headlines.Davenport.abs_argChange_LFunction_le"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 2, p. 14 (Poisson summation for piecewise monotone functions)"
+      lean: "NTKB.Headlines.Davenport.poisson_summation_piecewise_monotone"
+      module: "Challenge_Davenport / Solution_Davenport"
+      status: "proved"
+    - source: "Davenport, Chapter 3, p. 25 (Kummer's cubic for the cubic periods)"
+      lean: "NTKB.Headlines.Davenport.kummer_cubic_periods"
       module: "Challenge_Davenport / Solution_Davenport"
       status: "proved"
 
