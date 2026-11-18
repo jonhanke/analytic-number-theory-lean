@@ -429,7 +429,7 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
   headline statement (`Challenge_Davenport.lean`, now 38); the 40 headlines of 0.1.0 to 0.4.0 unchanged. Refreshed
   Davenport map (432 results: 244 proved, was 243; 32 proved in part; none conditional; 80 in Mathlib). See *What's
   new in 0.4.1*.
-- **[v0.5.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.5.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:ZENODO-DOI-v0.5.0](https://doi.org/ZENODO-DOI-v0.5.0):
+- **[v0.5.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.5.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24333713](https://doi.org/10.5281/zenodo.24333713):
   explicit formulas over the zeros (Chapters 8 and 19), primes in progressions with the exceptional zero (Chapters 14,
   20 and 22), Hecke's class number bound under a zero-free interval (Chapter 21), Montgomery's large sieve with the
   Brun–Titchmarsh inequality (Chapter 27), Kronecker's symbol and Kummer's cubic periods. 7 new headline statements
