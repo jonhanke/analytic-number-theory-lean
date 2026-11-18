@@ -9,7 +9,8 @@ has it; the related results are cited. The searches were by name and by content 
 that no declaration of that content was found, not a proof of absence. The nine headlines new in 0.4.0 were searched on
 2026-11-16 in Mathlib master `a8754b1`, Tau Ceti main `726e93ef` and PrimeNumberTheoremAnd `a4fb6989`. The headline new
 in 0.4.1 was searched on 2026-11-17 in Mathlib master `d9a73ae1` and Tau Ceti main `7b4d5f70` (PrimeNumberTheoremAnd:
-the 0.4.0 search of the same formula for `x ≥ 2`).
+the 0.4.0 search of the same formula for `x ≥ 2`). The seven headlines new in 0.5.0 were searched on 2026-11-18 in Mathlib master
+`5198cccb`, Tau Ceti main `6532c340` and PrimeNumberTheoremAnd `a4fb6989`.
 
 ## Headlines
 
@@ -38,6 +39,12 @@ the 0.4.0 search of the same formula for `x ≥ 2`).
 | `Davenport.riemann_von_mangoldt` (Chapter 15; new in 0.4.0) | not found | complex Stirling (ported here with credit for the proof); no zero count | `riemannZeta.Riemann_vonMangoldt_bound` stated with `sorry` (`backlund_bound`); `N(T) ≤ A T^{3/2}` proved (`Backlund.zetaCounting_crude_majorant`) |
 | `Davenport.explicit_formula_vonMangoldt` (Chapter 17; new in 0.4.0) | not found | the truncated Perron kernel; no explicit formula | smoothed explicit formulas (`Kadiri.prop_2_1`) resting on statements with `sorry`; a truncated form with `sorry` |
 | `Davenport.explicit_formula_vonMangoldt_of_one_lt` (Chapter 17, every real `x > 1`; new in 0.4.1) | not found | as above | as above |
+| `Davenport.explicit_formula_memoir` (Chapter 8, (d'), Riemann's form; new in 0.5.0) | not found | Hadamard's theorem for order one (`TauCeti.hadamard_of_orderLE_one`); no explicit formula | as for `explicit_formula_vonMangoldt` |
+| `Davenport.explicit_formula_psiL` (Chapter 19, (G); new in 0.5.0) | not found | order one of the completed Dirichlet `L`-functions (`dirichletData_completed_orderLE_one`); no explicit formula | not found (no Dirichlet characters) |
+| `Davenport.real_zero_lt` (Chapter 14, (18); new in 0.5.0) | `L(1, χ) ≠ 0`; no bound for a real zero | the sign of `L(σ, χ)` up to the first real zero (`LSeries/Quadratic/Character.lean`); no bound | not found |
+| `Davenport.psiAP_exceptional` (Chapter 20, (9); new in 0.5.0) | Dirichlet's theorem; no error term | not found | not found (the prime number theorem for `ψ(x)` only) |
+| `Davenport.classNumber_gt_of_no_real_zero`, `classNumber_mul_regulator_gt_of_no_real_zero` (Chapter 21, Hecke; new in 0.5.0) | class numbers; no lower bound | `h(d) = w √|d| L(1, χ)/(2π)` and the upper bound `h(d) ≪ √|d| log |d|`; no lower bound | not found |
+| `Davenport.card_le_montgomery` (Chapter 27, Montgomery's large sieve; new in 0.5.0) | not found | the Selberg sieve upper bound (`SelbergSieve.lean`) and `log_le_sum_selbergTerms`; no large sieve | the Selberg sieve and Brun–Titchmarsh (`BrunTitchmarsh.primesBetween_le`); no large sieve |
 | `Apostol.card_partition_lt_exp` (Theorem 14.5) | partitions (`Nat.Partition`), Euler's generating function; no bound | not found | not found |
 | `Apostol.mean_square_LSeries` (Theorem 11.16) | `LSeries`, its convergence; no mean value | absolute convergence from mean-square bounds on the coefficients (`TauCeti.LSeriesSummable_of_sum_norm_sq_bigO`), a different statement | not found |
 
@@ -46,6 +53,9 @@ the 0.4.0 search of the same formula for `x ≥ 2`).
 | result (Lean) | where else |
 |---|---|
 | Hadamard's factorization theorem for entire functions of order at most one (`NTKB.Davenport.hadamard_factorization_order_one`, Davenport Chapter 11) | PrimeNumberTheoremAnd, every finite order (`hadamard_factorization_of_order`) |
+| the Brun–Titchmarsh inequality from Montgomery's large sieve (`NTKB.Davenport.brun_titchmarsh`, `brun_titchmarsh_asymptotic`, since 0.5.0) | PrimeNumberTheoremAnd, by the Selberg sieve (`BrunTitchmarsh.primesBetween_le`) |
+| Kronecker's symbol `(d/n)` for every `n` (`NTKB.Davenport.kroneckerSym`, since 0.5.0) | Tau Ceti (`TauCeti/NumberTheory/LegendreSymbol/KroneckerSymbol.lean`) |
+| `L(1, χ) ≠ 0` for real `χ` by de la Vallée Poussin's argument (`NTKB.Davenport.LFunction_one_ne_zero_of_isQuadratic`, since 0.5.0) | Mathlib (the statement, `DirichletCharacter.LFunction_apply_one_ne_zero`, by another proof) |
 | the product for `ξ(s)` (`NTKB.Davenport.riemannXi_hadamard`, Chapter 12) | PrimeNumberTheoremAnd (`riemannXi_hadamard_factorization`) |
 | the zero-free region for `ζ` (`NTKB.Davenport.riemannZeta_zero_free_region`, Chapter 13) | PrimeNumberTheoremAnd (`ZeroInequality`) |
 | `ψ(x) = x + O(x e^{-c√log x})` (`NTKB.Davenport.psi_sub_self_le`, Chapter 18) | PrimeNumberTheoremAnd (`StrongPNT`) |

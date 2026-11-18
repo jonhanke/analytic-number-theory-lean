@@ -45,3 +45,10 @@ import Solution_Davenport
 #print axioms NTKB.Headlines.Davenport.riemann_von_mangoldt
 #print axioms NTKB.Headlines.Davenport.explicit_formula_vonMangoldt
 #print axioms NTKB.Headlines.Davenport.explicit_formula_vonMangoldt_of_one_lt
+#print axioms NTKB.Headlines.Davenport.explicit_formula_memoir
+#print axioms NTKB.Headlines.Davenport.explicit_formula_psiL
+#print axioms NTKB.Headlines.Davenport.real_zero_lt
+#print axioms NTKB.Headlines.Davenport.psiAP_exceptional
+#print axioms NTKB.Headlines.Davenport.classNumber_gt_of_no_real_zero
+#print axioms NTKB.Headlines.Davenport.classNumber_mul_regulator_gt_of_no_real_zero
+#print axioms NTKB.Headlines.Davenport.card_le_montgomery

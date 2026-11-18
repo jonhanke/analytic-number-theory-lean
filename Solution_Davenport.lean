@@ -26,6 +26,12 @@ import NTKB.Analytic.Davenport.Forms.Units
 import NTKB.Analytic.Davenport.Zeros.RiemannVonMangoldtExact
 import NTKB.Analytic.Davenport.Zeros.ExplicitReal
 import NTKB.Analytic.Davenport.Zeros.ExplicitSmall
+import NTKB.Analytic.Davenport.Explicit.RiemannMemoir
+import NTKB.Analytic.Davenport.Explicit.LSimplified
+import NTKB.Analytic.Davenport.ClassNumber.EvenZero
+import NTKB.Analytic.Davenport.Zeros.PNTAPExceptional
+import NTKB.Analytic.Davenport.Siegel.Hecke
+import NTKB.Analytic.Davenport.Sieve.Montgomery
 
 /-!
 # Proofs of the Davenport headline statements
@@ -322,5 +328,63 @@ theorem explicit_formula_vonMangoldt_of_one_lt {x : ℝ} (hx : 1 < x) :
       (nhds ((x : ℂ) - NTKB.psi0R x - Real.log (2 * π) -
         ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))) :=
   NTKB.Davenport.explicit_formula_vonMangoldt hx
+
+/-! ## New in 0.5.0: explicit formulas (Chapters 8 and 19), the exceptional zero (Chapters 14 and 20), Hecke's class
+number bound (Chapter 21) and Montgomery's large sieve (Chapter 27)
+
+The Brun–Titchmarsh inequality, which the library proves from Montgomery's large sieve
+(`NTKB.Davenport.brun_titchmarsh`, `NTKB.Davenport.brun_titchmarsh_asymptotic`), is not a headline:
+PrimeNumberTheoremAnd proves it by the Selberg sieve (`BrunTitchmarsh.primesBetween_le`). -/
+
+theorem explicit_formula_memoir {x : ℝ} (hx : 1 < x) (hpp : ∀ n : ℕ, IsPrimePow n → (n : ℝ) ≠ x) :
+    Filter.Tendsto (fun T : ℝ ↦ -∑ ρ ∈ NTKB.zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val -
+        deriv riemannZeta 0 / riemannZeta 0 - ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))
+      Filter.atTop (nhds ((Chebyshev.psi x - x : ℝ) : ℂ)) :=
+  NTKB.Davenport.explicit_formula_memoir hx hpp
+
+theorem explicit_formula_psiL :
+    ∃ A : ℝ, 0 < A ∧ ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive)
+      (hq : q ≠ 1), ∀ x : ℝ, 2 ≤ x → ∀ T : ℝ, 2 ≤ T → T ≤ x →
+      ‖NTKB.psiL χ x - (-∑ ρ ∈ NTKB.zerosBelowL hχ hq T, (x : ℂ) ^ ρ.val / ρ.val - NTKB.bChar χ)‖ ≤
+        A * x * Real.log (q * x) ^ 2 / T :=
+  NTKB.Davenport.explicit_formula_psiL_simplified
+
+theorem real_zero_lt :
+    ∃ c : ℝ, 0 < c ∧ ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q},
+      χ.IsQuadratic → χ ≠ 1 → ∀ β : ℝ, χ.LFunction β = 0 →
+        β < 1 - c / (√(q : ℝ) * Real.log q ^ 2) ∧
+          (χ.Even → β < 1 - c / (√(q : ℝ) * Real.log q)) :=
+  NTKB.Davenport.real_zero_lt_book
+
+theorem psiAP_exceptional (C : ℝ) (hC : 0 < C) :
+    ∃ c A : ℝ, 0 < c ∧ 0 < A ∧ ∀ {q : ℕ} [NeZero q] {a : ZMod q}, IsUnit a →
+      ∀ x : ℝ, 3 ≤ x → Real.log q ≤ C * √(Real.log x) →
+      ((∀ (χ : DirichletCharacter ℂ q) (β : ℝ), ¬ NTKB.IsExceptional χ β) →
+        |NTKB.psiAP a x - x / q.totient| ≤ A * x * Real.exp (-(c * √(Real.log x)))) ∧
+      (∀ (χ₁ : DirichletCharacter ℂ q) (β₁ : ℝ), NTKB.IsExceptional χ₁ β₁ →
+        ‖(NTKB.psiAP a x : ℂ) - x / q.totient + χ₁ a * (x : ℂ) ^ (β₁ : ℂ) / (q.totient * β₁)‖ ≤
+          A * x * Real.exp (-(c * √(Real.log x)))) :=
+  NTKB.Davenport.psiAP_exceptional_real C hC
+
+theorem classNumber_gt_of_no_real_zero {c₂ : ℝ} (hc₂ : 0 < c₂) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      NumberField.discr K < 0 →
+      (∀ σ : ℝ, 1 - c₂ / Real.log |(NumberField.discr K : ℝ)| < σ → σ < 1 →
+        (NTKB.kroneckerChar (NumberField.discr K)).LFunction σ ≠ 0) →
+      C * √|(NumberField.discr K : ℝ)| / Real.log |(NumberField.discr K : ℝ)| < NumberField.classNumber K :=
+  NTKB.Davenport.classNumber_gt_of_no_real_zero hc₂
+
+theorem classNumber_mul_regulator_gt_of_no_real_zero {c₂ : ℝ} (hc₂ : 0 < c₂) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      0 < NumberField.discr K →
+      (∀ σ : ℝ, 1 - c₂ / Real.log (NumberField.discr K : ℝ) < σ → σ < 1 →
+        (NTKB.kroneckerChar (NumberField.discr K)).LFunction σ ≠ 0) →
+      C * √(NumberField.discr K : ℝ) / Real.log (NumberField.discr K : ℝ) <
+        NumberField.classNumber K * NumberField.Units.regulator K :=
+  NTKB.Davenport.classNumber_mul_regulator_gt_of_no_real_zero hc₂
+
+theorem card_le_montgomery {Q : ℝ} (hQ : 1 ≤ Q) (M : ℤ) (N : ℕ) (Z : Finset ℤ) (hZ : Z ⊆ Ioc M (M + N)) :
+    (Z.card : ℝ) ≤ (N + 3 * Q ^ 2) / NTKB.Davenport.montgomeryL Z Q :=
+  NTKB.Davenport.card_le_montgomery hQ M N Z hZ
 
 end NTKB.Headlines.Davenport

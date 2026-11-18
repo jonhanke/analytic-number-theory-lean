@@ -26,6 +26,12 @@ import NTKB.Analytic.Davenport.Forms.Units
 import NTKB.Analytic.Davenport.Zeros.RiemannVonMangoldtExact
 import NTKB.Analytic.Davenport.Zeros.ExplicitReal
 import NTKB.Analytic.Davenport.Zeros.ExplicitSmall
+import NTKB.Analytic.Davenport.Explicit.RiemannMemoir
+import NTKB.Analytic.Davenport.Explicit.LSimplified
+import NTKB.Analytic.Davenport.ClassNumber.EvenZero
+import NTKB.Analytic.Davenport.Zeros.PNTAPExceptional
+import NTKB.Analytic.Davenport.Siegel.Hecke
+import NTKB.Analytic.Davenport.Sieve.Montgomery
 
 /-!
 # Headline statements of analytic-number-theory-lean: Davenport
@@ -90,6 +96,11 @@ these too:
   zeros of `ξ` with multiplicity and `|γ| < T`), `NTKB.zetaArgS T` (Davenport's `S(T)`, `π⁻¹` times the argument of
   `ζ(1/2 + iT)` by continuous variation from `2` along `2 → 2 + iT → 1/2 + iT`, written as the integral of `ζ'/ζ`),
   `NTKB.psi0R x` (`ψ₀(x) = ∑_{n ≤ x} Λ(n)`, with the term `n = x` halved)
+* (since 0.5.0) `NTKB.psiL χ x` (`ψ(x, χ) = ∑_{n ≤ x} χ(n) Λ(n)`), `NTKB.bChar χ` (Davenport's `b(χ)`: the constant
+  term of `L'/L(s, χ)` at `s = 0`, for every `χ`), `NTKB.IsExceptional χ β` (`β` is an exceptional zero: `χ ≠ 1`,
+  `χ² = 1`, `L(β, χ) = 0` and `β > 1 - 1/(16200 log q)`), `NTKB.Davenport.sieveOmega Z p` (the number of residue
+  classes modulo `p` containing no element of `Z`) and `NTKB.Davenport.montgomeryL Z Q`
+  (`L = ∑_{q ≤ Q} μ(q)² ∏_{p ∣ q} ω(p)/(p - ω(p))`)
 
 A real character is one with `χ ^ 2 = 1`, or in the statements since 0.2.0, Mathlib's `χ.IsQuadratic` (every value
 is `0`, `1` or `-1`); these are equivalent.
@@ -533,6 +544,100 @@ theorem explicit_formula_vonMangoldt_of_one_lt {x : ℝ} (hx : 1 < x) :
     Filter.Tendsto (fun T : ℝ ↦ ∑ ρ ∈ NTKB.zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val) Filter.atTop
       (nhds ((x : ℂ) - NTKB.psi0R x - Real.log (2 * π) -
         ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))) := by
+  sorry
+
+/-! ## New in 0.5.0: explicit formulas (Chapters 8 and 19), the exceptional zero (Chapters 14 and 20), Hecke's class
+number bound (Chapter 21) and Montgomery's large sieve (Chapter 27)
+
+The Brun–Titchmarsh inequality, which the library proves from Montgomery's large sieve
+(`NTKB.Davenport.brun_titchmarsh`, `NTKB.Davenport.brun_titchmarsh_asymptotic`), is not a headline:
+PrimeNumberTheoremAnd proves it by the Selberg sieve (`BrunTitchmarsh.primesBetween_le`). -/
+
+/-- **Von Mangoldt's formula in Riemann's form** (Chapter 8, p. 60, (d')): for real `x > 1` not a prime power,
+`ψ(x) - x = -∑_ρ x^ρ/ρ - ζ'(0)/ζ(0) - (1/2) log(1 - x⁻²)`, with `ψ(x) = ∑_{n ≤ x} Λ(n)` (Mathlib's `Chebyshev.psi`)
+and the sum over the nontrivial zeros `ρ` of `ζ` (with multiplicity) taken symmetrically, `|γ| < T`, `T → ∞`. The
+library proves Riemann's product for `ξ` (Chapter 8, (c'), from Hadamard's factorization of Chapter 12) and deduces
+the formula from Chapter 17's (the headline `explicit_formula_vonMangoldt_of_one_lt`, where the constant appears as
+`log 2π`). Neither Mathlib nor Tau Ceti has an explicit formula over the zeros of `ζ`. -/
+theorem explicit_formula_memoir {x : ℝ} (hx : 1 < x) (hpp : ∀ n : ℕ, IsPrimePow n → (n : ℝ) ≠ x) :
+    Filter.Tendsto (fun T : ℝ ↦ -∑ ρ ∈ NTKB.zerosBelow T, (x : ℂ) ^ ρ.val / ρ.val -
+        deriv riemannZeta 0 / riemannZeta 0 - ((1 / 2 * Real.log (1 - x ^ (-2 : ℝ)) : ℝ) : ℂ))
+      Filter.atTop (nhds ((Chebyshev.psi x - x : ℝ) : ℂ)) := by
+  sorry
+
+/-- **The truncated explicit formula for `ψ(x, χ)`** (Chapter 19, p. 117, (G)): there is an absolute `A` such that
+for every primitive character `χ` modulo `q > 1`, real `x ≥ 2` and `2 ≤ T ≤ x`,
+`|ψ(x, χ) + ∑_{|γ| < T} x^ρ/ρ + b(χ)| ≤ A x log²(qx)/T`, with `ψ(x, χ) = ∑_{n ≤ x} χ(n) Λ(n)`, the sum over the zeros
+`ρ = β + iγ` of `ξ(s, χ)` with multiplicity, and `b(χ)` the constant term of `L'/L(s, χ)` at `s = 0`. Neither
+Mathlib nor Tau Ceti has an explicit formula over the zeros of `L(s, χ)`. -/
+theorem explicit_formula_psiL :
+    ∃ A : ℝ, 0 < A ∧ ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive)
+      (hq : q ≠ 1), ∀ x : ℝ, 2 ≤ x → ∀ T : ℝ, 2 ≤ T → T ≤ x →
+      ‖NTKB.psiL χ x - (-∑ ρ ∈ NTKB.zerosBelowL hχ hq T, (x : ℂ) ^ ρ.val / ρ.val - NTKB.bChar χ)‖ ≤
+        A * x * Real.log (q * x) ^ 2 / T := by
+  sorry
+
+/-- **The effective bound for a real zero** (Chapter 14, p. 96, (18)): there is an absolute `c > 0` such that for
+every real character `χ ≠ 1` modulo `q` and every real zero `β` of `L(s, χ)`, `β < 1 - c/(q^{1/2} log² q)`, and
+`β < 1 - c/(q^{1/2} log q)` if `χ` is even. Tau Ceti has the sign of `L(σ, χ)` up to its first real zero, not this
+bound; Mathlib has neither. -/
+theorem real_zero_lt :
+    ∃ c : ℝ, 0 < c ∧ ∀ {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q},
+      χ.IsQuadratic → χ ≠ 1 → ∀ β : ℝ, χ.LFunction β = 0 →
+        β < 1 - c / (√(q : ℝ) * Real.log q ^ 2) ∧
+          (χ.Even → β < 1 - c / (√(q : ℝ) * Real.log q)) := by
+  sorry
+
+/-- **The prime number theorem for arithmetic progressions with the exceptional zero** (Chapter 20, p. 123, (9)):
+for every `C > 0` there are `c, A > 0` such that for every modulus `q`, every `a` prime to `q` and every real `x ≥ 3`
+with `log q ≤ C (log x)^{1/2}`: if no character modulo `q` has an exceptional zero, then
+`|ψ(x; q, a) - x/φ(q)| ≤ A x exp(-c (log x)^{1/2})`; and if `β₁` is an exceptional zero of `L(s, χ₁)`, then
+`|ψ(x; q, a) - x/φ(q) + χ₁(a) x^{β₁}/(φ(q) β₁)| ≤ A x exp(-c (log x)^{1/2})`. An exceptional zero (`NTKB.IsExceptional`)
+is a real zero `β > 1 - c₀/log q` of `L(s, χ)` for a real character `χ ≠ 1`, `c₀ = 1/16200` the constant of the
+zero-free region; there is at most one. Neither Mathlib nor Tau Ceti has a prime number theorem for arithmetic
+progressions with an error term. -/
+theorem psiAP_exceptional (C : ℝ) (hC : 0 < C) :
+    ∃ c A : ℝ, 0 < c ∧ 0 < A ∧ ∀ {q : ℕ} [NeZero q] {a : ZMod q}, IsUnit a →
+      ∀ x : ℝ, 3 ≤ x → Real.log q ≤ C * √(Real.log x) →
+      ((∀ (χ : DirichletCharacter ℂ q) (β : ℝ), ¬ NTKB.IsExceptional χ β) →
+        |NTKB.psiAP a x - x / q.totient| ≤ A * x * Real.exp (-(c * √(Real.log x)))) ∧
+      (∀ (χ₁ : DirichletCharacter ℂ q) (β₁ : ℝ), NTKB.IsExceptional χ₁ β₁ →
+        ‖(NTKB.psiAP a x : ℂ) - x / q.totient + χ₁ a * (x : ℂ) ^ (β₁ : ℂ) / (q.totient * β₁)‖ ≤
+          A * x * Real.exp (-(c * √(Real.log x)))) := by
+  sorry
+
+/-- **Hecke's class number bound, `d < 0`** (Chapter 21, p. 127): for every `c₂ > 0` there is `C > 0` such that for
+every imaginary quadratic field of discriminant `d` whose Kronecker character `χ_d` has no real zero `σ` with
+`1 - c₂/log |d| < σ < 1`, `h(d) > C |d|^{1/2}/log |d|`. The hypothesis is the zero-free interval of the theorem, not
+known in general (it is not a named input). Davenport cites the result without proof; the library proves it by
+Estermann's inequality for `ζ(s) L(s, χ_d)`. Neither Mathlib nor Tau Ceti has it. -/
+theorem classNumber_gt_of_no_real_zero {c₂ : ℝ} (hc₂ : 0 < c₂) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      NumberField.discr K < 0 →
+      (∀ σ : ℝ, 1 - c₂ / Real.log |(NumberField.discr K : ℝ)| < σ → σ < 1 →
+        (NTKB.kroneckerChar (NumberField.discr K)).LFunction σ ≠ 0) →
+      C * √|(NumberField.discr K : ℝ)| / Real.log |(NumberField.discr K : ℝ)| < NumberField.classNumber K := by
+  sorry
+
+/-- **Hecke's class number bound, `d > 0`** (Chapter 21, p. 127): under the same hypothesis on `χ_d`,
+`h(d) R > C d^{1/2}/log d` for every real quadratic field of discriminant `d`, `R` its regulator (Mathlib's
+`NumberField.Units.regulator`). Neither Mathlib nor Tau Ceti has it. -/
+theorem classNumber_mul_regulator_gt_of_no_real_zero {c₂ : ℝ} (hc₂ : 0 < c₂) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (K : Type) [Field K] [NumberField K], Module.finrank ℚ K = 2 →
+      0 < NumberField.discr K →
+      (∀ σ : ℝ, 1 - c₂ / Real.log (NumberField.discr K : ℝ) < σ → σ < 1 →
+        (NTKB.kroneckerChar (NumberField.discr K)).LFunction σ ≠ 0) →
+      C * √(NumberField.discr K : ℝ) / Real.log (NumberField.discr K : ℝ) <
+        NumberField.classNumber K * NumberField.Units.regulator K := by
+  sorry
+
+/-- **Montgomery's large sieve** (Chapter 27, p. 159): for a set `Z` of integers in `(M, M + N]` and real `Q ≥ 1`,
+`|Z| ≤ (N + 3Q²)/L` with `L = ∑_{q ≤ Q} μ(q)² ∏_{p ∣ q} ω(p)/(p - ω(p))`, `ω(p)` the number of residue classes modulo
+`p` that contain no element of `Z` (`NTKB.Davenport.montgomeryL`, `NTKB.Davenport.sieveOmega`). Davenport states it
+without proof; the library proves it by Montgomery's argument from the large sieve inequality. Tau Ceti has
+ingredients of the Selberg sieve, not this inequality; Mathlib has neither. -/
+theorem card_le_montgomery {Q : ℝ} (hQ : 1 ≤ Q) (M : ℤ) (N : ℕ) (Z : Finset ℤ) (hZ : Z ⊆ Ioc M (M + N)) :
+    (Z.card : ℝ) ≤ (N + 3 * Q ^ 2) / NTKB.Davenport.montgomeryL Z Q := by
   sorry
 
 end NTKB.Headlines.Davenport
