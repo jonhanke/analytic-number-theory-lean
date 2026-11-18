@@ -506,7 +506,7 @@ Releases are tagged with semantic versions; `main` continues to develop. The DOI
   (`Challenge_Davenport.lean`, now 45); the 41 headlines of 0.1.0 to 0.4.1 unchanged. Refreshed Davenport map (432 results: 275 proved, was 244; 20
   proved in part, was 32; none conditional; 80 in Mathlib). See *What's
   new in 0.5.0*.
-- **[v0.6.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.6.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:ZENODO-DOI-v0.6.0](https://doi.org/ZENODO-DOI-v0.6.0):
+- **[v0.6.0](https://github.com/jonhanke/analytic-number-theory-lean/releases/tag/v0.6.0)** (Lean v4.36.0-rc2, Mathlib `1b1ccf4`), archived on Zenodo as [doi:10.5281/zenodo.24353815](https://doi.org/10.5281/zenodo.24353815):
   the zeros of $`\zeta(s)`$ and $`L(s, \chi)`$ in the book's form by the change of argument (Chapters 8, 15, 16 and
   19), Poisson summation for piecewise monotone functions (Chapter 2), Kummer's cubic for the cubic periods and the
   other rows of Chapters 3 to 5, 9 and 10 (see *What's new in 0.6.0*). The source books were not available to this
