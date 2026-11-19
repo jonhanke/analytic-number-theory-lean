@@ -89,7 +89,9 @@ theorem summable_etaPair {s : ℂ} (hs : 0 < s.re) : Summable (etaPair s) := by
   refine Summable.of_norm_bounded ?_ (norm_etaPair_le hs)
   exact Summable.mul_left _ (summable_succ_rpow (by linarith))
 
-/-- `η(s) = ∑_m ((2m+1)^{-s} - (2m+2)^{-s})`. -/
+/-- `η(s) = ∑_m ((2m+1)^{-s} - (2m+2)^{-s})`.
+**Restriction:** the series converges (absolutely) for `Re s > 0`; for `Re s ≤ 0` it diverges (except at `s = 0`,
+where every term is 0) and the value is 0 by Lean's `∑'` convention, not the analytic continuation of `η`. -/
 noncomputable def etaSum (s : ℂ) : ℂ := ∑' m, etaPair s m
 
 theorem differentiableOn_etaSum : DifferentiableOn ℂ etaSum {s | 0 < s.re} := by

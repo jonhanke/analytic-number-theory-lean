@@ -25,7 +25,9 @@ noncomputable section
 
 namespace NTKB.Davenport
 
-/-- `ω(x) = ∑_{n ≥ 1} e^{-π n² x}`. -/
+/-- `ω(x) = ∑_{n ≥ 1} e^{-π n² x}`.
+**Restriction:** the series converges only for `x > 0`; for `x ≤ 0` it diverges and the value is 0 by Lean's `∑'`
+convention, not the intended value. -/
 def riemannOmega (x : ℝ) : ℝ := ∑' n : ℕ, Real.exp (-Real.pi * ((n : ℝ) + 1) ^ 2 * x)
 
 lemma cosKernel_zero_eq {x : ℝ} (hx : 0 < x) : cosKernel 0 x = 1 + 2 * riemannOmega x := by

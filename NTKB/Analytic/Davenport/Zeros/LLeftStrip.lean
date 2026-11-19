@@ -317,7 +317,9 @@ lemma norm_integral_explicitIntegrandL_far_left :
 
 open scoped Classical in
 /-- The sum of the residues of `F(s, χ)` at the trivial zeros `p_n ≠ 0`:
-`∑_n -x^{p_n}/p_n = ∑_{m ≥ 1} x^{a-2m}/(2m - a)` (Davenport's last sums in (2), (3) of Ch. 19). -/
+`∑_n -x^{p_n}/p_n = ∑_{m ≥ 1} x^{a-2m}/(2m - a)` (Davenport's last sums in (2), (3) of Ch. 19).
+**Restriction:** the series converges for `x > 1` (the lemmas use `x ≥ 2`); where it diverges (e.g. `0 < x ≤ 1`)
+the value is 0 by Lean's `∑'` convention, not the intended value. -/
 noncomputable def trivialSumL (χ : DirichletCharacter ℂ N) (x : ℝ) : ℂ :=
   ∑' n : ℕ, if trivialZeroL χ n = 0 then 0 else -perronKernel x (trivialZeroL χ n)
 
