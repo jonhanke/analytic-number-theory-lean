@@ -275,7 +275,9 @@ theorem tendsto_re_logL_one [NeZero N] :
   simp only [Function.comp_apply]
   rw [← exp_logL _ hs1, Complex.norm_exp, Real.log_exp]
 
-/-- The right side of (E) as a real number: `T(s) = ∑_{p^m ≡ a} m^{-1} p^{-ms}`. -/
+/-- The right side of (E) as a real number: `T(s) = ∑_{p^m ≡ a} m^{-1} p^{-ms}`.
+**Restriction:** the series converges for real `s > 1`; for a unit `a` (as in the lemmas) it diverges for `s ≤ 1`
+(Dirichlet's theorem) and the value is 0 by Lean's `∑'` convention, not the intended value. -/
 def primePowSum (a : ZMod N) (s : ℝ) : ℝ :=
   ∑' pm : Nat.Primes × ℕ, if (((pm.1 : ℕ) ^ (pm.2 + 1) : ℕ) : ZMod N) = a then
     (((pm.1 : ℕ) : ℝ) ^ (-s)) ^ (pm.2 + 1) / (pm.2 + 1) else 0

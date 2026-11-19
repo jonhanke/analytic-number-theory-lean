@@ -197,7 +197,9 @@ theorem summable_norm_pow_succ : Summable fun k : ℕ ↦ ‖q ^ (k + 1)‖ := b
   simp_rw [norm_pow]
   exact (summable_geometric_of_lt_one (norm_nonneg _) hq).comp_injective (add_left_injective 1)
 
-/-- `(q;q)_∞ = ∏_{k ≥ 1} (1 - q^k)`. -/
+/-- `(q;q)_∞ = ∏_{k ≥ 1} (1 - q^k)`.
+**Restriction:** the product converges for `‖q‖ < 1`; for `q` a root of unity a factor vanishes and the value is
+0; for all other `q` it is not multipliable and the value is 1 by Lean's `∏'` convention, not the intended value. -/
 noncomputable def qPochInf (q : ℂ) : ℂ := ∏' k : ℕ, (1 - q ^ (k + 1))
 
 theorem multipliable_one_sub_pow_succ : Multipliable fun k : ℕ ↦ (1 - q ^ (k + 1)) :=

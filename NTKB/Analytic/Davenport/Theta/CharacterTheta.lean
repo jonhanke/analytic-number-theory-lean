@@ -44,7 +44,9 @@ namespace NTKB.Davenport
 
 variable {N : ℕ} [NeZero N]
 
-/-- Davenport's `ψ(x, χ) = ∑_{n ∈ ℤ} χ(n) e^{-π n² x / q}` (Ch. 9, (2)), `q = N`. -/
+/-- Davenport's `ψ(x, χ) = ∑_{n ∈ ℤ} χ(n) e^{-π n² x / q}` (Ch. 9, (2)), `q = N`.
+**Restriction:** the series converges only for `x > 0`; for `x ≤ 0` it diverges and the value is 0 by Lean's `∑'`
+convention, not the intended value. -/
 def thetaChar (χ : DirichletCharacter ℂ N) (x : ℝ) : ℂ :=
   ∑' n : ℤ, χ n * (Real.exp (-Real.pi * (n : ℝ) ^ 2 * x / N) : ℂ)
 
