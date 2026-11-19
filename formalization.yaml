@@ -45,14 +45,14 @@ sources:
     authors:
       - "Harold Davenport"
     type: "book"
-    location: "Springer, Graduate Texts in Mathematics 74, 1980 (revised by H. L. Montgomery); every result mapped in docs/results/books/davenport.md"
+    location: "Springer, Graduate Texts in Mathematics 74, 1980 (revised by H. L. Montgomery); results mapped in a map kept privately until licensing is confirmed"
     relationship: "formalizes"
     author_endorsement: "n/a"
   - title: "Introduction to Analytic Number Theory"
     authors:
       - "Tom M. Apostol"
     type: "book"
-    location: "Springer, Undergraduate Texts in Mathematics, 1976; every result mapped in docs/results/books/apostol.md"
+    location: "Springer, Undergraduate Texts in Mathematics, 1976; results mapped in a map kept privately until licensing is confirmed"
     relationship: "formalizes"
     author_endorsement: "n/a"
   - title: "Further references"
